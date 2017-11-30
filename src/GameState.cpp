@@ -15,6 +15,7 @@ namespace Hills
 	{
 		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH );
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
+		this->_background.setScale(2,2);
 	}
 
 	void GameState::HandleInput( )

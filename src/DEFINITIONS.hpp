@@ -12,6 +12,6 @@
 //#define GAME_TITLE_FILEPATH "Resources/hillracinglogo.jpg"
 #define PLAY_BUTTON_FILEPATH "Resources/PlayButton.png"
 //Gamenstaten definet
-#define GAME_BACKGROUND_FILEPATH "Resources/gamebg.jpeg"
+#define GAME_BACKGROUND_FILEPATH "Resources/hillbackground.jpg"
 //Gameoverstaten definet
 #define GAME_OVER_BACKGROUND_FILEPATH "Resources/gameoverbg.jpg"
