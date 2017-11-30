@@ -1,7 +1,7 @@
 #pragma once
 
 #include <map>
-#include <SFML/Graphics.hpp>
+#include "lib/SFML/Graphics.hpp"
 
 namespace Hills
 {
