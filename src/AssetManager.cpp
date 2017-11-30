@@ -1,5 +1,5 @@
 #include <iostream>
-#include </lib/SFML/Graphics.hpp>
+#include "lib/SFML/Graphics.hpp"
 #include "AssetManager.hpp"
 
 
@@ -50,4 +50,4 @@ namespace Hills
 	}
 }
 
-//Tänne toteutetaan samalla logiikalla audiot 
+//Tänne toteutetaan samalla logiikalla audiot
