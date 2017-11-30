@@ -1,6 +1,10 @@
 #pragma once
 
+<<<<<<< HEAD
 #include <SFML/Graphics.hpp>
+=======
+#include "lib/SFML/Graphics.hpp"
+>>>>>>> d3b180d66d123383818ad60d1dfa6e64f0f6daa3
 #include "State.hpp"
 #include "Game.hpp"
 
