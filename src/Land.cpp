@@ -23,6 +23,8 @@ namespace Hills
             // TODO: move land according to vehicle movement
             
             // switch to next sprite when the previous sprite goes offscreen
+        for (unsigned short int i = 0; i < _landSprites.size( ); i++) 
+        {
             if ( _landSprites.at( i ).getPosition( ).x < 0 - _landSprites.at( i ).getGlobalBounds( ).width )
             {
                 sf::Vector2f position( _data->window.getSize( ).x, _landSprites.at( i ).getPosition( ).y );
@@ -30,7 +32,7 @@ namespace Hills
                 _landSprites.at( i ).setPosition( position );
             }
             
-        }
+        };
     }
     
     void Land::DrawLand( )
@@ -38,7 +40,7 @@ namespace Hills
         for (unsigned short int i = 0; i < _landSprites.size( ); i++) 
         {
             _data->window.draw( _landSprites.at( i ) );
-        }
+        };
     }
 }
 
