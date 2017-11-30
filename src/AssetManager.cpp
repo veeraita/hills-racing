@@ -1,5 +1,5 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
+#include </lib/SFML/Graphics.hpp>
 #include "AssetManager.hpp"
 
 
