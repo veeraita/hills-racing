@@ -196,6 +196,7 @@ Testbed/CMakeFiles/Testbed.dir/Tests/TestEntries.cpp.o: ../Testbed/Tests/Dynamic
 Testbed/CMakeFiles/Testbed.dir/Tests/TestEntries.cpp.o: ../Testbed/Tests/EdgeShapes.h
 Testbed/CMakeFiles/Testbed.dir/Tests/TestEntries.cpp.o: ../Testbed/Tests/EdgeTest.h
 Testbed/CMakeFiles/Testbed.dir/Tests/TestEntries.cpp.o: ../Testbed/Tests/Gears.h
+Testbed/CMakeFiles/Testbed.dir/Tests/TestEntries.cpp.o: ../Testbed/Tests/HillsTest.h
 Testbed/CMakeFiles/Testbed.dir/Tests/TestEntries.cpp.o: ../Testbed/Tests/Mobile.h
 Testbed/CMakeFiles/Testbed.dir/Tests/TestEntries.cpp.o: ../Testbed/Tests/MobileBalanced.h
 Testbed/CMakeFiles/Testbed.dir/Tests/TestEntries.cpp.o: ../Testbed/Tests/MotorJoint.h

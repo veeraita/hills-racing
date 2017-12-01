@@ -74,9 +74,11 @@
 #include "VaryingRestitution.h"
 #include "VerticalStack.h"
 #include "Web.h"
+#include "HillsTest.h"
 
 TestEntry g_testEntries[] =
 {
+    {"Hills Racing Test", Hills::Create},
 	{"Ray-Cast", RayCast::Create},
 	{"Dump Shell", DumpShell::Create},
 	{"Convex Hull", ConvexHull::Create},

@@ -11,8 +11,8 @@ namespace Hills
         //goes off screen
         sf::Sprite sprite2( _data->assets.GetTexture( "Land" ) );
         
-        sprite.setPosition( 0, _data->window.getSize( ).y - sprite.getGlobalBounds( ).height );
-        sprite2.setPosition( sprite.getGlobalBounds( ).width, _data->window.getSize( ).y - sprite.getGlobalBounds( ).height );
+        sprite.setPosition( 0, _data->window.getSize( ).y - sprite.getGlobalBounds( ).height / 2 );
+        sprite2.setPosition( sprite.getGlobalBounds( ).width, _data->window.getSize( ).y - sprite.getGlobalBounds( ).height / 2 );
         
         _landSprites.push_back( sprite );
         _landSprites.push_back( sprite2 );

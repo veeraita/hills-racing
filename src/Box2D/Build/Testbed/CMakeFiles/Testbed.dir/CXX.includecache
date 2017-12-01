@@ -380,6 +380,8 @@ algorithm
 
 /home/veeraitalinna/hill-racing-1/src/Box2D/Testbed/Tests/Gears.h
 
+/home/veeraitalinna/hill-racing-1/src/Box2D/Testbed/Tests/HillsTest.h
+
 /home/veeraitalinna/hill-racing-1/src/Box2D/Testbed/Tests/Mobile.h
 
 /home/veeraitalinna/hill-racing-1/src/Box2D/Testbed/Tests/MobileBalanced.h
@@ -521,6 +523,8 @@ VerticalStack.h
 /home/veeraitalinna/hill-racing-1/src/Box2D/Testbed/Tests/VerticalStack.h
 Web.h
 /home/veeraitalinna/hill-racing-1/src/Box2D/Testbed/Tests/Web.h
+HillsTest.h
+/home/veeraitalinna/hill-racing-1/src/Box2D/Testbed/Tests/HillsTest.h
 
 /home/veeraitalinna/hill-racing-1/src/Box2D/Testbed/Tests/TheoJansen.h
 
