@@ -17,9 +17,8 @@ namespace Hills
 		private:
 			GameDataRef _data;
 			sf::Sprite _background;
-			
 			Level *level;
-			
+			sf::View view;
 			sf::Clock clock;
 	};
 }
