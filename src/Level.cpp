@@ -20,7 +20,7 @@ namespace Hills
 		fd.density = 0.0f;
 		fd.friction = 0.6f;
 		
-		shape.Set(b2Vec2(-20.0f, 0.0f), b2Vec2(20.0f, 0.0f));
+		//shape.Set(b2Vec2(-20.0f, 0.0f), b2Vec2(20.0f, 0.0f));
 		ground->CreateFixture(&fd);
 		
 		float32 hs[10] = {0.25f, 1.0f, 4.0f, 0.0f, 0.0f, -1.0f, -2.0f, -2.0f, -1.25f, 0.0f};
@@ -37,7 +37,7 @@ namespace Hills
 		
 		for (int32 i = 0; i < 10; ++i)
 		{
-			float32 y2 = y1 + hs[i];
+			float32 y2 = 10.0f + hs[i];
 			shape.Set(b2Vec2(x, y1), b2Vec2(x + dx, y2));
 			ground->CreateFixture(&fd);
 
