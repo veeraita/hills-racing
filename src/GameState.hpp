@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Land.hpp"
+#include "Level.hpp"
 #include "State.hpp"
 #include "Game.hpp"
 
@@ -18,7 +18,7 @@ namespace Hills
 			GameDataRef _data;
 			sf::Sprite _background;
 			
-			Land *land;
+			Level *level;
 			
 			sf::Clock clock;
 	};

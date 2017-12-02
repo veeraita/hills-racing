@@ -4,7 +4,7 @@
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 1024
-#define SCALE 30
+#define SCALE 10
 //splashstaten definet
 #define SPLASH_STATE_SHOW_TIME 3.0
 #define SPLASH_SCENE_BACKGROUND_FILEPATH "Resources/splashback.jpg"
