@@ -5,6 +5,7 @@
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 1024
 #define SCALE 30
+#define LEVEL_LENGTH_PIXELS 10000
 //splashstaten definet
 #define SPLASH_STATE_SHOW_TIME 3.0
 #define SPLASH_SCENE_BACKGROUND_FILEPATH "Resources/splashback.jpg"
@@ -13,7 +14,7 @@
 //#define GAME_TITLE_FILEPATH "Resources/hillracinglogo.jpg"
 #define PLAY_BUTTON_FILEPATH "Resources/PlayButton.png"
 //Gamenstaten definet
-#define GAME_BACKGROUND_FILEPATH "Resources/hillbackground.jpg"
+#define GAME_BACKGROUND_FILEPATH "Resources/gamebackground.png"
 #define LAND_FILEPATH "Resources/ground.png"
 //Gameoverstaten definet
 #define GAME_OVER_BACKGROUND_FILEPATH "Resources/gameoverbg.jpg"

@@ -11,7 +11,7 @@ namespace Hills
 			AssetManager() { }
 			~AssetManager() { }
 
-			void LoadTexture( std::string name, std::string fileName );
+			void LoadTexture( std::string name, std::string fileName, bool repeat = false );
 			sf::Texture &GetTexture( std::string name );
 
 			void LoadFont( std::string name, std::string fileName );

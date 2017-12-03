@@ -66,10 +66,6 @@ namespace Hills
 		
     }
     
-    void Level::MoveLevel( )
-    {
-
-    }
     
     void Level::draw( sf::RenderTarget& target, sf::RenderStates states ) const
     {

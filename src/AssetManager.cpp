@@ -9,7 +9,7 @@ namespace Hills
 	//LoadTexture lataa kuvan fileNamen perusteella mappiin. Avaimena toimii std::string name
 	//fileName löytyy valmiiksi DEFINITIONS.hpp:sta, jonne kirjataan kaikki resurssien FILEPATH:t!!
 	//std::string namen voi heittää miksi huvittaa
-	void AssetManager::LoadTexture( std::string name, std::string fileName )
+	void AssetManager::LoadTexture( std::string name, std::string fileName, bool repeat)
 	{
 		//aluksi luodaan sfml-texture-muuttuja tex
 		sf::Texture tex;
@@ -17,6 +17,10 @@ namespace Hills
 		//yritetään ladata sinne sfml-loadFromFile-funktiolla kuva tiedostosta
 		if ( tex.loadFromFile( fileName ) )
 		{
+		    if (repeat)
+		    {
+		        tex.setRepeated(true);
+		    }
 			//Jos lataus onnistuu asetetaan se mappiin avaimella: name
 			this->_textures[name] = tex;
 		}
