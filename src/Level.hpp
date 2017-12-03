@@ -10,13 +10,13 @@ namespace Hills
     class Level : public sf::Drawable, public sf::Transformable
     {
         public:
-            Level( GameDataRef data, std::vector<float32> const& points );
-            void MoveLevel( );
+            Level( GameDataRef data, float factor, float roughness );
         private:
             GameDataRef _data;
             sf::Texture _leveltexture;
-            std::vector<float> _points;
+            //std::vector<float> _points;
             sf::VertexArray _vertices;
+            std::vector<float> GenerateTerrain( float factor, float roughness );
             virtual void draw( sf::RenderTarget& target, sf::RenderStates states ) const;
     };
 }

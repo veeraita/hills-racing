@@ -18,13 +18,15 @@ namespace Hills
 		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH, true );
 		this->_data->assets.LoadTexture( "Land", LAND_FILEPATH );
 		
-		std::vector<float> points = {0.25f, 1.0f, 4.0f, 0.0f, 0.0f, -1.0f, -2.0f, -2.0f, -1.25f, 0.0f};
+		//define terrain shape
+		//std::vector<float> points = {0.25f, 1.0f, 4.0f, 0.0f, 0.0f, -1.0f, -2.0f, -2.0f, -1.25f, 0.0f};
 		
-		this->level = new Level( this->_data, points );
+		this->level = new Level( this->_data, 2, 0.5 );
 		
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
 		this->_background.setScale(2,2);
-		this->_background.setTextureRect( sf::IntRect(0, 0, LEVEL_LENGTH_PIXELS, SCREEN_HEIGHT) );
+		// make the sprite longer so the texture repeats itself
+		this->_background.setTextureRect( sf::IntRect(0, 0, NUM_POINTS * LEVEL_DX * SCALE / 2, SCREEN_HEIGHT) );
 		this->_background.move(0,-200);
 		
 		view.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -65,7 +67,7 @@ namespace Hills
 	void GameState::Draw( float dt )
 	{
 	    this->_data->window.setView(view);
-		this->_data->window.clear(sf::Color::Red);
+		this->_data->window.clear( );
 		this->_data->window.draw( this->_background );
 		this->_data->window.draw( *level );
 		this->_data->window.display();

@@ -1,10 +1,11 @@
 #include "Level.hpp"
 #include <Box2D/Box2D.h>
+#include <random>
 
 namespace Hills
 {
 
-    Level::Level( GameDataRef data, std::vector<float32> const& points ) : _data(data), _points(points)
+    Level::Level( GameDataRef data, float factor, float roughness ) : _data(data)
     {
         //create world with gravity
         b2Vec2 gravity(0.0f, -9.8f);
@@ -26,9 +27,11 @@ namespace Hills
 		
 		//define the vertex points
 		//float32 hs[10] = {0.25f, 1.0f, 4.0f, 0.0f, 0.0f, -1.0f, -2.0f, -2.0f, -1.25f, 0.0f};
-
-		unsigned int n = points.size();
-		float32 x = 0.0f, y1 = 10.0f, dx = 5.0f;
+		
+		std::vector<float> points = GenerateTerrain( factor, roughness );
+		unsigned int n = NUM_POINTS;
+		
+		float32 x = 0.0f, y1 = 10.0f, dx = LEVEL_DX;
 		
 		//construct the terrain sprite from multiple quads
 		_vertices.setPrimitiveType(sf::Quads); 
@@ -64,6 +67,53 @@ namespace Hills
         }
 		
 		
+    }
+    
+    std::vector<float> Level::GenerateTerrain( float factor, float roughness )
+    {
+        srand(time(NULL));
+        
+        float range;
+        std::vector<float> points;
+        
+        for (int i = 0; i < NUM_POINTS; i++)
+        {
+            points.push_back( 0.0 );
+        }
+        
+        for (int p = 0; p < 50; p++)
+        {
+            range = 20.0;
+            int segments = 1;
+            for (int i = 0; i < (NUM_POINTS / pow(2, 2)); i++)
+            {
+                int segs = segments;
+                for (int j = 0; j < segs; j++)
+                {
+                    //how many points are in a segment
+                    int x = floor(NUM_POINTS / segs);
+                    int start = (j * x) + 1;
+                    int end = start + x;
+                    if (i == 0)
+                    {
+                        end--;
+                    }
+                    float lo = -range;
+                    float hi = +range;
+                    float change = lo + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (hi - lo)));
+
+                    //find the midpoint of the segment
+                    int center = ((end - start) / 2) + start;
+                    //displace the midpoint by a random amount
+                    points[center - 1] = (points[start] + points[end]) / 2;
+                    points[center - 1] += change * factor;
+                    segments++;
+                }
+                range *= roughness;
+            }
+        }
+        
+        return points;
     }
     
     

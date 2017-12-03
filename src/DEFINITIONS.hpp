@@ -1,11 +1,12 @@
 #pragma once
 
-//Tänne kirjataan kaikki Resourcesien kuvien ym. FILEPATHIT, jottei niitä tarviyse toistaa koodissa
+//Tänne kirjataan kaikki Resourcesien kuvien ym. FILEPATHIT, jottei niitä tarvitse toistaa koodissa
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 1024
 #define SCALE 30
-#define LEVEL_LENGTH_PIXELS 10000
+#define NUM_POINTS 65
+#define LEVEL_DX 5.0
 //splashstaten definet
 #define SPLASH_STATE_SHOW_TIME 3.0
 #define SPLASH_SCENE_BACKGROUND_FILEPATH "Resources/splashback.jpg"
