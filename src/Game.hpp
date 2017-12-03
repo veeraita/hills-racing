@@ -15,6 +15,7 @@ namespace Hills
 		sf::RenderWindow window;
 		AssetManager assets;
 		InputManager input;
+		//LevelManager levels;
 	};
 
 	typedef std::shared_ptr<GameData> GameDataRef;

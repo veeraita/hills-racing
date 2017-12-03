@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 #include "Game.hpp"
 #include <vector>
 
@@ -19,4 +19,4 @@ namespace Hills
 
             std::vector<sf::Sprite> _landSprites;
     };
-}
+} 

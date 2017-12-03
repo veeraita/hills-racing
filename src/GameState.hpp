@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Level.hpp"
 #include "State.hpp"
 #include "Game.hpp"
 
@@ -17,5 +18,8 @@ namespace Hills
 		private:
 			GameDataRef _data;
 			sf::Sprite _background;
+			Level *level;
+			sf::View view;
+			sf::Clock clock;
 	};
 }
