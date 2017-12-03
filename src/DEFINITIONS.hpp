@@ -19,3 +19,5 @@
 #define LAND_FILEPATH "Resources/ground.png"
 //Gameoverstaten definet
 #define GAME_OVER_BACKGROUND_FILEPATH "Resources/gameoverbg.jpg"
+//auton definet
+#define CAR_BODY_FILEPATH "Resources/carbody.png"

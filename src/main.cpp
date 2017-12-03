@@ -10,6 +10,8 @@
 #include "SplashState.hpp"
 #include "SplashState.cpp"
 #include "DEFINITIONS.hpp"
+#include "Car.cpp"
+#include "Car.hpp"
 
 int main()
 {

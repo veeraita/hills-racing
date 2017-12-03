@@ -4,6 +4,7 @@
 #include "Level.hpp"
 #include "State.hpp"
 #include "Game.hpp"
+#include "Car.hpp"
 
 namespace Hills
 {
@@ -21,5 +22,6 @@ namespace Hills
 			Level *level;
 			sf::View view;
 			sf::Clock clock;
+			Car *car;
 	};
 }

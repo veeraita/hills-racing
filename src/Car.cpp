@@ -1,3 +1,17 @@
+#pragma once
+
+#include "Car.hpp"
+
+namespace Hills
+{
+    Car::Car(GameDataRef data) : _data(data){
+        _bodySprite.setTexture(_data->assets.GetTexture("car body sprite"));
+    }
+
+    void Car::draw(){
+        _data->window.draw( _bodySprite);
+    }
+}
 // Tänne dynaaminen objekti Car, joka likkuu 
 
 /*

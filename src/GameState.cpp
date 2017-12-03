@@ -17,11 +17,13 @@ namespace Hills
 	{
 		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH, true );
 		this->_data->assets.LoadTexture( "Land", LAND_FILEPATH );
+		this->_data->assets.LoadTexture( "car body sprite", CAR_BODY_FILEPATH);
 		
 		//define terrain shape
 		//std::vector<float> points = {0.25f, 1.0f, 4.0f, 0.0f, 0.0f, -1.0f, -2.0f, -2.0f, -1.25f, 0.0f};
 		
 		this->level = new Level( this->_data, 2, 0.5 );
+		this->car = new Car( this->_data);
 		
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
 		this->_background.setScale(2,2);
@@ -71,6 +73,7 @@ namespace Hills
 		this->_data->window.draw( this->_background );
 		this->_data->window.draw( *level );
 		this->_data->window.display();
+		this->car->draw();
 	}
 
 }
