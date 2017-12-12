@@ -62,13 +62,18 @@ namespace Hills
         {
             if (view.getCenter().x >= 10 + SCREEN_WIDTH / 2)
             {
-                view.move(-10, 0);
+                car->Reverse();
             }
         }
 		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-                view.move(10, 0);
+                car->Accelerate();
+        }
+        
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        {
+                car->Brake();
         }
         
 	}
@@ -91,6 +96,8 @@ namespace Hills
 		this->_data->window.draw( chassis );
 		this->_data->window.draw( wheel1 );
 		this->_data->window.draw( wheel2 );
+		sf::Vector2f pos = car->getChassisSprite().getPosition();
+        view.setCenter(pos);
 		this->_data->window.display( );
 	}
 

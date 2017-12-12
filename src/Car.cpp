@@ -10,14 +10,14 @@ namespace Hills
       
 /*========================== BOX2Dsetup Begin ==========================================*/
         //Random variables for the joints
-        float m_hz = 4.0f;
-        float m_zeta = 0.7f;
-        float m_speed = 50.0f;
+        m_hz = 4.0f;
+        m_zeta = 0.9f;
+        m_speed = 1.0f;
         float y1 = 5.0f;
         /*========= chassis =============*/
         b2BodyDef bd;
         bd.type = b2_dynamicBody;
-        bd.position.Set(3.5f, 1.5*y1+1.0f); //origin of chassis
+        bd.position.Set(11.0f, 1.5*y1+1.0f); //origin of chassis
 
         b2PolygonShape chassis;
         b2Vec2 vertices[8];
@@ -41,24 +41,24 @@ namespace Hills
 		fd.friction = 0.9f;
 
         /*========== wheel1 ================*/
-        bd.position.Set(3.0f, 1.5*y1+0.35f); //backwheel
+        bd.position.Set(10.0f, 1.5*y1+0.35f); //backwheel
         wheel1 = world.CreateBody( &bd );
         wheel1->CreateFixture( &fd );
 
         /*=========== wheel2 ================*/
-        bd.position.Set(5.0f, 1.5*y1+0.35f); //frontwheel
+        bd.position.Set(12.0f, 1.5*y1+0.4f); //frontwheel
         wheel2 = world.CreateBody( &bd );
         wheel2->CreateFixture( &fd );
 
         /*========== Joints =================*/
         b2WheelJointDef jd;
-        b2Vec2 axis(0.0f, 1.0f); //origin of chassis
+        b2Vec2 axis(0.0f, 1.0f);
         //axis.Normalize();
 
         //joints connect the origin of the chassis and origin of circleshapes
         jd.Initialize(car, wheel1, wheel1->GetPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 20.0f;
+        jd.maxMotorTorque = 10.0f;
         jd.enableMotor = true;
         jd.frequencyHz = m_hz;
         jd.dampingRatio = m_zeta;
@@ -66,7 +66,7 @@ namespace Hills
 
         jd.Initialize(car, wheel2, wheel2->GetPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 10.0f;
+        jd.maxMotorTorque = 5.0f;
         jd.enableMotor = false;
         jd.frequencyHz = m_hz;
         jd.dampingRatio = m_zeta;
@@ -79,45 +79,23 @@ namespace Hills
         this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
         
         _chassissprite.setTexture( this->_data->assets.GetTexture( "Chassis") );
-        _chassissprite.setScale(0.5, 0.5);
         _chassissprite.setOrigin( _chassissprite.getGlobalBounds().width / 2, _chassissprite.getGlobalBounds().height / 2 );
+        _chassissprite.setScale(0.5, 0.5);
 
     	_wheelsprite1.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
+    	_wheelsprite1.setOrigin( _wheelsprite1.getGlobalBounds().width / 2, _wheelsprite1.getGlobalBounds().height / 2 );
     	_wheelsprite1.setScale(0.5, 0.5);
-        _wheelsprite1.setOrigin( _wheelsprite1.getGlobalBounds().width / 2, _wheelsprite1.getGlobalBounds().height / 2 );
         
         _wheelsprite2.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
+        _wheelsprite2.setOrigin( _wheelsprite2.getGlobalBounds().width / 2, _wheelsprite2.getGlobalBounds().height / 2 );
         _wheelsprite2.setScale(0.5, 0.5);
-        _wheelsprite2.setOrigin( _wheelsprite2.getGlobalBounds().width / 2, _wheelsprite2.getGlobalBounds().height / 2 );
 
   }
-/*
-  void Car::Draw( b2Body* car, b2Body* wheel1, b2Body* wheel2, sf::Sprite _chassissprite, sf::Sprite _wheelsprite1, sf::Sprite _wheelsprite2, GameDataRef _data )
-  {
-        _chassissprite.setScale(1/SCALE, 1/SCALE);
-        _chassissprite.setOrigin( _chassissprite.getGlobalBounds().width / 2, _chassissprite.getGlobalBounds().height / 2 );
-        _chassissprite.setPosition(SCALE * car->GetPosition().x , SCREEN_HEIGHT - SCALE * car->GetPosition().y );
-        _chassissprite.setRotation( car->GetAngle() * 180/b2_pi );
-        _data->window.draw( _chassissprite );
-        
-        _wheelsprite1.setScale(1/SCALE, 1/SCALE);
-        _wheelsprite1.setOrigin( _wheelsprite1.getGlobalBounds().width / 2, _wheelsprite1.getGlobalBounds().height / 2 );
-        _wheelsprite1.setPosition( SCALE * wheel1->GetPosition().x , SCREEN_HEIGHT - SCALE * wheel1->GetPosition().y );
-        _wheelsprite1.setRotation( wheel1->GetAngle() * 180/b2_pi );
-        _data->window.draw( _wheelsprite1 );
 
-        _wheelsprite1.setScale(1/SCALE, 1/SCALE);
-        _wheelsprite2.setOrigin( _wheelsprite2.getGlobalBounds().width / 2, _wheelsprite2.getGlobalBounds().height / 2 );
-        _wheelsprite2.setPosition( SCALE * wheel2->GetPosition().x , SCREEN_HEIGHT - SCALE * wheel2->GetPosition().y );
-        _wheelsprite2.setRotation( wheel2->GetAngle() * 180/b2_pi );
-        _data->window.draw( _wheelsprite2 );
-      
-  }
- */ 
     sf::Sprite& Car::getChassisSprite()
     {
         _chassissprite.setPosition(SCALE * car->GetPosition().x , SCREEN_HEIGHT - SCALE * car->GetPosition().y );
-        _chassissprite.setRotation( car->GetAngle() * 180/b2_pi );
+        _chassissprite.setRotation( car->GetAngle() * -180/b2_pi );
         return _chassissprite;
     }
     
@@ -133,6 +111,21 @@ namespace Hills
         _wheelsprite2.setPosition( SCALE * wheel2->GetPosition().x , SCREEN_HEIGHT - SCALE * wheel2->GetPosition().y );
         _wheelsprite2.setRotation( wheel2->GetAngle() * 180/b2_pi );
         return _wheelsprite2;
+    }
+    
+    void Car::Reverse()
+    {
+        spring1->SetMotorSpeed(m_speed);
+    }
+    
+    void Car::Accelerate()
+    {
+        spring1->SetMotorSpeed(-m_speed);
+    }
+    
+    void Car::Brake()
+    {
+        spring1->SetMotorSpeed(0.0f);
     }
 }
 

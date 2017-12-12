@@ -50,8 +50,8 @@ namespace Hills
             sf::Vertex* quad = &_vertices[ i * 4];
 
             // define its 3 corners
-            quad[0].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT);
-            quad[1].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT);
+            quad[0].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT * 2);
+            quad[1].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT * 2);
             quad[2].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT - (y * SCALE));
             quad[3].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT - (y * SCALE));
             
@@ -74,8 +74,8 @@ namespace Hills
             sf::Vertex* quad = &_vertices[ i * 4];
 
             // define its 3 corners
-            quad[0].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT);
-            quad[1].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT);
+            quad[0].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT * 2);
+            quad[1].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT * 2);
             quad[2].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT - (y2 * SCALE));
             quad[3].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT - (y1 * SCALE));
             

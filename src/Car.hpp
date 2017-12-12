@@ -15,6 +15,9 @@ namespace Hills
           sf::Sprite& getChassisSprite();
           sf::Sprite& getWheelSprite1();
           sf::Sprite& getWheelSprite2();
+          void Reverse();
+          void Accelerate();
+          void Brake();
       private:
           GameDataRef _data;
           b2World& world;
@@ -28,5 +31,8 @@ namespace Hills
           b2Body* wheel2;
           b2WheelJoint* spring1;
 	      b2WheelJoint* spring2;
+	      float m_hz;
+          float m_zeta;
+          float m_speed;
   };
 }
