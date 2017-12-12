@@ -13,11 +13,11 @@ namespace Hills
         float m_hz = 4.0f;
         float m_zeta = 0.7f;
         float m_speed = 50.0f;
-        float y1 = 10.0f;
+        float y1 = 5.0f;
         /*========= chassis =============*/
         b2BodyDef bd;
         bd.type = b2_dynamicBody;
-        bd.position.Set(5.0f, 1.5*y1+1.0f); //origin of chassis
+        bd.position.Set(3.5f, 1.5*y1+1.0f); //origin of chassis
 
         b2PolygonShape chassis;
         b2Vec2 vertices[8];
@@ -41,12 +41,12 @@ namespace Hills
 		fd.friction = 0.9f;
 
         /*========== wheel1 ================*/
-        bd.position.Set(1.5f, 1.5*y1); //backwheel
+        bd.position.Set(3.0f, 1.5*y1+0.35f); //backwheel
         wheel1 = world.CreateBody( &bd );
         wheel1->CreateFixture( &fd );
 
         /*=========== wheel2 ================*/
-        bd.position.Set(8.5f, 1.5*y1); //frontwheel
+        bd.position.Set(5.0f, 1.5*y1+0.35f); //frontwheel
         wheel2 = world.CreateBody( &bd );
         wheel2->CreateFixture( &fd );
 
@@ -79,15 +79,15 @@ namespace Hills
         this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
         
         _chassissprite.setTexture( this->_data->assets.GetTexture( "Chassis") );
-        //_chassissprite.setScale(1/SCALE, 1/SCALE);
+        _chassissprite.setScale(0.5, 0.5);
         _chassissprite.setOrigin( _chassissprite.getGlobalBounds().width / 2, _chassissprite.getGlobalBounds().height / 2 );
 
     	_wheelsprite1.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
-    	//_wheelsprite1.setScale(1/SCALE, 1/SCALE);
+    	_wheelsprite1.setScale(0.5, 0.5);
         _wheelsprite1.setOrigin( _wheelsprite1.getGlobalBounds().width / 2, _wheelsprite1.getGlobalBounds().height / 2 );
         
         _wheelsprite2.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
-        //_wheelsprite2.setScale(1/SCALE, 1/SCALE);
+        _wheelsprite2.setScale(0.5, 0.5);
         _wheelsprite2.setOrigin( _wheelsprite2.getGlobalBounds().width / 2, _wheelsprite2.getGlobalBounds().height / 2 );
 
   }

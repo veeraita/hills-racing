@@ -20,14 +20,15 @@ namespace Hills
 		fd.density = 0.0f;
 		fd.friction = 0.6f;
 		
+		//shape.Set(b2Vec2(-20.0f, 5.0f), b2Vec2(20.0f, 5.0f));
 		ground->CreateFixture(&fd);
 		
 		//factor: magnitude of displacement
 		//roughness: how much the displacement range is reducted (0.5 -> very smooth, 1.0 -> jagged)
 		std::vector<float> points = GenerateTerrain( factor, roughness );
-		unsigned int n = NUM_POINTS;
+		unsigned int n = NUM_POINTS + 3;
 		
-		float32 x = 0.0f, y1 = 10.0f, dx = LEVEL_DX;
+		float32 x = 0.0f, y1 = 5.0f, dx = LEVEL_DX;
 		
 		//construct the terrain sprite from multiple quads
 		_vertices.setPrimitiveType(sf::Quads); 
@@ -38,9 +39,34 @@ namespace Hills
 		
 		_leveltexture = this->_data->assets.GetTexture( "Land" );
 		
-		for (unsigned int i = 0; i < n; ++i)
+		// create some flat ground at the start of the level
+		for (unsigned int i = 0; i < 3; ++i)
 		{
-			float32 y2 = 10.0f + points[i];
+			float32 y = 5.0f;
+			shape.Set(b2Vec2(x, y), b2Vec2(x + dx, y));
+			ground->CreateFixture(&fd);
+
+            // get a pointer to the current quad
+            sf::Vertex* quad = &_vertices[ i * 4];
+
+            // define its 3 corners
+            quad[0].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT);
+            quad[1].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT);
+            quad[2].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT - (y * SCALE));
+            quad[3].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT - (y * SCALE));
+            
+            quad[0].texCoords = sf::Vector2f(0, 0);
+            quad[1].texCoords = sf::Vector2f(50, 0);
+            quad[2].texCoords = sf::Vector2f(50, 50);
+            quad[3].texCoords = sf::Vector2f(0, 50);
+            
+			x += dx;
+			//::cout << quad[2].position.y << std::endl;
+        }	
+		
+		for (unsigned int i = 3; i < n; ++i)
+		{
+			float32 y2 = 5.0f + points[i];
 			shape.Set(b2Vec2(x, y1), b2Vec2(x + dx, y2));
 			ground->CreateFixture(&fd);
 

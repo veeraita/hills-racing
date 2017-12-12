@@ -4,7 +4,7 @@
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 1024
-#define SCALE 30
+#define SCALE 50
 #define NUM_POINTS 65
 #define LEVEL_DX 5.0
 //splashstaten definet
