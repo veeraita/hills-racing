@@ -10,9 +10,10 @@ namespace Hills
     class Level : public sf::Drawable, public sf::Transformable
     {
         public:
-            Level( GameDataRef data, float factor, float roughness );
+            Level( GameDataRef data, b2World& world, float factor, float roughness );
         private:
             GameDataRef _data;
+            b2World& world;
             sf::Texture _leveltexture;
             //std::vector<float> _points;
             sf::VertexArray _vertices;

@@ -5,11 +5,8 @@
 namespace Hills
 {
 
-    Level::Level( GameDataRef data, float factor, float roughness ) : _data(data)
+    Level::Level( GameDataRef data, b2World& world, float factor, float roughness ) : _data(data), world(world)
     {
-        //create world with gravity
-        b2Vec2 gravity(0.0f, -9.8f);
-        b2World world(gravity);
         b2Body* ground = NULL;
         
         //create physical ground and add it to the world
@@ -25,9 +22,8 @@ namespace Hills
 		
 		ground->CreateFixture(&fd);
 		
-		//define the vertex points
-		//float32 hs[10] = {0.25f, 1.0f, 4.0f, 0.0f, 0.0f, -1.0f, -2.0f, -2.0f, -1.25f, 0.0f};
-		
+		//factor: magnitude of displacement
+		//roughness: how much the displacement range is reducted (0.5 -> very smooth, 1.0 -> jagged)
 		std::vector<float> points = GenerateTerrain( factor, roughness );
 		unsigned int n = NUM_POINTS;
 		
@@ -42,7 +38,7 @@ namespace Hills
 		
 		_leveltexture = this->_data->assets.GetTexture( "Land" );
 		
-		for (int32 i = 0; i < n; ++i)
+		for (unsigned int i = 0; i < n; ++i)
 		{
 			float32 y2 = 10.0f + points[i];
 			shape.Set(b2Vec2(x, y1), b2Vec2(x + dx, y2));
@@ -64,9 +60,8 @@ namespace Hills
             
             y1 = y2;
 			x += dx;
-        }
-		
-		
+			//::cout << quad[2].position.y << std::endl;
+        }		
     }
     
     std::vector<float> Level::GenerateTerrain( float factor, float roughness )

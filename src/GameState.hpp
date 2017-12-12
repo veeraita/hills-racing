@@ -18,10 +18,11 @@ namespace Hills
 			void Draw( float dt );
 		private:
 			GameDataRef _data;
+			b2World world;
 			sf::Sprite _background;
 			Level *level;
+			Car *car;
 			sf::View view;
 			sf::Clock clock;
-			Car *car;
 	};
 }

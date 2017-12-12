@@ -8,7 +8,7 @@
 
 namespace Hills
 {
-	GameState::GameState( GameDataRef data) : _data( data )
+	GameState::GameState( GameDataRef data) : _data( data ), world(b2World(b2Vec2(0.0f, -9.8f)))
 	{
 
 	}
@@ -17,13 +17,18 @@ namespace Hills
 	{
 		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH, true );
 		this->_data->assets.LoadTexture( "Land", LAND_FILEPATH );
-		this->_data->assets.LoadTexture( "car body sprite", CAR_BODY_FILEPATH);
+		this->_data->assets.LoadTexture( "Chassis", CHASSIS_FILEPATH );
+        this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
 		
 		//define terrain shape
 		//std::vector<float> points = {0.25f, 1.0f, 4.0f, 0.0f, 0.0f, -1.0f, -2.0f, -2.0f, -1.25f, 0.0f};
 		
-		this->level = new Level( this->_data, 2, 0.5 );
-		this->car = new Car( this->_data);
+		//create world with gravity
+        //b2Vec2 gravity(0.0f, -9.8f);
+        //world.SetGravity(gravity);
+		
+		level = new Level( this->_data, world, 2, 0.5 );
+		car = new Car( this->_data, world );
 		
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
 		this->_background.setScale(2,2);
@@ -32,6 +37,13 @@ namespace Hills
 		this->_background.move(0,-200);
 		
 		view.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
+		
+        sf::Sprite chassissprite;
+        chassissprite.setTexture( this->_data->assets.GetTexture( "Chassis") );
+        sf::Sprite wheelsprite1;
+        wheelsprite1.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
+        sf::Sprite wheelsprite2;
+        wheelsprite2.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
 	}
 
 	void GameState::HandleInput( )
@@ -68,12 +80,18 @@ namespace Hills
 
 	void GameState::Draw( float dt )
 	{
-	    this->_data->window.setView(view);
+	    world.Step( 1.0f/60.0f, 8, 3 );
+	    this->_data->window.setView( view );
 		this->_data->window.clear( );
 		this->_data->window.draw( this->_background );
 		this->_data->window.draw( *level );
-		this->_data->window.display();
-		this->car->draw();
+		sf::Sprite chassis = car->getChassisSprite();
+		sf::Sprite wheel1 = car->getWheelSprite1();
+		sf::Sprite wheel2 = car->getWheelSprite2();
+		this->_data->window.draw( chassis );
+		this->_data->window.draw( wheel1 );
+		this->_data->window.draw( wheel2 );
+		this->_data->window.display( );
 	}
 
 }
