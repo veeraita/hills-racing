@@ -134,11 +134,13 @@ namespace Hills
     
     void Car::TiltUp()
     {
+        // doesn't work yet
         car->ApplyTorque(20.0f, true);
     }
     
     void Car::TiltDown()
     {
+        // doesn't work yet
         car->ApplyTorque(-20.0f, true);
     }
 }
