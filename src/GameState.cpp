@@ -28,7 +28,7 @@ namespace Hills
         //b2Vec2 gravity(0.0f, -9.8f);
         //world.SetGravity(gravity);
 
-		level = new Level( this->_data, world, 2, 0.4 );
+		level = new Level( this->_data, world, 2, 0.5 );
 		car = new Car( this->_data, world );
 
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
@@ -125,13 +125,25 @@ namespace Hills
 		this->_data->window.draw( wheel1 );
 		this->_data->window.draw( wheel2 );
 		sf::Vector2f pos = car->getChassisSprite().getPosition();
-		if (pos.x > SCREEN_WIDTH/2 || pos.x < NUM_POINTS * LEVEL_DX - SCREEN_WIDTH/2)
+		if (pos.x > SCREEN_WIDTH/2 && pos.x < NUM_POINTS * LEVEL_DX * SCALE - SCREEN_WIDTH/2)
 		{
-            view.setCenter(pos);
+		    if (pos.y <= SCREEN_HEIGHT - 10.0f*SCALE)
+            {
+                view.setCenter(pos.x, SCREEN_HEIGHT - 10.0f*SCALE);
+            }
+            else if (pos.y >=  SCREEN_HEIGHT)
+            {
+                view.setCenter(pos.x, SCREEN_HEIGHT);
+            }
+            else
+            {
+                view.setCenter(pos);
+            }
         }
+        // && pos.y > SCREEN_HEIGHT - 15.0f*SCALE && pos.y <  SCREEN_HEIGHT
 		sf::Time elapsed = clock.getElapsedTime();
 		timerText.setString(std::to_string(elapsed.asSeconds()));
-		timerText.setPosition(-500+pos.x,-500+pos.y);
+		timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
 		this->_data->window.draw(timerText);
 		this->_data->window.display( );
 
