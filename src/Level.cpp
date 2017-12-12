@@ -1,12 +1,16 @@
 #include "Level.hpp"
 #include <Box2D/Box2D.h>
 #include <random>
+#include <fstream>
 
 namespace Hills
 {
 
-    Level::Level( GameDataRef data, b2World& world, float factor, float roughness ) : _data(data), world(world)
+    Level::Level( GameDataRef data, b2World& world, std::string& filename ) : _data(data), world(world), filename(filename)
     {
+        std::vector<std::pair<float, float>> points = LoadTerrain(filename);
+        CreateTerrain(points);
+        /*
         b2Body* ground = NULL;
         
         //create physical ground and add it to the world
@@ -21,7 +25,7 @@ namespace Hills
 		fd.friction = 0.6f*SCALE;
 		
 		//shape.Set(b2Vec2(-20.0f, 5.0f), b2Vec2(20.0f, 5.0f));
-		ground->CreateFixture(&fd);
+		//ground->CreateFixture(&fd);
 		
 		//factor: magnitude of displacement
 		//roughness: how much the displacement range is reducted (0.5 -> very smooth, 1.0 -> jagged)
@@ -61,13 +65,99 @@ namespace Hills
             quad[3].texCoords = sf::Vector2f(0, 50);
             
 			x += dx;
-
+        
         }	
 		
 		for (unsigned int i = 3; i < n; ++i)
 		{
 			float32 y2 = 5.0f + points[i];
-			std::cout << y2 << std::endl;
+			std::cout << points[i] << std::endl;
+			shape.Set(b2Vec2(x, y1), b2Vec2(x + dx, y2));
+			ground->CreateFixture(&fd);
+
+            // get a pointer to the current quad
+            sf::Vertex* quad = &_vertices[ i * 4];
+
+            // define its 3 corners
+            quad[0].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT * 2);
+            quad[1].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT * 2);
+            quad[2].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT - (y2 * SCALE));
+            quad[3].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT - (y1 * SCALE));
+            
+            quad[0].texCoords = sf::Vector2f(0, 0);
+            quad[1].texCoords = sf::Vector2f(50, 0);
+            quad[2].texCoords = sf::Vector2f(50, 50);
+            quad[3].texCoords = sf::Vector2f(0, 50);
+            
+            y1 = y2;
+			x += dx;
+        }
+        */		
+    }
+    
+    std::vector<std::pair<float, float>> Level::LoadTerrain(std::string& filename)
+    {
+        std::vector<std::pair<float, float>> points;
+        std::ifstream infile(filename);
+        std::string line;
+        
+        while (std::getline(infile, line))
+        {
+            std::istringstream iss(line);
+            float a; 
+            float b;
+            if (iss >> a ) 
+            { 
+                if (iss >> b ) 
+                { 
+                    points.push_back(std::make_pair(a, b)); 
+                }
+                else
+                {
+                    points.push_back(std::make_pair(a, -1));
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        return points;
+    }
+    
+    void Level::CreateTerrain(std::vector<std::pair<float, float>> points)
+    {
+        b2Body* ground = NULL;
+        
+        //create physical ground and add it to the world
+        b2BodyDef bd;
+        ground = world.CreateBody(&bd);
+        
+        b2EdgeShape shape;
+        
+        b2FixtureDef fd;
+		fd.shape = &shape;
+		fd.density = 0.0f;
+		fd.friction = 0.6f*SCALE;
+        unsigned int n = points.size();
+		
+		float x = 0.0f, y1 = 5.0f, dx = LEVEL_DX;
+		
+		//construct the terrain sprite from multiple quads
+		_vertices.setPrimitiveType(sf::Quads); 
+		//set the number of vertices (4 per quad)
+		_vertices.resize( n * 4 );
+		
+		this->_data->assets.LoadTexture( "Land", LAND_FILEPATH );
+		
+		_leveltexture = this->_data->assets.GetTexture( "Land" );
+		
+		for (unsigned int i = 0; i < n; ++i)
+		{
+			float32 y2 = 5.0f + points[i].first;
+			
+			std::cout << points[i].first << std::endl;
+			
 			shape.Set(b2Vec2(x, y1), b2Vec2(x + dx, y2));
 			ground->CreateFixture(&fd);
 
@@ -89,7 +179,9 @@ namespace Hills
 			x += dx;
         }		
     }
+
     
+/*    
     std::vector<float> Level::GenerateTerrain( float factor, float roughness )
     {
         srand(time(NULL));
@@ -144,7 +236,7 @@ namespace Hills
         
         return points;
     }
-    
+*/    
     
     void Level::draw( sf::RenderTarget& target, sf::RenderStates states ) const
     {

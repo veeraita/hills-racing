@@ -17,7 +17,7 @@ namespace Hills
         /*========= chassis =============*/
         b2BodyDef bd;
         bd.type = b2_dynamicBody;
-        bd.position.Set(11.0f, 1.5*y1+1.0f); //origin of chassis
+        bd.position.Set(4.0f, 1.5*y1+1.0f); //origin of chassis
 
         b2PolygonShape chassis;
         b2Vec2 vertices[8];
@@ -41,12 +41,12 @@ namespace Hills
 		fd.friction = 0.9f*SCALE;
 
         /*========== wheel1 ================*/
-        bd.position.Set(10.0f, 1.5*y1+0.35f); //backwheel
+        bd.position.Set(3.0f, 1.5*y1+0.35f); //backwheel
         wheel1 = world.CreateBody( &bd );
         wheel1->CreateFixture( &fd );
 
         /*=========== wheel2 ================*/
-        bd.position.Set(12.0f, 1.5*y1+0.4f); //frontwheel
+        bd.position.Set(5.0f, 1.5*y1+0.4f); //frontwheel
         wheel2 = world.CreateBody( &bd );
         wheel2->CreateFixture( &fd );
 
@@ -106,14 +106,14 @@ namespace Hills
     sf::Sprite& Car::getWheelSprite1()
     {
         _wheelsprite1.setPosition( SCALE * wheel1->GetPosition().x , SCREEN_HEIGHT - SCALE * wheel1->GetPosition().y );
-        _wheelsprite1.setRotation( wheel1->GetAngle() * 180/b2_pi );
+        _wheelsprite1.setRotation( wheel1->GetAngle() * -180/b2_pi );
         return _wheelsprite1;
     }
     
     sf::Sprite& Car::getWheelSprite2()
     {
         _wheelsprite2.setPosition( SCALE * wheel2->GetPosition().x , SCREEN_HEIGHT - SCALE * wheel2->GetPosition().y );
-        _wheelsprite2.setRotation( wheel2->GetAngle() * 180/b2_pi );
+        _wheelsprite2.setRotation( wheel2->GetAngle() * -180/b2_pi );
         return _wheelsprite2;
     }
     

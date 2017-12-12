@@ -19,16 +19,11 @@ namespace Hills
 		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH, true );
 		this->_data->assets.LoadTexture( "Land", LAND_FILEPATH );
 		this->_data->assets.LoadTexture( "Chassis", CHASSIS_FILEPATH );
-    this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
+        this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
 
-		//define terrain shape
-		//std::vector<float> points = {0.25f, 1.0f, 4.0f, 0.0f, 0.0f, -1.0f, -2.0f, -2.0f, -1.25f, 0.0f};
-
-		//create world with gravity
-        //b2Vec2 gravity(0.0f, -9.8f);
-        //world.SetGravity(gravity);
-
-		level = new Level( this->_data, world, 2, 0.4 );
+        // TODO: choose filename according to level selection
+        std::string filename = "level1.txt";
+		level = new Level( this->_data, world, filename );
 		car = new Car( this->_data, world );
 
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
