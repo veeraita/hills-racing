@@ -4,6 +4,8 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
+#include "b2GLDraw.h"
+#include "b2GLDraw.cpp"
 /*======================== GLOBALS ======================================================*/
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 1024
@@ -23,6 +25,16 @@ int main()
   window.setFramerateLimit( 60 );
   b2Vec2 gravity( 0.0f, 8.0f );
   b2World world( gravity );
+  /*====================== DEBUG DRAWING MODE ============================================*/
+  b2GLDraw debugDrawInstance(window);
+  world.SetDebugDraw( &debugDrawInstance );
+  uint32 flags = 0;
+  flags += b2Draw::e_shapeBit;
+  flags += b2Draw::e_jointBit;
+  flags += b2Draw::e_pairBit;
+  flags += b2Draw::e_centerOfMassBit;
+  flags += b2Draw::e_aabbBit;
+  debugDrawInstance.SetFlags( flags );
 
 /*========================= PREPARE THE TEXTURES =========================================*/
   sf::Texture _chassistexture;
@@ -59,14 +71,14 @@ int main()
   {
 /*========================= EVENT POLLING ================================================*/
     sf::Event event;
-		while ( window.pollEvent( event ) )
-		{
-			if ( sf::Event::Closed == event.type )
-			{
-				window.close();
-			}
-      if ( event.type == sf::Event::KeyPressed )
-      {
+        while ( window.pollEvent( event ) )
+        {
+            if ( sf::Event::Closed == event.type )
+            {
+                    window.close();
+            }
+          if ( event.type == sf::Event::KeyPressed )
+          {
           if(event.key.code == sf::Keyboard::Space)
           {
             int MouseX = sf::Mouse::getPosition(window).x;
@@ -81,8 +93,8 @@ int main()
             CreateCircle( world, MouseX, MouseY );
           }
           car->Keyboard( event );
+        }
       }
-		}
 
 /*========================== ONE STEP FOR B2WORLD AND WINDOW ===================================*/
     world.Step( 1.0f/60.0f, 8, 3 );
@@ -129,6 +141,7 @@ int main()
       }
     }
 /*========================== SFML SETUP END =====================================================*/
+  world.DrawDebugData();
   window.display();
   }
   return 0;
@@ -172,9 +185,3 @@ void CreateCircle(b2World& world, int MouseX, int MouseY)
     Body->CreateFixture(&FixtureDef);
 }
 
-void debugDraw( b2World& world )
-{
-  b2Draw* debug;
-  debug->SetFlags( b2Draw.e_shapeBit | b2Draw.e_jointBit );
-  world.SetDebugDraw()
-}
