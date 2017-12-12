@@ -17,6 +17,7 @@ namespace Hills
 			void HandleInput();
 			void Update( float dt );
 			void Draw( float dt );
+			sf::Vector2f getPrevPos();
 		private:
 			GameDataRef _data;
 			b2World world;
@@ -27,6 +28,9 @@ namespace Hills
 			sf::Clock clock;
 			sf::Font timerFont;
 			sf::Text timerText;
+			sf::Text velocityText;
+			sf::Vector2f prevPos;
+
 
 	};
 }
