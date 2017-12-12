@@ -149,6 +149,7 @@ namespace Hills
 		_vertices.resize( n * 4 );
 		
 		this->_data->assets.LoadTexture( "Land", LAND_FILEPATH );
+		this->_data->assets.LoadTexture( "Finish", FINISH_LINE_FILEPATH, true );
 		
 		_leveltexture = this->_data->assets.GetTexture( "Land" );
 		
@@ -156,7 +157,7 @@ namespace Hills
 		{
 			float32 y2 = 5.0f + points[i].first;
 			
-			std::cout << points[i].first << std::endl;
+			//std::cout << points[i].first << std::endl;
 			
 			shape.Set(b2Vec2(x, y1), b2Vec2(x + dx, y2));
 			ground->CreateFixture(&fd);
@@ -177,7 +178,19 @@ namespace Hills
             
             y1 = y2;
 			x += dx;
-        }		
+        }
+        
+        // create finish line 
+        _finishLine.setSize(sf::Vector2f(50.0f, 300.0f));
+        _finishLine.setTexture(&(this->_data->assets.GetTexture( "Finish" )));
+        _finishLine.setTextureRect(sf::IntRect(0, 0, 50, 300));
+        _finishLine.setPosition((x-4*dx)*SCALE, SCREEN_HEIGHT - ((points[n-5].first+8.0f)*SCALE + 150.0f));
+        //std::cout << _finishLine.getPosition().x << " " << _finishLine.getPosition().y << std::endl;
+    }
+    
+    sf::RectangleShape Level::getFinishSprite()
+    {
+        return _finishLine;
     }
 
     

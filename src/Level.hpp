@@ -11,12 +11,14 @@ namespace Hills
     {
         public:
             Level( GameDataRef data, b2World& world, std::string& filename );
+            sf::RectangleShape getFinishSprite();
         private:
             GameDataRef _data;
             b2World& world;
             std::string& filename;
             sf::Texture _leveltexture;
             sf::VertexArray _vertices;
+            sf::RectangleShape _finishLine;
             //std::vector<float> GenerateTerrain( float factor, float roughness );
             std::vector<std::pair<float, float>> LoadTerrain(std::string& filename);
             void CreateTerrain(std::vector<std::pair<float, float>> points);

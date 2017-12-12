@@ -12,7 +12,7 @@ namespace Hills
         //Random variables for the joints
         m_hz = 4.0f;
         m_zeta = 0.7f;
-        m_speed = 50.0f/SCALE;
+        m_speed = 75.0f/SCALE;
         float y1 = 5.0f;
         /*========= chassis =============*/
         b2BodyDef bd;
@@ -29,7 +29,7 @@ namespace Hills
 		vertices[5].Set(-1.5f, 0.2f);
         chassis.Set(vertices, 6);
         car = world.CreateBody(&bd);
-        car->CreateFixture( &chassis, 1.0f );
+        car->CreateFixture( &chassis, 0.5f );
 
         /*========== wheel properties =================*/
         b2CircleShape circle;
@@ -37,7 +37,7 @@ namespace Hills
         
     	b2FixtureDef fd;
 		fd.shape = &circle;
-		fd.density = 1.0f;
+		fd.density = 0.5f;
 		fd.friction = 0.9f*SCALE;
 
         /*========== wheel1 ================*/

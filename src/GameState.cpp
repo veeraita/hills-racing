@@ -120,6 +120,8 @@ namespace Hills
 	  this->_data->window.setView( view );
 		this->_data->window.clear( );
 		this->_data->window.draw( this->_background );
+		sf::RectangleShape finishFlag = level->getFinishSprite();
+		this->_data->window.draw( finishFlag );
 		this->_data->window.draw( *level );
 		sf::Sprite chassis = car->getChassisSprite();
 		sf::Sprite wheel1 = car->getWheelSprite1();
@@ -144,7 +146,7 @@ namespace Hills
                 view.setCenter(pos);
             }
         }
-        // && pos.y > SCREEN_HEIGHT - 15.0f*SCALE && pos.y <  SCREEN_HEIGHT
+        
 		sf::Time elapsed = clock.getElapsedTime();
 		timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
 		int minutes = floor(elapsed.asSeconds() / 60); // counts how many mins have gone
@@ -154,7 +156,7 @@ namespace Hills
 
 		float velocity = abs(round(((float) pos.x - (float) prevPos2.x)*30));
 		velocityText.setString("Speed: " + std::to_string((int) velocity)+" KM/H");
-		velocityText.setPosition(-500+pos.x,-450+pos.y);
+		velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
 		this->_data->window.draw(velocityText);
 		this->_data->window.display();
 		prevPos = pos;

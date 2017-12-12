@@ -17,6 +17,7 @@
 //Gamenstaten definet
 #define GAME_BACKGROUND_FILEPATH "Resources/gamebackground.png"
 #define LAND_FILEPATH "Resources/ground.png"
+#define FINISH_LINE_FILEPATH "Resources/finishline.jpg"
 //Gameoverstaten definet
 #define GAME_OVER_BACKGROUND_FILEPATH "Resources/gameoverbg.jpg"
 //auton definet
