@@ -27,7 +27,7 @@ namespace Hills
         //b2Vec2 gravity(0.0f, -9.8f);
         //world.SetGravity(gravity);
 		
-		level = new Level( this->_data, world, 2, 0.5 );
+		level = new Level( this->_data, world, 2, 0.4 );
 		car = new Car( this->_data, world );
 		
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );

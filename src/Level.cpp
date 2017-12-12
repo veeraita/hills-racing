@@ -18,7 +18,7 @@ namespace Hills
         b2FixtureDef fd;
 		fd.shape = &shape;
 		fd.density = 0.0f;
-		fd.friction = 0.6f;
+		fd.friction = 10.0f;
 		
 		//shape.Set(b2Vec2(-20.0f, 5.0f), b2Vec2(20.0f, 5.0f));
 		ground->CreateFixture(&fd);
@@ -104,7 +104,7 @@ namespace Hills
         
         for (int p = 0; p < 50; p++)
         {
-            range = 20.0;
+            range = 15.0;
             int segments = 1;
             for (int i = 0; i < (NUM_POINTS / pow(2, 2)); i++)
             {
