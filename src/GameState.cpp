@@ -6,6 +6,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <cmath>
 
 namespace Hills
 {
@@ -50,9 +51,15 @@ namespace Hills
 
  		// This is gonna be the printed time
 		timerText.setFont(timerFont); // The font is the one loaded above
-		timerText.setString(std::to_string(0)); // Setting it 0 when the game starts
-		timerText.setPosition(40,300); // Position is somewhere
+		//timerText.setString(std::to_string(0)); // Setting it 0 when the game starts
 		timerText.setCharacterSize(40); // Font size is 40 px I guess?
+
+		velocityText.setFont(timerFont); // The font is the one loaded above
+		//timerText.setString(std::to_string(0)); // Setting it 0 when the game starts
+		//timerText.setPosition(40,300); // Position is somewhere
+		velocityText.setCharacterSize(40); // Font size is 40 px I guess?
+
+
 		//this->_data->window.draw(timerText);
     //
 
@@ -93,7 +100,7 @@ namespace Hills
         {
                 car->TiltDown();
         }
-        
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
                 car->TiltUp();
@@ -108,6 +115,7 @@ namespace Hills
 
 	void GameState::Draw( float dt )
 	{
+
 	  world.Step( 1.0f/60.0f, 8, 3 );
 	  this->_data->window.setView( view );
 		this->_data->window.clear( );
@@ -119,19 +127,44 @@ namespace Hills
 		this->_data->window.draw( chassis );
 		this->_data->window.draw( wheel1 );
 		this->_data->window.draw( wheel2 );
+		sf::Vector2f prevPos2 = getPrevPos();
 		sf::Vector2f pos = car->getChassisSprite().getPosition();
-		if (pos.x > SCREEN_WIDTH/2 || pos.x < NUM_POINTS * LEVEL_DX - SCREEN_WIDTH/2)
+		if (pos.x > SCREEN_WIDTH/2 && pos.x < NUM_POINTS * LEVEL_DX * SCALE - SCREEN_WIDTH/2)
 		{
-            view.setCenter(pos);
+		    if (pos.y <= SCREEN_HEIGHT - 10.0f*SCALE)
+            {
+                view.setCenter(pos.x, SCREEN_HEIGHT - 10.0f*SCALE);
+            }
+            else if (pos.y >=  SCREEN_HEIGHT)
+            {
+                view.setCenter(pos.x, SCREEN_HEIGHT);
+            }
+            else
+            {
+                view.setCenter(pos);
+            }
         }
+        // && pos.y > SCREEN_HEIGHT - 15.0f*SCALE && pos.y <  SCREEN_HEIGHT
 		sf::Time elapsed = clock.getElapsedTime();
-		timerText.setString(std::to_string(elapsed.asSeconds()));
-		timerText.setPosition(-500+pos.x,-500+pos.y);
+		timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
+		int minutes = floor(elapsed.asSeconds() / 60); // counts how many mins have gone
+		int seconds = (int) elapsed.asSeconds(); // counts the elapsed time in seconds
+		timerText.setString("Time: " +std::to_string(minutes)+ ":" + std::to_string(seconds - minutes*60));
 		this->_data->window.draw(timerText);
-		this->_data->window.display( );
+
+		float velocity = abs(round(((float) pos.x - (float) prevPos2.x)*30));
+		velocityText.setString("Speed: " + std::to_string((int) velocity)+" KM/H");
+		velocityText.setPosition(-500+pos.x,-450+pos.y);
+		this->_data->window.draw(velocityText);
+		this->_data->window.display();
+		prevPos = pos;
 
 
 
 	}
 
+	sf::Vector2f GameState::getPrevPos ()
+	{
+		return prevPos;
+	}
 }
