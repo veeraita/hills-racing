@@ -5,6 +5,7 @@
 #include "State.hpp"
 #include "Game.hpp"
 #include "Car.hpp"
+#include <string>
 
 namespace Hills
 {
@@ -24,5 +25,8 @@ namespace Hills
 			Car *car;
 			sf::View view;
 			sf::Clock clock;
+			sf::Font timerFont;
+			sf::Text timerText;
+
 	};
 }
