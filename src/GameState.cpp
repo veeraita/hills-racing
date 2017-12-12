@@ -168,7 +168,7 @@ namespace Hills
 
         float velocity = abs(round(((float) pos.x - (float) prevPos2.x)*30));
         velocityText.setString("Speed: " + std::to_string((int) velocity)+" KM/H");
-        velocityText.setPosition(-500+pos.x,-450+pos.y);
+        velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
         this->_data->window.draw(velocityText);
         world.DrawDebugData();//comment out if you dont need debug drawing
         this->_data->window.display();
