@@ -11,8 +11,8 @@ namespace Hills
 /*========================== BOX2Dsetup Begin ==========================================*/
         //Random variables for the joints
         m_hz = 4.0f;
-        m_zeta = 0.9f;
-        m_speed = 1.0f;
+        m_zeta = 0.7f;
+        m_speed = 2.0f;
         float y1 = 5.0f;
         /*========= chassis =============*/
         b2BodyDef bd;
@@ -29,7 +29,7 @@ namespace Hills
 		vertices[5].Set(-1.5f, 0.2f);
         chassis.Set(vertices, 6);
         car = world.CreateBody(&bd);
-        car->CreateFixture( &chassis, 1.0f );
+        car->CreateFixture( &chassis, 5.0f );
 
         /*========== wheel properties =================*/
         b2CircleShape circle;
@@ -37,8 +37,8 @@ namespace Hills
         
     	b2FixtureDef fd;
 		fd.shape = &circle;
-		fd.density = 1.0f;
-		fd.friction = 0.9f;
+		fd.density = 5.0f;
+		fd.friction = 10.0f;
 
         /*========== wheel1 ================*/
         bd.position.Set(10.0f, 1.5*y1+0.35f); //backwheel
@@ -58,7 +58,7 @@ namespace Hills
         //joints connect the origin of the chassis and origin of circleshapes
         jd.Initialize(car, wheel1, wheel1->GetPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 10.0f;
+        jd.maxMotorTorque = 100.0f;
         jd.enableMotor = true;
         jd.frequencyHz = m_hz;
         jd.dampingRatio = m_zeta;
@@ -66,7 +66,7 @@ namespace Hills
 
         jd.Initialize(car, wheel2, wheel2->GetPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 5.0f;
+        jd.maxMotorTorque = 30.0f;
         jd.enableMotor = false;
         jd.frequencyHz = m_hz;
         jd.dampingRatio = m_zeta;

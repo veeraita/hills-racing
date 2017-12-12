@@ -18,7 +18,7 @@ namespace Hills
         b2FixtureDef fd;
 		fd.shape = &shape;
 		fd.density = 0.0f;
-		fd.friction = 0.6f;
+		fd.friction = 10.0f;
 		
 		//shape.Set(b2Vec2(-20.0f, 5.0f), b2Vec2(20.0f, 5.0f));
 		ground->CreateFixture(&fd);
@@ -28,7 +28,7 @@ namespace Hills
 		std::vector<float> points = GenerateTerrain( factor, roughness );
 		unsigned int n = NUM_POINTS + 3;
 		
-		float32 x = 0.0f, y1 = 5.0f, dx = LEVEL_DX;
+		float x = 0.0f, y1 = 10.0f, dx = LEVEL_DX;
 		
 		//construct the terrain sprite from multiple quads
 		_vertices.setPrimitiveType(sf::Quads); 
@@ -42,7 +42,7 @@ namespace Hills
 		// create some flat ground at the start of the level
 		for (unsigned int i = 0; i < 3; ++i)
 		{
-			float32 y = 5.0f;
+			float32 y = 10.0f;
 			shape.Set(b2Vec2(x, y), b2Vec2(x + dx, y));
 			ground->CreateFixture(&fd);
 
@@ -61,12 +61,13 @@ namespace Hills
             quad[3].texCoords = sf::Vector2f(0, 50);
             
 			x += dx;
-			//::cout << quad[2].position.y << std::endl;
+
         }	
 		
 		for (unsigned int i = 3; i < n; ++i)
 		{
-			float32 y2 = 5.0f + points[i];
+			float32 y2 = 10.0f + points[i];
+			std::cout << y2 << std::endl;
 			shape.Set(b2Vec2(x, y1), b2Vec2(x + dx, y2));
 			ground->CreateFixture(&fd);
 
@@ -86,7 +87,6 @@ namespace Hills
             
             y1 = y2;
 			x += dx;
-			//::cout << quad[2].position.y << std::endl;
         }		
     }
     
@@ -104,7 +104,7 @@ namespace Hills
         
         for (int p = 0; p < 50; p++)
         {
-            range = 20.0;
+            range = 15.0;
             int segments = 1;
             for (int i = 0; i < (NUM_POINTS / pow(2, 2)); i++)
             {

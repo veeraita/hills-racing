@@ -5,7 +5,7 @@
 #include <Box2D/Box2D.h>
 #include <vector>
 
-namespace Hills 
+namespace Hills
 {
     class Level : public sf::Drawable, public sf::Transformable
     {
