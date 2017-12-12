@@ -12,7 +12,7 @@ namespace Hills
         //Random variables for the joints
         m_hz = 4.0f;
         m_zeta = 0.7f;
-        m_speed = 2.0f;
+        m_speed = 50.0f/SCALE;
         float y1 = 5.0f;
         /*========= chassis =============*/
         b2BodyDef bd;
@@ -29,16 +29,16 @@ namespace Hills
 		vertices[5].Set(-1.5f, 0.2f);
         chassis.Set(vertices, 6);
         car = world.CreateBody(&bd);
-        car->CreateFixture( &chassis, 5.0f );
+        car->CreateFixture( &chassis, 1.0f );
 
         /*========== wheel properties =================*/
         b2CircleShape circle;
-        circle.m_radius = 0.4f;
+        circle.m_radius = 0.35f;
         
     	b2FixtureDef fd;
 		fd.shape = &circle;
-		fd.density = 5.0f;
-		fd.friction = 10.0f;
+		fd.density = 1.0f;
+		fd.friction = 0.9f*SCALE;
 
         /*========== wheel1 ================*/
         bd.position.Set(10.0f, 1.5*y1+0.35f); //backwheel
@@ -58,7 +58,7 @@ namespace Hills
         //joints connect the origin of the chassis and origin of circleshapes
         jd.Initialize(car, wheel1, wheel1->GetPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 100.0f;
+        jd.maxMotorTorque = 20.0f*SCALE;
         jd.enableMotor = true;
         jd.frequencyHz = m_hz;
         jd.dampingRatio = m_zeta;
@@ -66,7 +66,7 @@ namespace Hills
 
         jd.Initialize(car, wheel2, wheel2->GetPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 30.0f;
+        jd.maxMotorTorque = 10.0f*SCALE;
         jd.enableMotor = false;
         jd.frequencyHz = m_hz;
         jd.dampingRatio = m_zeta;
@@ -96,6 +96,10 @@ namespace Hills
     {
         _chassissprite.setPosition(SCALE * car->GetPosition().x , SCREEN_HEIGHT - SCALE * car->GetPosition().y );
         _chassissprite.setRotation( car->GetAngle() * -180/b2_pi );
+        if (_chassissprite.getPosition().x < 1.5f * SCALE)
+        {
+            spring1->SetMotorSpeed(0.0f);
+        }
         return _chassissprite;
     }
     
@@ -115,17 +119,27 @@ namespace Hills
     
     void Car::Reverse()
     {
-        spring1->SetMotorSpeed(m_speed);
+            spring1->SetMotorSpeed(std::min(m_speed, spring1->GetMotorSpeed() + 0.1f));
     }
     
     void Car::Accelerate()
     {
-        spring1->SetMotorSpeed(-m_speed);
+        spring1->SetMotorSpeed(std::max(-m_speed, spring1->GetMotorSpeed() - 0.1f));
     }
     
     void Car::Brake()
     {
         spring1->SetMotorSpeed(0.0f);
+    }
+    
+    void Car::TiltUp()
+    {
+        car->ApplyTorque(20.0f, true);
+    }
+    
+    void Car::TiltDown()
+    {
+        car->ApplyTorque(-20.0f, true);
     }
 }
 

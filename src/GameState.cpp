@@ -27,7 +27,7 @@ namespace Hills
         //b2Vec2 gravity(0.0f, -9.8f);
         //world.SetGravity(gravity);
 		
-		level = new Level( this->_data, world, 2, 0.4 );
+		level = new Level( this->_data, world, 2.5, 0.5 );
 		car = new Car( this->_data, world );
 		
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
@@ -60,10 +60,7 @@ namespace Hills
 		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            if (view.getCenter().x >= 10 + SCREEN_WIDTH / 2)
-            {
                 car->Reverse();
-            }
         }
 		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
@@ -73,7 +70,12 @@ namespace Hills
         
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-                car->Brake();
+                car->TiltDown();
+        }
+        
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+                car->TiltUp();
         }
         
 	}
@@ -97,7 +99,10 @@ namespace Hills
 		this->_data->window.draw( wheel1 );
 		this->_data->window.draw( wheel2 );
 		sf::Vector2f pos = car->getChassisSprite().getPosition();
-        view.setCenter(pos);
+		if (pos.x > SCREEN_WIDTH/2 || pos.x < NUM_POINTS * LEVEL_DX - SCREEN_WIDTH/2)
+		{
+            view.setCenter(pos);
+        }
 		this->_data->window.display( );
 	}
 

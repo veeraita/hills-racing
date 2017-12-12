@@ -18,6 +18,8 @@ namespace Hills
           void Reverse();
           void Accelerate();
           void Brake();
+          void TiltUp();
+          void TiltDown();
       private:
           GameDataRef _data;
           b2World& world;
