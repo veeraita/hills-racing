@@ -17,5 +17,6 @@ namespace Hills
 		private:
 			GameDataRef _data;
 			sf::Sprite _background;
+			sf::Sprite _exitButton;
 	};
 }
