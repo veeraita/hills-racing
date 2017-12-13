@@ -14,6 +14,7 @@ namespace Hills
             sf::RectangleShape getFinishSprite();
             std::vector<sf::Sprite> getTokens();
             int getLevelLength();
+            void deleteToken(unsigned int i);
         private:
             GameDataRef _data;
             b2World& world;

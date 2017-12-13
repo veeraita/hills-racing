@@ -219,6 +219,11 @@ namespace Hills
     {
         return _points.size() * LEVEL_DX * SCALE;
     }
+    
+    void Level::deleteToken(unsigned int i)
+    {
+        _tokens.erase(_tokens.begin() + i);
+    }
 
     
 /*    

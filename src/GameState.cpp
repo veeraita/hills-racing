@@ -158,6 +158,14 @@ namespace Hills
                 view.setCenter(pos);
             }
         }
+        
+        for (unsigned int i = 0; i < level->getTokens().size(); i++)
+        {
+            if (car->getChassisSprite().getGlobalBounds().intersects(level->getTokens().at(i).getGlobalBounds()))
+            {
+                level->deleteToken(i);
+            }
+        }
 
         sf::Time elapsed = clock.getElapsedTime();
         timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
