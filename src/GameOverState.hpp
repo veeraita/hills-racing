@@ -16,7 +16,7 @@ namespace Hills
 			void Draw( float dt );
 		private:
 			GameDataRef _data;
-                        sf::Sprite _background;
-                        sf::View view;
+            sf::Sprite _background;
+            sf::View view;
 	};
 }

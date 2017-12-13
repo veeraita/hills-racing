@@ -12,6 +12,9 @@
 #define SPLASH_SCENE_BACKGROUND_FILEPATH "Resources/splashback.jpg"
 //main menun definet
 #define MAIN_MENU_BACKGROUND_FILEPATH "Resources/mainmenubg.jpg"
+#define LEVEL1_FILEPATH "Resources/level1.png"
+#define LEVEL2_FILEPATH "Resources/level2.png"
+#define LEVEL3_FILEPATH "Resources/level3.png"
 //#define GAME_TITLE_FILEPATH "Resources/hillracinglogo.jpg"
 #define PLAY_BUTTON_FILEPATH "Resources/PlayButton.png"
 //Gamenstaten definet

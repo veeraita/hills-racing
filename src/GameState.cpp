@@ -206,8 +206,8 @@ namespace Hills
 	}
 
 
-        sf::Text GameState::getPoints()
-        {
-            return pointsText;
-        }
+    sf::Text GameState::getPoints()
+    {
+        return pointsText;
+    }
 }
