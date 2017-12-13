@@ -13,6 +13,7 @@
 #include <sstream>
 #include <string>
 #include <cmath>
+#include <fstream>
 
 namespace Hills
 {
@@ -69,6 +70,8 @@ namespace Hills
         velocityText.setCharacterSize(40); // Font size is 40 px I guess?
         pointsText.setFont(timerFont);
         pointsText.setCharacterSize(40);
+        pointsNumber.setFont(timerFont);
+        pointsNumber.setCharacterSize(40);
 
         //this->_data->window.draw(timerText);
         // sf::Text text;
@@ -145,7 +148,7 @@ namespace Hills
         this->_data->window.draw( chassis );
         this->_data->window.draw( wheel1 );
         this->_data->window.draw( wheel2 );
-        
+
         sf::Vector2f prevPos2 = getPrevPos();
         sf::Vector2f pos = car->getChassisSprite().getPosition();
         if (pos.x > SCREEN_WIDTH/2 && pos.x < level->getLevelLength() - SCREEN_WIDTH/2)
@@ -163,22 +166,44 @@ namespace Hills
                 view.setCenter(pos);
             }
         }
-        
-        for (unsigned int i = 0; i < level->getTokens().size(); i++)
+
+        for (unsigned int i = 0; i < level->getTokens().size(); i++) // if the car collides with a coin, the following will happen
         {
             if (car->getChassisSprite().getGlobalBounds().intersects(level->getTokens().at(i).getGlobalBounds()))
             {
 
-                level->deleteToken(i);
-                intPoints += 10;
+                level->deleteToken(i);  //deletes the token
+                intPoints += 10; //  we get points
             }
         }
 
 
-        if (car->getChassisSprite().getGlobalBounds().intersects(level->getFinishSprite().getGlobalBounds()))
+        if (car->getChassisSprite().getGlobalBounds().intersects(level->getFinishSprite().getGlobalBounds())) // if the car collides with the finish line, the following will happen
         {
 
-           this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+
+          std::string p = pointsNumber.getString();
+
+          std::ofstream allscores;
+          allscores.open("allscores.txt",std::ios::out |std::ios::app);
+          if (!allscores)
+          {
+            std::cerr << "Error opening the file" << std::endl;
+          }
+
+          allscores << p << std::endl;
+          allscores.close();
+
+          std::ofstream recentscore;
+          recentscore.open("recentscore.txt");
+          if (!recentscore)
+          {
+            std::cerr << "Error opening the file" << std::endl;
+          }
+          recentscore << p << std::endl;
+          recentscore.close();
+
+          this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
         }
 
         sf::Time elapsed = clock.getElapsedTime();
@@ -192,9 +217,16 @@ namespace Hills
         velocityText.setString("Speed: " + std::to_string((int) velocity)+" KM/H");
         velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
         this->_data->window.draw(velocityText);
-        pointsText.setString("Points: " + std::to_string(intPoints));
+
+
+        pointsText.setString("Points: ");
         pointsText.setPosition(-500+view.getCenter().x,-400+view.getCenter().y);
         this->_data->window.draw(pointsText);
+
+        pointsNumber.setString(std::to_string(intPoints));
+        pointsNumber.setPosition(-375+view.getCenter().x,-400+view.getCenter().y);
+        this->_data->window.draw(pointsNumber);
+
         world.DrawDebugData();//comment out if you dont need debug drawing
         this->_data->window.display();
         prevPos = pos;
@@ -204,10 +236,4 @@ namespace Hills
 	{
 		return prevPos;
 	}
-
-
-    sf::Text GameState::getPoints()
-    {
-        return pointsText;
-    }
 }
