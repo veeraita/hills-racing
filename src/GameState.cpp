@@ -16,7 +16,7 @@
 
 namespace Hills
 {
-        GameState::GameState( GameDataRef data) : _data( data ), world(b2World(b2Vec2(0.0f, -9.8f)))
+        GameState::GameState( GameDataRef data, std::string level_filename) : _data( data ), world(b2World(b2Vec2(0.0f, -9.8f))), _filename(level_filename)
 	{
 
 	}
@@ -31,8 +31,8 @@ namespace Hills
         this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
 
         // TODO: choose filename according to level selection
-        std::string filename = "level1.txt";
-		level = new Level( this->_data, world, filename );
+        //std::string filename = "level1.txt";
+		level = new Level( this->_data, world, _filename );
 		car = new Car( this->_data, world );
 
                 /*====================== SETUP THE BACKGROUND AND VIEW ============================================*/

@@ -20,9 +20,9 @@ namespace Hills
         {
         this->_data->window.setView(view); // sets the view to the start
         this->_data->assets.LoadTexture( "Main Menu Background", MAIN_MENU_BACKGROUND_FILEPATH );
-        this->_data->assets.LoadTexture( "Level 1", LEVEL1_FILEPATH );
-        this->_data->assets.LoadTexture( "Level 2", LEVEL2_FILEPATH );
-        this->_data->assets.LoadTexture( "Level 3", LEVEL3_FILEPATH );
+        this->_data->assets.LoadTexture( "Level 1", LEVEL1_BUTTON_FILEPATH );
+        this->_data->assets.LoadTexture( "Level 2", LEVEL2_BUTTON_FILEPATH );
+        this->_data->assets.LoadTexture( "Level 3", LEVEL3_BUTTON_FILEPATH );
 		this->_data->assets.LoadTexture( "Highscore Button", HIGHSCORE_FILEPATH );
 		
 		this->_background.setTexture( this->_data->assets.GetTexture( "Main Menu Background") );
@@ -47,14 +47,24 @@ namespace Hills
 			{
 				this->_data->window.close();
 			}
-
-      if ( this->_data->input.IsSpriteClicked( this->_button1, sf::Mouse::Left, this->_data->window ) )
-      {
-        this->_data->machine.AddState( StateRef( new GameState( this->_data ) ), true );
-      }
-		}
-
-
+        }
+        
+        //Level 1 selected
+        if ( this->_data->input.IsSpriteClicked( this->_button1, sf::Mouse::Left, this->_data->window ) )
+        {
+        this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL1_FILEPATH ) ), true );
+        }
+        //Level 2 selected
+        if ( this->_data->input.IsSpriteClicked( this->_button2, sf::Mouse::Left, this->_data->window ) )
+        {
+        this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL2_FILEPATH ) ), true );
+        }
+        //Level 3 selected
+        if ( this->_data->input.IsSpriteClicked( this->_button3, sf::Mouse::Left, this->_data->window ) )
+        {
+        this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL3_FILEPATH ) ), true );
+        }
+        //Go to High Scores state
 		if ( this->_data->input.IsSpriteClicked( this->_hsButton, sf::Mouse::Left, this->_data->window ) )
 		{
 			this->_data->machine.AddState( StateRef( new HighscoreState( this->_data ) ), true );
