@@ -23,3 +23,4 @@
 //auton definet
 #define CHASSIS_FILEPATH "Resources/car.png"
 #define WHEEL_FILEPATH "Resources/wheel.png"
+#define HIGHSCORE_FILEPATH "Resources/placeholder.png"
