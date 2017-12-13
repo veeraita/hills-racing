@@ -6,7 +6,7 @@
 
 namespace Hills
 {
-	class SplashState : public State
+	class HighscoreState : public State
 	{
 		public:
 			HighscoreState(GameDataRef data);
@@ -16,7 +16,6 @@ namespace Hills
 			void Draw( float dt );
 		private:
 			GameDataRef _data;
-			sf::Clock _clock;
 			sf::Sprite _background;
 	};
 }

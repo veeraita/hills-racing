@@ -4,6 +4,8 @@
 #include "GameState.hpp"
 #include "GameState.cpp"
 #include "DEFINITIONS.hpp"
+#include "HighscoreState.cpp"
+#include "HighscoreState.hpp"
 #include <iostream>
 
 
@@ -49,10 +51,11 @@ namespace Hills
 		}
 
 
-		// if ( this->_data->input.IsSpriteClicked( this->_hsButton, sf::Mouse::Left, this->_data->window ) )
-		// {
-		// 	this->_data->machine.AddState( StateRef( new HighscoreState( this->_data ) ), true );
-		// }
+		if ( this->_data->input.IsSpriteClicked( this->_hsButton, sf::Mouse::Left, this->_data->window ) )
+		{
+			this->_data->machine.AddState( StateRef( new HighscoreState( this->_data ) ), true );
+
+		}
 	}
 
 	void MainMenuState::Update( float dt )

@@ -1,6 +1,6 @@
 #pragma once
 #include <sstream>
-#include "SplashState.hpp"
+#include "HighscoreState.hpp"
 #include "MainMenuState.hpp"
 #include "MainMenuState.cpp"
 #include "DEFINITIONS.hpp"
