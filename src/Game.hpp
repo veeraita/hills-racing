@@ -26,7 +26,7 @@ namespace Hills
 			Game( int width, int height, std::string title );
 
 		private:
-			const float dt = 1.0f / 60.0f;
+			const float dt = 1.0f / 120.0f;
 			sf::Clock _clock;
 			GameDataRef _data = std::make_shared<GameData>();
 			void Run();

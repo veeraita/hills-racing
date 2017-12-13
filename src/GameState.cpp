@@ -92,22 +92,22 @@ namespace Hills
                 }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
                 car->Reverse();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
                 car->Accelerate();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
                 car->TiltDown();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
                 car->TiltUp();
         }
@@ -132,7 +132,7 @@ namespace Hills
         flags += b2Draw::e_aabbBit;
         debugDrawInstance.SetFlags( flags );
 
-        world.Step( 1.0f/60.0f, 8, 3 );
+        world.Step( 1.0f/120.0f, 8, 3 );
         this->_data->window.setView( view );
         this->_data->window.clear( );
         this->_data->window.draw( this->_background );
@@ -181,11 +181,29 @@ namespace Hills
            this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
         }
 
+        //TODO: katolleen kääntyessä gameover
+        //cary = car->getPosition().y;
+        //carx = car->getPosition().x;
+        //carr = car->getRotation();
+        //if (carr > 120 )
+        //{
+
+        //   this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+        //}
+
         sf::Time elapsed = clock.getElapsedTime();
         timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
         int minutes = floor(elapsed.asSeconds() / 60); // counts how many mins have gone
         int seconds = (int) elapsed.asSeconds(); // counts the elapsed time in seconds
-        timerText.setString("Time: " +std::to_string(minutes)+ ":" + std::to_string(seconds - minutes*60));
+        std::string sec;
+        if ((seconds - minutes*60) < 10)
+        {
+                sec = '0' + std::to_string(seconds - minutes*60);
+        }
+        else{
+                sec = std::to_string(seconds - minutes*60);
+        }
+        timerText.setString("Time: " +std::to_string(minutes)+ ":" + sec);
         this->_data->window.draw(timerText);
 
         float velocity = abs(round(((float) pos.x - (float) prevPos2.x)*30));
