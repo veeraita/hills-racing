@@ -18,6 +18,7 @@
 #include <iostream>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include "DEFINITIONS.hpp"
 
 class b2GLDraw : public b2Draw
 {
@@ -40,7 +41,7 @@ class b2GLDraw : public b2Draw
 
     private:
        sf::RenderWindow *window;
-       static constexpr float RATIO = 30.0f;
+       static constexpr float RATIO = SCALE;
 };
 
 #endif // DEBUGDRAW_H

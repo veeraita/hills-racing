@@ -12,7 +12,7 @@
 
 namespace Hills
 {
-        GameState::GameState( GameDataRef data) : _data( data ), world(b2World(b2Vec2(0.0f, -5.0)))
+        GameState::GameState( GameDataRef data) : _data( data ), world(b2World(b2Vec2(0.0f, -9.8f)))
 	{
 
 	}
@@ -35,17 +35,17 @@ namespace Hills
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
 		this->_background.setScale(2,2);
 		// make the sprite longer so the texture repeats itself
-		this->_background.setTextureRect( sf::IntRect(0, 0, NUM_POINTS * LEVEL_DX * SCALE / 2, SCREEN_HEIGHT) );
+		this->_background.setTextureRect( sf::IntRect(0, 0, level->getLevelLength() / 2, SCREEN_HEIGHT) );
 		this->_background.move(0,-200);
 
 		view.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
 
-                sf::Sprite chassissprite;
-                chassissprite.setTexture( this->_data->assets.GetTexture( "Chassis") );
-                sf::Sprite wheelsprite1;
-                wheelsprite1.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
-                sf::Sprite wheelsprite2;
-                wheelsprite2.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
+        sf::Sprite chassissprite;
+        chassissprite.setTexture( this->_data->assets.GetTexture( "Chassis") );
+        sf::Sprite wheelsprite1;
+        wheelsprite1.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
+        sf::Sprite wheelsprite2;
+        wheelsprite2.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
 
 		if(!timerFont.loadFromFile("Resources/KhmerOS.ttf"))
 		{
@@ -143,7 +143,7 @@ namespace Hills
         
         sf::Vector2f prevPos2 = getPrevPos();
         sf::Vector2f pos = car->getChassisSprite().getPosition();
-        if (pos.x > SCREEN_WIDTH/2 && pos.x < NUM_POINTS * LEVEL_DX * SCALE - SCREEN_WIDTH/2)
+        if (pos.x > SCREEN_WIDTH/2 && pos.x < level->getLevelLength() - SCREEN_WIDTH/2)
         {
             if (pos.y <= SCREEN_HEIGHT - 10.0f*SCALE)
             {

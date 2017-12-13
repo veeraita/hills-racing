@@ -12,7 +12,7 @@ namespace Hills
         //Random variables for the joints
         m_hz = 4.0f;
         m_zeta = 0.7f;
-        m_speed = 75.0f/SCALE;
+        m_speed = 50.0f;
         float y1 = 5.0f;
         /*========= chassis =============*/
         b2BodyDef bd;
@@ -24,12 +24,12 @@ namespace Hills
 		vertices[0].Set(-1.5f, -0.5f);
 		vertices[1].Set(1.5f, -0.5f);
 		vertices[2].Set(1.5f, 0.0f);
-		vertices[3].Set(0.0f, 0.9f);
-		vertices[4].Set(-1.15f, 0.9f);
+		vertices[3].Set(0.0f, 0.8f);
+		vertices[4].Set(-1.15f, 0.8f);
 		vertices[5].Set(-1.5f, 0.2f);
         chassis.Set(vertices, 6);
         car = world.CreateBody(&bd);
-        car->CreateFixture( &chassis, 0.5f );
+        car->CreateFixture( &chassis, 1.0f );
 
         /*========== wheel properties =================*/
         b2CircleShape circle;
@@ -37,8 +37,8 @@ namespace Hills
         
     	b2FixtureDef fd;
 		fd.shape = &circle;
-		fd.density = 0.5f;
-		fd.friction = 0.9f*SCALE;
+		fd.density = 1.0f;
+		fd.friction = 0.9f;
 
         /*========== wheel1 ================*/
         bd.position.Set(3.0f, 1.5*y1+0.35f); //backwheel
@@ -58,7 +58,7 @@ namespace Hills
         //joints connect the origin of the chassis and origin of circleshapes
         jd.Initialize(car, wheel1, wheel1->GetPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 20.0f*SCALE;
+        jd.maxMotorTorque = 20.0f;
         jd.enableMotor = true;
         jd.frequencyHz = m_hz;
         jd.dampingRatio = m_zeta;
@@ -66,7 +66,7 @@ namespace Hills
 
         jd.Initialize(car, wheel2, wheel2->GetPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 10.0f*SCALE;
+        jd.maxMotorTorque = 10.0f;
         jd.enableMotor = false;
         jd.frequencyHz = m_hz;
         jd.dampingRatio = m_zeta;
@@ -135,30 +135,15 @@ namespace Hills
     void Car::TiltUp()
     {
         // doesn't work yet
-        car->ApplyTorque(20.0f, true);
+        car->ApplyTorque(200.0f, false);
     }
     
     void Car::TiltDown()
     {
         // doesn't work yet
-        car->ApplyTorque(-20.0f, true);
+        car->ApplyTorque(-200.0f, false);
     }
 }
 
 
 
-// Liikuttaa vasemmalle
-// if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-// {
-//     // left key is pressed: move our character
-//     character.move(-1, 0);
-// }
-//
-//
-//
-// Liikuttaa oikealle
-// if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-// {
-//     // left key is pressed: move our character
-//     character.move(1, 0);
-// }
