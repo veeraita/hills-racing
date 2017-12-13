@@ -7,12 +7,12 @@ namespace Hills
   Car::Car( GameDataRef data, b2World& world ) : _data(data), world(world)
   {
       //Initialization of the b2body of the car and the sprites in the constructor
-      
+
 /*========================== BOX2Dsetup Begin ==========================================*/
         //Random variables for the joints
         m_hz = 4.0f;
         m_zeta = 0.7f;
-        m_speed = 75.0f/SCALE;
+        m_speed = 200.0f/SCALE;
         float y1 = 5.0f;
         /*========= chassis =============*/
         b2BodyDef bd;
@@ -34,7 +34,7 @@ namespace Hills
         /*========== wheel properties =================*/
         b2CircleShape circle;
         circle.m_radius = 0.35f;
-        
+
     	b2FixtureDef fd;
 		fd.shape = &circle;
 		fd.density = 0.5f;
@@ -77,7 +77,7 @@ namespace Hills
         //load Resources to sprites
         this->_data->assets.LoadTexture( "Chassis", CHASSIS_FILEPATH );
         this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
-        
+
         _chassissprite.setTexture( this->_data->assets.GetTexture( "Chassis") );
         _chassissprite.setOrigin( _chassissprite.getGlobalBounds().width / 2, _chassissprite.getGlobalBounds().height / 2 );
         _chassissprite.setScale(0.5, 0.5);
@@ -85,7 +85,7 @@ namespace Hills
     	_wheelsprite1.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
     	_wheelsprite1.setOrigin( _wheelsprite1.getGlobalBounds().width / 2, _wheelsprite1.getGlobalBounds().height / 2 );
     	_wheelsprite1.setScale(0.5, 0.5);
-        
+
         _wheelsprite2.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
         _wheelsprite2.setOrigin( _wheelsprite2.getGlobalBounds().width / 2, _wheelsprite2.getGlobalBounds().height / 2 );
         _wheelsprite2.setScale(0.5, 0.5);
@@ -102,42 +102,42 @@ namespace Hills
         }
         return _chassissprite;
     }
-    
+
     sf::Sprite& Car::getWheelSprite1()
     {
         _wheelsprite1.setPosition( SCALE * wheel1->GetPosition().x , SCREEN_HEIGHT - SCALE * wheel1->GetPosition().y );
         _wheelsprite1.setRotation( wheel1->GetAngle() * -180/b2_pi );
         return _wheelsprite1;
     }
-    
+
     sf::Sprite& Car::getWheelSprite2()
     {
         _wheelsprite2.setPosition( SCALE * wheel2->GetPosition().x , SCREEN_HEIGHT - SCALE * wheel2->GetPosition().y );
         _wheelsprite2.setRotation( wheel2->GetAngle() * -180/b2_pi );
         return _wheelsprite2;
     }
-    
+
     void Car::Reverse()
     {
             spring1->SetMotorSpeed(std::min(m_speed, spring1->GetMotorSpeed() + 0.1f));
     }
-    
+
     void Car::Accelerate()
     {
         spring1->SetMotorSpeed(std::max(-m_speed, spring1->GetMotorSpeed() - 0.1f));
     }
-    
+
     void Car::Brake()
     {
         spring1->SetMotorSpeed(0.0f);
     }
-    
+
     void Car::TiltUp()
     {
         // doesn't work yet
         car->ApplyTorque(20.0f, true);
     }
-    
+
     void Car::TiltDown()
     {
         // doesn't work yet
