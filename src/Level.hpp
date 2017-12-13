@@ -10,7 +10,7 @@ namespace Hills
     class Level : public sf::Drawable, public sf::Transformable
     {
         public:
-            Level( GameDataRef data, b2World& world, std::string& filename );
+            Level( GameDataRef data, b2World& world, std::string _filename );
             sf::RectangleShape getFinishSprite();
             std::vector<sf::Sprite> getTokens();
             int getLevelLength();
@@ -18,7 +18,7 @@ namespace Hills
         private:
             GameDataRef _data;
             b2World& world;
-            std::string& filename;
+            std::string _filename;
             sf::Texture _leveltexture;
             sf::VertexArray _vertices;
             std::vector<std::pair<float, float>> _points;

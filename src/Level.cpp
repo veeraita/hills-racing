@@ -6,7 +6,7 @@
 namespace Hills
 {
 
-    Level::Level( GameDataRef data, b2World& world, std::string& filename ) : _data(data), world(world), filename(filename)
+    Level::Level( GameDataRef data, b2World& world, std::string filename ) : _data(data), world(world), _filename(filename)
     {
         LoadTerrain(filename);
         CreateTerrain();

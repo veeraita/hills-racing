@@ -17,7 +17,7 @@
 
 namespace Hills
 {
-        GameState::GameState( GameDataRef data) : _data( data ), world(b2World(b2Vec2(0.0f, -9.8f)))
+        GameState::GameState( GameDataRef data, std::string level_filename) : _data( data ), world(b2World(b2Vec2(0.0f, -9.8f))), _filename(level_filename)
 	{
 
 	}
@@ -29,11 +29,11 @@ namespace Hills
 		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH, true );
 		this->_data->assets.LoadTexture( "Land", LAND_FILEPATH );
 		this->_data->assets.LoadTexture( "Chassis", CHASSIS_FILEPATH );
-        this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
+                this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
 
         // TODO: choose filename according to level selection
-        std::string filename = "level1.txt";
-		level = new Level( this->_data, world, filename );
+        //std::string filename = "level1.txt";
+		level = new Level( this->_data, world, _filename );
 		car = new Car( this->_data, world );
 
                 /*====================== SETUP THE BACKGROUND AND VIEW ============================================*/
@@ -95,22 +95,22 @@ namespace Hills
                 }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
                 car->Reverse();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
                 car->Accelerate();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
                 car->TiltDown();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
                 car->TiltUp();
         }

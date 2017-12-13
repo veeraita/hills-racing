@@ -12,7 +12,7 @@ namespace Hills
 	class GameState : public State
 	{
 		public:
-			GameState(GameDataRef data);
+			GameState(GameDataRef data, std::string level_filename);
 			void Init();
 			void HandleInput();
 			void Update( float dt );
@@ -22,6 +22,7 @@ namespace Hills
 		private:
 			GameDataRef _data;
 			b2World world;
+			std::string _filename;
 			sf::Sprite _background;
 			Level *level;
 			Car *car;
