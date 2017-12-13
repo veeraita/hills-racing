@@ -12,16 +12,20 @@ namespace Hills
         public:
             Level( GameDataRef data, b2World& world, std::string& filename );
             sf::RectangleShape getFinishSprite();
+            int getLevelLength();
         private:
             GameDataRef _data;
             b2World& world;
             std::string& filename;
             sf::Texture _leveltexture;
             sf::VertexArray _vertices;
+            std::vector<std::pair<float, float>> _points;
+            std::vector<sf::Sprite> _tokens;
             sf::RectangleShape _finishLine;
             //std::vector<float> GenerateTerrain( float factor, float roughness );
-            std::vector<std::pair<float, float>> LoadTerrain(std::string& filename);
-            void CreateTerrain(std::vector<std::pair<float, float>> points);
+            void LoadTerrain(std::string& filename);
+            void CreateTerrain();
+            void CreateTokens();
             virtual void draw( sf::RenderTarget& target, sf::RenderStates states ) const;
     };
 }

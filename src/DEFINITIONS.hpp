@@ -5,7 +5,7 @@
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 1024
 #define SCALE 50
-#define NUM_POINTS 65
+//#define NUM_POINTS 65
 #define LEVEL_DX 2.5
 //splashstaten definet
 #define SPLASH_STATE_SHOW_TIME 3.0
@@ -18,6 +18,7 @@
 #define GAME_BACKGROUND_FILEPATH "Resources/gamebackground.png"
 #define LAND_FILEPATH "Resources/ground.png"
 #define FINISH_LINE_FILEPATH "Resources/finishline.jpg"
+#define TOKEN_FILEPATH "Resources/token.png"
 //Gameoverstaten definet
 #define GAME_OVER_BACKGROUND_FILEPATH "Resources/gameoverbg.jpg"
 //auton definet

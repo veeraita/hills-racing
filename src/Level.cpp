@@ -8,8 +8,9 @@ namespace Hills
 
     Level::Level( GameDataRef data, b2World& world, std::string& filename ) : _data(data), world(world), filename(filename)
     {
-        std::vector<std::pair<float, float>> points = LoadTerrain(filename);
-        CreateTerrain(points);
+        LoadTerrain(filename);
+        CreateTerrain();
+        CreateTokens();
         /*
         b2Body* ground = NULL;
         
@@ -95,9 +96,9 @@ namespace Hills
         */		
     }
     
-    std::vector<std::pair<float, float>> Level::LoadTerrain(std::string& filename)
+    void Level::LoadTerrain(std::string& filename)
     {
-        std::vector<std::pair<float, float>> points;
+        //std::vector<std::pair<float, float>> points;
         std::ifstream infile(filename);
         std::string line;
         
@@ -110,11 +111,11 @@ namespace Hills
             { 
                 if (iss >> b ) 
                 { 
-                    points.push_back(std::make_pair(a, b)); 
+                    _points.push_back(std::make_pair(a, b)); 
                 }
                 else
                 {
-                    points.push_back(std::make_pair(a, -1));
+                    _points.push_back(std::make_pair(a, -1));
                 }
             }
             else
@@ -122,10 +123,10 @@ namespace Hills
                 break;
             }
         }
-        return points;
+        //return points;
     }
     
-    void Level::CreateTerrain(std::vector<std::pair<float, float>> points)
+    void Level::CreateTerrain()
     {
         b2Body* ground = NULL;
         
@@ -139,7 +140,7 @@ namespace Hills
 		fd.shape = &shape;
 		fd.density = 0.0f;
 		fd.friction = 0.6f*SCALE;
-        unsigned int n = points.size();
+        unsigned int n = _points.size();
 		
 		float x = 0.0f, y1 = 5.0f, dx = LEVEL_DX;
 		
@@ -155,7 +156,7 @@ namespace Hills
 		
 		for (unsigned int i = 0; i < n; ++i)
 		{
-			float32 y2 = 5.0f + points[i].first;
+			float32 y2 = 5.0f + _points[i].first;
 			
 			//std::cout << points[i].first << std::endl;
 			
@@ -184,13 +185,34 @@ namespace Hills
         _finishLine.setSize(sf::Vector2f(50.0f, 300.0f));
         _finishLine.setTexture(&(this->_data->assets.GetTexture( "Finish" )));
         _finishLine.setTextureRect(sf::IntRect(0, 0, 50, 300));
-        _finishLine.setPosition((x-4*dx)*SCALE, SCREEN_HEIGHT - ((points[n-5].first+8.0f)*SCALE + 150.0f));
+        _finishLine.setPosition((x-4*dx)*SCALE, SCREEN_HEIGHT - ((_points[n-5].first+8.0f)*SCALE + 150.0f));
         //std::cout << _finishLine.getPosition().x << " " << _finishLine.getPosition().y << std::endl;
+    }
+    
+    void Level::CreateTokens()
+    {
+        this->_data->assets.LoadTexture( "Token", TOKEN_FILEPATH );
+        
+        for (unsigned int i = 0; i < _points.size(); i++)
+        {
+            if (_points.at(i).second != -1 && _points.at(i).second > _points.at(i).first)
+            {
+                sf::Sprite token(this->_data->assets.GetTexture( "Token"));
+                token.setPosition((i+1) * LEVEL_DX * SCALE, SCREEN_HEIGHT - (_points.at(i).second + 5.0f) * SCALE);
+                //std::cout << token.getPosition().x << " " << token.getPosition().y << std::endl;
+                _tokens.push_back(token);
+            }
+        }
     }
     
     sf::RectangleShape Level::getFinishSprite()
     {
         return _finishLine;
+    }
+    
+    int Level::getLevelLength()
+    {
+        return _points.size() * LEVEL_DX * SCALE;
     }
 
     
@@ -258,6 +280,12 @@ namespace Hills
         
         // draw the vertex array
         target.draw(_vertices, states);
+        
+        // draw the tokens
+        for (auto i = _tokens.begin(); i != _tokens.end(); i++)
+        {
+            target.draw(*i);
+        }
     }
 
     
