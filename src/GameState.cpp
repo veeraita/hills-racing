@@ -28,7 +28,7 @@ namespace Hills
 		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH, true );
 		this->_data->assets.LoadTexture( "Land", LAND_FILEPATH );
 		this->_data->assets.LoadTexture( "Chassis", CHASSIS_FILEPATH );
-        this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
+                this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
 
         // TODO: choose filename according to level selection
         //std::string filename = "level1.txt";
@@ -92,22 +92,22 @@ namespace Hills
                 }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
                 car->Reverse();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
                 car->Accelerate();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
                 car->TiltDown();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
                 car->TiltUp();
         }
