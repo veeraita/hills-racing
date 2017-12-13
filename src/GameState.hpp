@@ -18,6 +18,7 @@ namespace Hills
 			void Update( float dt );
 			void Draw( float dt );
 			sf::Vector2f getPrevPos();
+                        sf::Text getPoint();
 		private:
 			GameDataRef _data;
 			b2World world;

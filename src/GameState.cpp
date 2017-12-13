@@ -204,4 +204,10 @@ namespace Hills
 	{
 		return prevPos;
 	}
+
+
+        sf::Text GameState::getPoints()
+        {
+            return pointsText;
+        }
 }

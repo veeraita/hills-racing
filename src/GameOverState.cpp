@@ -43,6 +43,9 @@ namespace Hills
 		this->_data->window.clear(sf::Color::Red);
 		this->_data->window.draw( this->_background );
 		this->_data->window.display();
+
+                sf::Text points = getPoints();
+
 	}
 
 }
