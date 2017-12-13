@@ -12,6 +12,7 @@ namespace Hills
         public:
             Level( GameDataRef data, b2World& world, std::string& filename );
             sf::RectangleShape getFinishSprite();
+            std::vector<sf::Sprite> getTokens();
             int getLevelLength();
         private:
             GameDataRef _data;

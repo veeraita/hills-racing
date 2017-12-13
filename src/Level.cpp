@@ -210,6 +210,11 @@ namespace Hills
         return _finishLine;
     }
     
+    std::vector<sf::Sprite> Level::getTokens()
+    {
+        return _tokens;
+    }
+    
     int Level::getLevelLength()
     {
         return _points.size() * LEVEL_DX * SCALE;
