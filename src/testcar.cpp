@@ -54,14 +54,14 @@ Testcar::Testcar( b2World& world, int MouseX, int MouseY ) : world(world), Mouse
       b2BodyDef bd_axle;
       bd_axle.type = b2_dynamicBody;
       bd_axle.userData = (void*)"axle";
-      bd_axle.position.Set( (MouseX/SCALE)-0.3f, (MouseY/SCALE)+0.9f  );//car->GetWorldCenter().x-(35.66f/SCALE), car->GetWorldCenter().y+0.9f
+      bd_axle.position.Set( (MouseX/SCALE)-(30.0f/SCALE), (MouseY/SCALE)+(27.0f/SCALE));//car->GetWorldCenter().x-(35.66f/SCALE), car->GetWorldCenter().y+0.9f
 
       /*===================== REAR AXLE ===========================*/
       b2Body* rearAxle = world.CreateBody( &bd_axle );
       rearAxle->CreateFixture( &fd_axle );
 
       /*===================== FRONT AXLE ===========================*/
-      bd_axle.position.Set( (MouseX/SCALE)+2.05f, (MouseY/SCALE)+0.9f );//car->GetWorldCenter().x+(33.66f/SCALE), car->GetWorldCenter().y+0.9f
+      bd_axle.position.Set( (MouseX/SCALE)+(30.0f/SCALE), (MouseY/SCALE)+(27.0f/SCALE));//car->GetWorldCenter().x+(33.66f/SCALE), car->GetWorldCenter().y+0.9f
       b2Body* frontAxle = world.CreateBody( &bd_axle );
       frontAxle->CreateFixture( &fd_axle );
 
@@ -71,7 +71,7 @@ Testcar::Testcar( b2World& world, int MouseX, int MouseY ) : world(world), Mouse
 
       b2FixtureDef fd_wheel1;
       fd_wheel1.density = 1.0f;
-      fd_wheel1.friction = 1.9f;
+      fd_wheel1.friction = 0.9f;
       fd_wheel1.filter.groupIndex = -1;
       fd_wheel1.shape = &circle;
 
@@ -79,7 +79,7 @@ Testcar::Testcar( b2World& world, int MouseX, int MouseY ) : world(world), Mouse
       b2BodyDef bd_wheel1;
       bd_wheel1.type = b2_dynamicBody;
       bd_wheel1.userData = (void*)"wheel1";
-      bd_wheel1.position.Set( (MouseX/SCALE)-0.3f, (MouseY/SCALE)+0.9f );//(MouseX/SCALE)-0.3f (MouseY/SCALE)+0.9f
+      bd_wheel1.position.Set( (MouseX/SCALE)-(30.0f/SCALE), (MouseY/SCALE)+(27.0f/SCALE) );//(MouseX/SCALE)-0.3f (MouseY/SCALE)+0.9f
 
       b2Body* wheel1 = world.CreateBody( &bd_wheel1 );
       wheel1->CreateFixture( &fd_wheel1 );
@@ -87,14 +87,14 @@ Testcar::Testcar( b2World& world, int MouseX, int MouseY ) : world(world), Mouse
       /*=========== FRONT WHEEL ===============*/
       b2FixtureDef fd_wheel2;
       fd_wheel2.density = 1.0f;
-      fd_wheel2.friction = 1.9f;
+      fd_wheel2.friction = 0.9f;
       fd_wheel2.filter.groupIndex = -1;
       fd_wheel2.shape = &circle;
 
       b2BodyDef bd_wheel2;
       bd_wheel2.type = b2_dynamicBody;
       bd_wheel2.userData = (void*)"wheel2";
-      bd_wheel2.position.Set( (MouseX/SCALE)+2.05f, (MouseY/SCALE)+0.9f );//(MouseX/SCALE)+2.05f (MouseY/SCALE)+0.9f
+      bd_wheel2.position.Set( (MouseX/SCALE)+(30.0f/SCALE), (MouseY/SCALE)+(27.0f/SCALE) );//(MouseX/SCALE)+2.05f (MouseY/SCALE)+0.9f
 
       b2Body* wheel2 = world.CreateBody( &bd_wheel2 );
       wheel2->CreateFixture( &fd_wheel2 );
@@ -105,21 +105,21 @@ Testcar::Testcar( b2World& world, int MouseX, int MouseY ) : world(world), Mouse
       b2RevoluteJointDef rear_rjd;
       rear_rjd.Initialize( wheel1, rearAxle, wheel1->GetWorldCenter() );
       rear_rjd.enableMotor = true;
-      rear_rjd.maxMotorTorque = 30.0f;
+      rear_rjd.maxMotorTorque = 50.0f;
       rear_revoluter = (b2RevoluteJoint*)world.CreateJoint( &rear_rjd );
 
       /*===== FRONT ==============*/
       b2RevoluteJointDef front_rjd;
       front_rjd.Initialize( wheel2, frontAxle, wheel2->GetWorldCenter() );
       front_rjd.enableMotor = true;
-      front_rjd.maxMotorTorque = 30.0f;
+      front_rjd.maxMotorTorque = 50.0f;
       front_revoluter = (b2RevoluteJoint*)world.CreateJoint( &front_rjd );
 
   /*========= PRISMATIC JOINTS ==================*/
       b2Vec2 axis1( 0, 1 );
       b2PrismaticJointDef pjd;
-      pjd.lowerTranslation = -5/SCALE;
-      pjd.upperTranslation = 4/SCALE;
+      pjd.lowerTranslation = -15/SCALE;
+      pjd.upperTranslation = 20/SCALE;
       pjd.enableLimit = true;
       pjd.enableMotor = true;
 
@@ -192,7 +192,7 @@ void Testcar::Keyboard( sf::Event event )
   {
     if( event.key.code == sf::Keyboard::Left )
     {
-      GetRearRevoluter()->SetMotorSpeed(-50.0f);
+      GetRearRevoluter()->SetMotorSpeed(100.0f);
     }
     if( event.key.code == sf::Keyboard::Down )
     {
@@ -200,7 +200,7 @@ void Testcar::Keyboard( sf::Event event )
     }
     if( event.key.code == sf::Keyboard::Right )
     {
-      GetRearRevoluter()->SetMotorSpeed(50.0);
+      GetRearRevoluter()->SetMotorSpeed(-100.0);
     }
   }
 

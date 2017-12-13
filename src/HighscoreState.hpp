@@ -1,16 +1,15 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include "lib/SFML/Graphics.hpp"
 #include "State.hpp"
 #include "Game.hpp"
 
-
 namespace Hills
 {
-	class MainMenuState : public State
+	class HighscoreState : public State
 	{
 		public:
-			MainMenuState(GameDataRef data);
+			HighscoreState(GameDataRef data);
 			void Init();
 			void HandleInput();
 			void Update( float dt );
@@ -18,8 +17,6 @@ namespace Hills
 		private:
 			GameDataRef _data;
 			sf::Sprite _background;
-      sf::Sprite _title;
-      sf::Sprite _playButton;
-			sf::Sprite _hsButton;
+			sf::Sprite _exitButton;
 	};
 }
