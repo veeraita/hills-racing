@@ -18,5 +18,7 @@ namespace Hills
 			GameDataRef _data;
             sf::Sprite _background;
             sf::View view;
+						sf::Text score;
+						sf::Font textFont;
 	};
 }
