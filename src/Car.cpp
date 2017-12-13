@@ -135,13 +135,15 @@ namespace Hills
     void Car::TiltUp()
     {
         // doesn't work yet
-        car->ApplyTorque(200.0f, false);
+        //car->ApplyTorque(200.0f, false);
+        car->ApplyForce(b2Vec2(0, 200), car->GetWorldPoint( b2Vec2(1,1)), false );
     }
 
     void Car::TiltDown()
     {
         // doesn't work yet
-        car->ApplyTorque(-200.0f, false);
+        //car->ApplyTorque(-200.0f, false);
+        car->ApplyForce(b2Vec2(0, 200), car->GetWorldPoint( b2Vec2(-1,1)), false );
     }
 }
 
