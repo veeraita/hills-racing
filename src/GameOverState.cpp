@@ -1,6 +1,7 @@
 #pragma once
 #include <sstream>
 #include "GameOverState.hpp"
+#include "GameState.hpp"
 #include "DEFINITIONS.hpp"
 #include <iostream>
 
@@ -13,7 +14,8 @@ namespace Hills
 
 	void GameOverState::Init()
 	{
-    std::cout<< "Game Over" << std::endl;
+            this->_data->window.setView(view); // sets the view to the start
+            std::cout<< "Game Over" << std::endl;
 		this->_data->assets.LoadTexture( "Game Over State Background", GAME_OVER_BACKGROUND_FILEPATH );
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game Over State Background") );
 	}

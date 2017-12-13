@@ -17,8 +17,9 @@ namespace Hills
 	}
 
 	void MainMenuState::Init()
-	{
-		this->_data->assets.LoadTexture( "Main Menu Background", MAIN_MENU_BACKGROUND_FILEPATH );
+        {
+            this->_data->window.setView(view); // sets the view to the start
+            this->_data->assets.LoadTexture( "Main Menu Background", MAIN_MENU_BACKGROUND_FILEPATH );
     //this->_data->assets.LoadTexture( "Game Title", GAME_TITLE_FILEPATH );
     this->_data->assets.LoadTexture( "Play Button", PLAY_BUTTON_FILEPATH );
 		this->_data->assets.LoadTexture( "Highscore Button", HIGHSCORE_FILEPATH );
@@ -64,8 +65,8 @@ namespace Hills
 	}
 
 	void MainMenuState::Draw( float dt )
-	{
-		this->_data->window.clear(sf::Color::Red);
+        {
+                this->_data->window.clear(sf::Color::Red);
 		this->_data->window.draw( this->_background );
     //this->_data->window.draw( this->_title );
     this->_data->window.draw( this->_playButton );

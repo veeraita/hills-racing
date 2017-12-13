@@ -1,5 +1,9 @@
 #pragma once
 #include "GameState.hpp"
+#include "MainMenuState.hpp"
+#include "HighscoreState.cpp"
+#include "GameOverState.hpp"
+#include "GameOverState.cpp"
 #include "Level.cpp"
 #include "b2GLDraw.h"
 #include "b2GLDraw.cpp"
@@ -47,31 +51,32 @@ namespace Hills
         sf::Sprite wheelsprite2;
         wheelsprite2.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
 
-		if(!timerFont.loadFromFile("Resources/KhmerOS.ttf"))
-		{
-			std::cerr << "No font file found!" << std::endl;
-		}
+        if(!timerFont.loadFromFile("Resources/KhmerOS.ttf"))
+        {
+                std::cerr << "No font file found!" << std::endl;
+        }
 
-		//sf::Clock clock; // starts the clock
+        //sf::Clock clock; // starts the clock
 
- 		// This is gonna be the printed time
-		timerText.setFont(timerFont); // The font is the one loaded above
-		//timerText.setString(std::to_string(0)); // Setting it 0 when the game starts
-		timerText.setCharacterSize(40); // Font size is 40 px I guess?
+        // This is gonna be the printed time
+        timerText.setFont(timerFont); // The font is the one loaded above
+        //timerText.setString(std::to_string(0)); // Setting it 0 when the game starts
+        timerText.setCharacterSize(40); // Font size is 40 px I guess?
 
-		velocityText.setFont(timerFont); // The font is the one loaded above
-		//timerText.setString(std::to_string(0)); // Setting it 0 when the game starts
-		//timerText.setPosition(40,300); // Position is somewhere
-		velocityText.setCharacterSize(40); // Font size is 40 px I guess?
+        velocityText.setFont(timerFont); // The font is the one loaded above
+        //timerText.setString(std::to_string(0)); // Setting it 0 when the game starts
+        //timerText.setPosition(40,300); // Position is somewhere
+        velocityText.setCharacterSize(40); // Font size is 40 px I guess?
+        pointsText.setFont(timerFont);
+        pointsText.setCharacterSize(40);
 
-
-		//this->_data->window.draw(timerText);
-		// sf::Text text;
-		// text.setFont(timerFont);
-		// text.setString("haha");
-		// text.setPosition(0,0);
-		// text.setCharacterSize(200);
-		// this->_data->window.draw(text);
+        //this->_data->window.draw(timerText);
+        // sf::Text text;
+        // text.setFont(timerFont);
+        // text.setString("haha");
+        // text.setPosition(0,0);
+        // text.setCharacterSize(200);
+        // this->_data->window.draw(text);
 
 	}
 
@@ -163,8 +168,17 @@ namespace Hills
         {
             if (car->getChassisSprite().getGlobalBounds().intersects(level->getTokens().at(i).getGlobalBounds()))
             {
+
                 level->deleteToken(i);
+                intPoints += 10;
             }
+        }
+
+
+        if (car->getChassisSprite().getGlobalBounds().intersects(level->getFinishSprite().getGlobalBounds()))
+        {
+
+           this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
         }
 
         sf::Time elapsed = clock.getElapsedTime();
@@ -178,6 +192,9 @@ namespace Hills
         velocityText.setString("Speed: " + std::to_string((int) velocity)+" KM/H");
         velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
         this->_data->window.draw(velocityText);
+        pointsText.setString("Points: " + std::to_string(intPoints));
+        pointsText.setPosition(-500+view.getCenter().x,-400+view.getCenter().y);
+        this->_data->window.draw(pointsText);
         world.DrawDebugData();//comment out if you dont need debug drawing
         this->_data->window.display();
         prevPos = pos;

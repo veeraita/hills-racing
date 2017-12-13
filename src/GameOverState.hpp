@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 #include "State.hpp"
 #include "Game.hpp"
 
@@ -16,6 +16,7 @@ namespace Hills
 			void Draw( float dt );
 		private:
 			GameDataRef _data;
-			sf::Sprite _background;
+                        sf::Sprite _background;
+                        sf::View view;
 	};
 }
