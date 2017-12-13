@@ -1,8 +1,8 @@
 #include "testcar.hpp"
 
 /*======================== GLOBALS ======================================================*/
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 1024
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
 #define SCALE 30
 
 Testcar::Testcar( b2World& world, int MouseX, int MouseY ) : world(world), MouseX(MouseX), MouseY(MouseY)

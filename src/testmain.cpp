@@ -4,14 +4,15 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <random>
 #include <cmath>
 #include <iostream>
 #include <vector>
 #include "b2GLDraw.h"
 #include "b2GLDraw.cpp"
 /*======================== GLOBALS ======================================================*/
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 1024
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
 #define SCALE 30
 
 /*======================== HEADERS ======================================================*/
@@ -153,6 +154,8 @@ int main()
   return 0;
 }
 
+
+/*========================== CREATE GROUND FOR THE WORLD ========================================*/
 void CreateGround(b2World& world, float X, float Y, float angle)
 {
     b2BodyDef BodyDef;
@@ -170,6 +173,7 @@ void CreateGround(b2World& world, float X, float Y, float angle)
     Body->CreateFixture(&FixtureDef);
 }
 
+/*=========================== CREATE CIRCLES IN THE WORLD ====================================*/
 void CreateCircle(b2World& world, int MouseX, int MouseY)
 {
     b2BodyDef BodyDef;
@@ -191,45 +195,66 @@ void CreateCircle(b2World& world, int MouseX, int MouseY)
     Body->CreateFixture(&FixtureDef);
 }
 
+/*============================ DRAW HILLS LIKE IN TINY WINGS ==================================*/
 void drawHills( b2World& world, int numbeOfHills, int pixelStep )
 {
-  srand (time(NULL));
-  int hillStartY = 24+( rand()%5+1 )*200; //setup y-coord for the start
-  int hillWidth = 1024/numbeOfHills;
-  int hillSliceWidth = hillWidth/pixelStep;
-  std::vector<b2Vec2> hillVector;
-  for ( unsigned i = 0; i < numbeOfHills; i++ )
-  {
-    int randomHeight = ( rand()%5+1 )*100;
-    if( i != 0 )
-    {
-      hillStartY-=randomHeight; //This is done so that all the hills wont start at the same Y-coord
-    }
-    for( unsigned j = 0; j < hillSliceWidth; j++ )
-    {
-      hillVector.push_back( b2Vec2( ( j*pixelStep+hillWidth*i )/SCALE , 1024/SCALE  ) );
-      hillVector.push_back( b2Vec2( ( j*pixelStep+hillWidth*i )/SCALE , ( hillStartY+randomHeight*cos( 2*b2_pi/hillSliceWidth*j ) )/SCALE ) );
-      hillVector.push_back( b2Vec2( ( (j+1)*pixelStep+hillWidth*i )/SCALE, ( hillStartY+randomHeight*cos( 2*b2_pi/hillSliceWidth*(j+1) ) )/SCALE ) );
-      hillVector.push_back( b2Vec2( ( (j+1)*pixelStep+hillWidth*i )/SCALE, 1024/SCALE ) );
 
-      b2BodyDef sliceBody;
-      b2Vec2 center = findCentroid( hillVector, hillVector.size() );
-      sliceBody.position.Set( center.x, center.y );
-      for( unsigned t = 0; t < hillVector.size(); t++ )
+      /*====================== SETUP ===========================================================*/
+
+      std::random_device rd;                                            //seed
+      std::default_random_engine generator( rd() );                     //random engine (C++11)
+      std::uniform_real_distribution<double> distribution( 0.25, 0.7 ); //distribution between 0.25 - 0.7
+      double random = distribution( generator );                        //random number from the distribution
+      int hillStartY = random*SCREEN_HEIGHT;                            //setup the starting y-coordinate
+      int hillWidth = SCREEN_WIDTH/numbeOfHills;                        //setup the hillWidth in pixels
+      int hillSliceNumber = hillWidth/pixelStep;                        //setup the number of slices we will divide one hill in
+      std::vector<b2Vec2> hillVector;                                   //setup a container with vertex-coordinates of the slices
+      int k = 0;                                                        //variable to keep track where we are going in the container
+
+      /*====================== CREATE THE HILLS =================================================*/
+      for ( unsigned i = 0; i < numbeOfHills; i++ )
       {
-        hillVector[t] -= center;
+        int randomHeight = random*100;
+        if( i != 0 )
+        {
+          hillStartY-=randomHeight;                  //This is done so that all the hills wont start at the same Y-coord
+        }
+
+        /*==================== CREATE THE COORDINATES FOR THE HILLS =============================*/
+        for( unsigned j = 0; j < hillSliceNumber; j++ )
+        {
+          hillVector.push_back( b2Vec2( ( j*pixelStep+hillWidth*i )/SCALE , SCREEN_HEIGHT/SCALE  ) );
+          hillVector.push_back( b2Vec2( ( j*pixelStep+hillWidth*i )/SCALE , ( hillStartY+randomHeight*cos( 2*b2_pi/hillSliceNumber*j ) )/SCALE ) );
+          hillVector.push_back( b2Vec2( ( (j+1)*pixelStep+hillWidth*i )/SCALE, ( hillStartY+randomHeight*cos( 2*b2_pi/hillSliceNumber*(j+1) ) )/SCALE ) );
+          hillVector.push_back( b2Vec2( ( (j+1)*pixelStep+hillWidth*i )/SCALE, SCREEN_HEIGHT/SCALE ) );
+          /*================== BOX2D SETUP FOR THE SLICES ======================================================*/
+          b2BodyDef sliceBody;
+//          b2Vec2 center = findCentroid( hillVector, hillVector.size() );
+//          sliceBody.position.Set( center.x, center.y );
+//          for( unsigned t = 0; t < hillVector.size(); t++ )
+//          {
+//            hillVector[t].x - center.x;
+//            hillVector[t].y - center.y;
+//          }
+
+          b2PolygonShape slicePolygon;
+          b2Vec2 vertices[4];
+          vertices[0].Set( hillVector[k].x , hillVector[k].y );
+          vertices[1].Set( hillVector[k+1].x, hillVector[k+1].y );
+          vertices[2].Set( hillVector[k+2].x, hillVector[k+2].y );
+          vertices[3].Set( hillVector[k+3].x, hillVector[k+3].y );
+          k+=4;
+
+          b2FixtureDef sliceFixture;
+          sliceFixture.shape = &slicePolygon;
+          b2Body* worldSlice = world.CreateBody( &sliceBody );
+          worldSlice->CreateFixture( &sliceFixture );
+        }
+        hillStartY = hillStartY+randomHeight;
       }
-      b2PolygonShape slicePolygon;
-      slicePolygon.SetAsVector( hillVector, 4 );
-      b2FixtureDef sliceFixture;
-      sliceFixture.shape = &slicePolygon;
-      b2Body* worldSlice = world.CreateBody( &sliceBody );
-      worldSlice->CreateFixture( &sliceFixture );
-    }
-    hillStartY = hillStartY+randomHeight;
-  }
 }
 
+/*============================= FINDS THE CENTROID OF THE HILLS ====================================*/
 b2Vec2 findCentroid( std::vector<b2Vec2> vs, unsigned count )
 {
   b2Vec2 c;
@@ -255,3 +280,4 @@ b2Vec2 findCentroid( std::vector<b2Vec2> vs, unsigned count )
   c.y*=1.0/area;
   return c;
 }
+
