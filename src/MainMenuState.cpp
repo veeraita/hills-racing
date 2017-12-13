@@ -30,7 +30,6 @@ namespace Hills
         this->_button2.setTexture( this->_data->assets.GetTexture( "Level 2") );
         this->_button3.setTexture( this->_data->assets.GetTexture( "Level 3") );
 		this->_hsButton.setTexture( this->_data->assets.GetTexture("Highscore Button"));
-		this->_hsButton.setScale(0.5,0.5);
 
         this->_button1.setPosition( ( SCREEN_WIDTH / 2 ) - ( this->_button1.getGlobalBounds().width / 2 ), 100);
         this->_button2.setPosition( ( SCREEN_WIDTH / 2 ) - ( this->_button2.getGlobalBounds().width / 2 ), 300);

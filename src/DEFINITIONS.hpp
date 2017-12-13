@@ -15,6 +15,7 @@
 #define LEVEL1_FILEPATH "Resources/level1.png"
 #define LEVEL2_FILEPATH "Resources/level2.png"
 #define LEVEL3_FILEPATH "Resources/level3.png"
+#define HIGHSCORE_FILEPATH "Resources/hsbutton.png"
 //#define GAME_TITLE_FILEPATH "Resources/hillracinglogo.jpg"
 #define PLAY_BUTTON_FILEPATH "Resources/PlayButton.png"
 //Gamenstaten definet
@@ -27,5 +28,4 @@
 //auton definet
 #define CHASSIS_FILEPATH "Resources/car.png"
 #define WHEEL_FILEPATH "Resources/wheel.png"
-#define HIGHSCORE_FILEPATH "Resources/placeholder.png"
 #define EXIT_FILEPATH "Resources/exit.png"
