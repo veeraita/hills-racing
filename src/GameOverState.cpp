@@ -33,22 +33,28 @@ namespace Hills
 		std::getline(recentscore,scorestring);
 		recentscore.close();
 		//std::string scorestring = "80";
-		int scoreint = std::stoi(scorestring); // store the points for possible later comparions
-
-		score.setFont(textFont);
-		score.setCharacterSize(25);
-		score.setString("Your score this game was: "+scorestring);
-		score.setPosition(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
-
-		exitText.setFont(textFont);
-		exitText.setCharacterSize(25);
-		exitText.setString("You can return to the main menu by pressing the Esc key");
-		exitText.setPosition(SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 300);
-
+		//int scoreint = std::stoi(scorestring); // store the points for possible later comparisons
+		
 		gameOver.setFont(textFont);
 		gameOver.setCharacterSize(100);
+		gameOver.setOutlineThickness(5.0);
+		gameOver.setOutlineColor(sf::Color::Black);
 		gameOver.setString("GAME OVER!");
-		gameOver.setPosition(SCREEN_WIDTH/2,SCREEN_HEIGHT/2 - 300);
+		gameOver.setPosition((SCREEN_WIDTH - gameOver.getGlobalBounds().width) / 2, 100);
+
+		score.setFont(textFont);
+		score.setCharacterSize(50);
+		score.setOutlineThickness(2.0);
+		score.setOutlineColor(sf::Color::Black);
+		score.setString("Your score this game was: "+scorestring);
+		score.setPosition((SCREEN_WIDTH - score.getGlobalBounds().width) / 2, 300);
+
+		exitText.setFont(textFont);
+		exitText.setCharacterSize(50);
+		exitText.setOutlineThickness(2.0);
+		exitText.setOutlineColor(sf::Color::Black);
+		exitText.setString("You can return to the main \nmenu by pressing the Esc key");
+		exitText.setPosition((SCREEN_WIDTH - exitText.getGlobalBounds().width) / 2, 500);
 	}
 
 	void GameOverState::HandleInput( )
