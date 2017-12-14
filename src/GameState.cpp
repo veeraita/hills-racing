@@ -26,11 +26,21 @@ namespace Hills
 	{
 
         /*====================== LOADING TEXTURES ================================================*/
-		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH, true );
-		this->_data->assets.LoadTexture( "Land", LAND_FILEPATH );
+                this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_1, true );
+		//this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_1 );
+
+                if("Levels/level2.txt" == _filename){
+                        this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_2, true );
+		        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_2 );
+                }
+                else if("Levels/level3.txt" == _filename){
+                        this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_3, true );
+		        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_3 );
+                }
+		
 		this->_data->assets.LoadTexture( "Chassis", CHASSIS_FILEPATH );
-        this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
-        this->_data->assets.LoadFont( "Game font", FONT_FILEPATH );
+                this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
+                this->_data->assets.LoadFont( "Game font", FONT_FILEPATH );
 
 		level = new Level( this->_data, world, _filename );
 		car = new Car( this->_data, world );
