@@ -12,7 +12,7 @@ namespace Hills
         //Random variables for the joints
         m_hz = 4.0f;
         m_zeta = 0.7f;
-        m_speed = 200.0f/SCALE;
+        m_speed = 1200.0f/SCALE;
         float y1 = 5.0f;
         /*========= chassis =============*/
         b2BodyDef bd;

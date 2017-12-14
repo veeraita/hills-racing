@@ -211,10 +211,10 @@ namespace Hills
         //Gameover jos flippaa ja stoppaa
         float angle = car->GetAngle();
         angle = (angle / 3.14) * 180;
-        if(angle <= 0){
+        while(angle <= 0){
                 angle += 360;
         }
-        if(angle > 360){
+        while(angle > 360){
                 angle -= 360;
         }
         if (!(angle < 120 || angle >240))
@@ -247,7 +247,7 @@ namespace Hills
         velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
         this->_data->window.draw(velocityText);
 
-        angleText.setString("Angle" + std::to_string(angle));
+        angleText.setString("Angle: " + std::to_string( (int) angle) + " deg");
         angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
         this->_data->window.draw(angleText);
 
