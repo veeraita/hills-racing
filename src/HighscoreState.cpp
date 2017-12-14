@@ -19,7 +19,7 @@ namespace Hills
 
 	void HighscoreState::Init()
 	{
-		this->_data->assets.LoadTexture( "Splash State Background", SPLASH_SCENE_BACKGROUND_FILEPATH );
+		this->_data->assets.LoadTexture( "Splash State Background", MAIN_MENU_BACKGROUND_FILEPATH );
 		this->_background.setTexture( this->_data->assets.GetTexture( "Splash State Background") );
 		this->_data->assets.LoadTexture( "Exit Button", EXIT_FILEPATH );
 		this->_exitButton.setTexture(this->_data->assets.GetTexture("Exit Button"));
@@ -59,9 +59,9 @@ namespace Hills
 		}
 		std::cout << oneScore << std::endl;
 		scores.setFont(hsFont);
-		scores.setCharacterSize(20);
+		scores.setCharacterSize(50);
 		scores.setString("Level1 Highscores\n#1 " + std::to_string(top1) + "\n#2 " + std::to_string(top2) + "\n#3 " + std::to_string(top3));
-		scores.setPosition(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+		scores.setPosition(SCREEN_WIDTH/2 - 100,SCREEN_HEIGHT/2 - 100);
 
 
 
