@@ -64,23 +64,18 @@ namespace Hills
         // This is gonna be the printed time
         timerText.setFont(this->_data->assets.GetFont( "Game font" ));
         timerText.setCharacterSize(40);
-        timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
 
         velocityText.setFont(this->_data->assets.GetFont( "Game font" ));
         velocityText.setCharacterSize(40);
-        velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
         
         pointsText.setFont(this->_data->assets.GetFont( "Game font" ));
         pointsText.setCharacterSize(40);
-        pointsText.setPosition(-500+view.getCenter().x,-400+view.getCenter().y);
 
         pointsNumber.setFont(this->_data->assets.GetFont( "Game font" ));
         pointsNumber.setCharacterSize(40);
-        pointsNumber.setPosition(-375+view.getCenter().x,-400+view.getCenter().y);
 
         angleText.setFont(this->_data->assets.GetFont( "Game font" ));
         angleText.setCharacterSize(40);
-        angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
 
 	}
 
@@ -235,38 +230,50 @@ namespace Hills
         if (car->getChassisSprite().getGlobalBounds().intersects(level->getFinishSprite().getGlobalBounds())) 
         // if the car collides with the finish line, the following will happen
         {
+            int elapsed = clock.getElapsedTime().asSeconds();
+            
+            intPoints += 1000 - elapsed*5;
+            if (intPoints < 0)
+            {
+                intPoints = 0;
+            }
+            std::string p = std::to_string(intPoints);
 
-          std::string p = pointsNumber.getString();
+            std::ofstream allscores;
+            allscores.open("allscores.txt",std::ios::out |std::ios::app);
+            if (!allscores)
+            {
+                std::cerr << "Error opening the file" << std::endl;
+            }
 
-          std::ofstream allscores;
-          allscores.open("allscores.txt",std::ios::out |std::ios::app);
-          if (!allscores)
-          {
-            std::cerr << "Error opening the file" << std::endl;
-          }
+            allscores << p << std::endl;
+            allscores.close();
 
-          allscores << p << std::endl;
-          allscores.close();
+            std::ofstream recentscore;
+            recentscore.open("recentscore.txt");
+            
+            if (!recentscore)
+            {
+                std::cerr << "Error opening the file" << std::endl;
+            }
+            recentscore << p << std::endl;
+            recentscore.close();
 
-          std::ofstream recentscore;
-          recentscore.open("recentscore.txt");
-          if (!recentscore)
-          {
-            std::cerr << "Error opening the file" << std::endl;
-          }
-          recentscore << p << std::endl;
-          recentscore.close();
-
-          this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+            this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
         }
 
 
         /*====================== DRAW INFO TEXTS  ============================================*/
+        timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
         this->_data->window.draw(timerText);
+        velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
         this->_data->window.draw(velocityText);
-        this->_data->window.draw(angleText);
+        pointsText.setPosition(-500+view.getCenter().x,-400+view.getCenter().y);
         this->_data->window.draw(pointsText);
+        pointsNumber.setPosition(-375+view.getCenter().x,-400+view.getCenter().y);
         this->_data->window.draw(pointsNumber);
+        angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
+        this->_data->window.draw(angleText);
 
         //world.DrawDebugData(); //comment out if you dont need debug drawing
         this->_data->window.display();
