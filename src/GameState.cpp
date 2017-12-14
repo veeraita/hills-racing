@@ -121,8 +121,61 @@ namespace Hills
 
 	void GameState::Update( float dt )
 	{
-
+        world.Step( dt, 8, 3 );
+        
+        /*====================== GAME OVER WHEN STUCK UPSIDE DOWN  ============================================*/
+        sf::Vector2f pos = car->getChassisSprite().getPosition();
+        float angle = car->GetAngle();
+        angle = (angle / 3.14) * 180;
+        
+        while(angle <= 0)
+        {
+            angle += 360;
+        }
+        
+        while(angle > 360)
+        {
+            angle -= 360;
+        }
+        
+        if (!(angle < 120 || angle >240))
+        {
+            if((abs(round(((float) pos.x - (float) prevPos.x)*30)) == 0) && (abs(round(((float) pos.y - (float) prevPos.y)*30)) == 0))
+            {
+                    this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+            }
+        }
+        
+        /*====================== TIMER, VELOCITY, ANGLE  ============================================*/
+        sf::Time elapsed = clock.getElapsedTime();
+        timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
+        int minutes = floor(elapsed.asSeconds() / 60); // counts how many mins have gone
+        int seconds = (int) elapsed.asSeconds(); // counts the elapsed time in seconds
+        std::string sec;
+        if ((seconds - minutes*60) < 10)
+        {
+                sec = '0' + std::to_string(seconds - minutes*60);
+        }
+        else
+        {
+                sec = std::to_string(seconds - minutes*60);
+        }
+        timerText.setString("Time: " +std::to_string(minutes)+ ":" + sec);
+        
+        float velocity = abs(round(((float) pos.x - (float) prevPos.x)*30));
+        velocityText.setString("Speed: " + std::to_string((int) velocity)+" KM/H");
+        velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
+        
+        angleText.setString("Angle: " + std::to_string( (int) angle) + " deg");
+        angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
+        
+        pointsText.setString("Points: ");
+        pointsText.setPosition(-500+view.getCenter().x,-400+view.getCenter().y);
+        
+        pointsNumber.setString(std::to_string(intPoints));
+        pointsNumber.setPosition(-375+view.getCenter().x,-400+view.getCenter().y);
 	}
+
 
 	void GameState::Draw( float dt )
 	{
@@ -137,7 +190,7 @@ namespace Hills
         flags += b2Draw::e_aabbBit;
         debugDrawInstance.SetFlags( flags );
 
-        world.Step( 1.0f/120.0f, 8, 3 );
+        /*====================== DRAW BACKGROUND, LEVEL AND CAR  ============================================*/
         this->_data->window.setView( view );
         this->_data->window.clear( );
         this->_data->window.draw( this->_background );
@@ -151,7 +204,8 @@ namespace Hills
         this->_data->window.draw( wheel1 );
         this->_data->window.draw( wheel2 );
 
-        sf::Vector2f prevPos2 = getPrevPos();
+        /*====================== MAKE CAMERA FOLLOW THE CAR  ============================================*/
+        //sf::Vector2f prevPos2 = getPrevPos();
         sf::Vector2f pos = car->getChassisSprite().getPosition();
         if (pos.x > SCREEN_WIDTH/2 && pos.x < level->getLevelLength() - SCREEN_WIDTH/2)
         {
@@ -169,20 +223,20 @@ namespace Hills
             }
         }
 
-        for (unsigned int i = 0; i < level->getTokens().size(); i++) // if the car collides with a coin, the following will happen
+        /*====================== SCORING  ============================================*/
+        for (unsigned int i = 0; i < level->getTokens().size(); i++) 
+        // if the car collides with a star, the following will happen
         {
             if (car->getChassisSprite().getGlobalBounds().intersects(level->getTokens().at(i).getGlobalBounds()))
             {
-
                 level->deleteToken(i);  //deletes the token
                 intPoints += 10; //  we get points
             }
         }
 
-
-        if (car->getChassisSprite().getGlobalBounds().intersects(level->getFinishSprite().getGlobalBounds())) // if the car collides with the finish line, the following will happen
+        if (car->getChassisSprite().getGlobalBounds().intersects(level->getFinishSprite().getGlobalBounds())) 
+        // if the car collides with the finish line, the following will happen
         {
-
 
           std::string p = pointsNumber.getString();
 
@@ -208,58 +262,19 @@ namespace Hills
           this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
         }
 
-        //Gameover jos flippaa ja stoppaa
-        float angle = car->GetAngle();
-        angle = (angle / 3.14) * 180;
-        while(angle <= 0){
-                angle += 360;
-        }
-        while(angle > 360){
-                angle -= 360;
-        }
-        if (!(angle < 120 || angle >240))
-        {
-                if((abs(round(((float) pos.x - (float) prevPos2.x)*30)) == 0) && (abs(round(((float) pos.y - (float) prevPos2.y)*30)) == 0))
-                {
-                        this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
-                }
-        }
 
-
-
-        sf::Time elapsed = clock.getElapsedTime();
-        timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
-        int minutes = floor(elapsed.asSeconds() / 60); // counts how many mins have gone
-        int seconds = (int) elapsed.asSeconds(); // counts the elapsed time in seconds
-        std::string sec;
-        if ((seconds - minutes*60) < 10)
-        {
-                sec = '0' + std::to_string(seconds - minutes*60);
-        }
-        else{
-                sec = std::to_string(seconds - minutes*60);
-        }
-        timerText.setString("Time: " +std::to_string(minutes)+ ":" + sec);
+        /*====================== DRAW INFO TEXTS  ============================================*/
         this->_data->window.draw(timerText);
 
-        float velocity = abs(round(((float) pos.x - (float) prevPos2.x)*30));
-        velocityText.setString("Speed: " + std::to_string((int) velocity)+" KM/H");
-        velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
         this->_data->window.draw(velocityText);
 
-        angleText.setString("Angle: " + std::to_string( (int) angle) + " deg");
-        angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
         this->_data->window.draw(angleText);
 
-        pointsText.setString("Points: ");
-        pointsText.setPosition(-500+view.getCenter().x,-400+view.getCenter().y);
         this->_data->window.draw(pointsText);
 
-        pointsNumber.setString(std::to_string(intPoints));
-        pointsNumber.setPosition(-375+view.getCenter().x,-400+view.getCenter().y);
         this->_data->window.draw(pointsNumber);
 
-        world.DrawDebugData();//comment out if you dont need debug drawing
+        world.DrawDebugData(); //comment out if you dont need debug drawing
         this->_data->window.display();
         prevPos = pos;
 	}
