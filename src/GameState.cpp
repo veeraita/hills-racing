@@ -211,13 +211,18 @@ namespace Hills
         sf::Vector2f pos = car->getChassisSprite().getPosition();
         if (pos.x > SCREEN_WIDTH/2 && pos.x < level->getLevelLength() - SCREEN_WIDTH/2)
         {
-            if (pos.y <= SCREEN_HEIGHT - 10.0f*SCALE)
+            if (pos.y <= SCREEN_HEIGHT - 15.0f*SCALE)
+            {
+                view.setCenter(pos.x, SCREEN_HEIGHT - 15.0f*SCALE);
+            }
+            else if (pos.y >=  SCREEN_HEIGHT - 10.0f*SCALE)
             {
                 view.setCenter(pos.x, SCREEN_HEIGHT - 10.0f*SCALE);
-            }
-            else if (pos.y >=  SCREEN_HEIGHT)
-            {
-                view.setCenter(pos.x, SCREEN_HEIGHT);
+                
+                if (pos.y >=  SCREEN_HEIGHT)
+                {
+                    this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+                }
             }
             else
             {
@@ -267,13 +272,9 @@ namespace Hills
 
         /*====================== DRAW INFO TEXTS  ============================================*/
         this->_data->window.draw(timerText);
-
         this->_data->window.draw(velocityText);
-
         this->_data->window.draw(angleText);
-
         this->_data->window.draw(pointsText);
-
         this->_data->window.draw(pointsNumber);
 
         world.DrawDebugData(); //comment out if you dont need debug drawing
