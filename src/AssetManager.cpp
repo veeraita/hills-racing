@@ -26,7 +26,7 @@ namespace Hills
 		}
 		else
 		{
-			std::cout <<"vituiks mäni, ei latautunu mappiin" << std::endl;
+			std::cout <<"Texture loading failed" << std::endl;
 		}
 	}
 
@@ -45,6 +45,11 @@ namespace Hills
 		if ( font.loadFromFile( fileName ) )
 		{
 			this->_fonts[name] = font;
+		}
+		
+		else
+		{
+			std::cout <<"Font loading failed" << std::endl;
 		}
 	}
 

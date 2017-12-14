@@ -28,7 +28,6 @@ namespace Hills
 			Car *car;
 			sf::View view;
 			sf::Clock clock;
-			sf::Font timerFont;
 			sf::Text timerText;
 			sf::Text velocityText;
 			sf::Text angleText;

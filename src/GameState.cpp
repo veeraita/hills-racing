@@ -25,18 +25,17 @@ namespace Hills
 	void GameState::Init()
 	{
 
-                /*====================== LOADING TEXTURES ================================================*/
+        /*====================== LOADING TEXTURES ================================================*/
 		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH, true );
 		this->_data->assets.LoadTexture( "Land", LAND_FILEPATH );
 		this->_data->assets.LoadTexture( "Chassis", CHASSIS_FILEPATH );
-                this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
+        this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
+        this->_data->assets.LoadFont( "Game font", FONT_FILEPATH );
 
-        // TODO: choose filename according to level selection
-        //std::string filename = "level1.txt";
 		level = new Level( this->_data, world, _filename );
 		car = new Car( this->_data, world );
 
-                /*====================== SETUP THE BACKGROUND AND VIEW ============================================*/
+        /*====================== SETUP THE BACKGROUND AND VIEW ============================================*/
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
 		this->_background.setScale(2,2);
 		// make the sprite longer so the texture repeats itself
@@ -52,38 +51,26 @@ namespace Hills
         sf::Sprite wheelsprite2;
         wheelsprite2.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
 
-        if(!timerFont.loadFromFile("Resources/dpcomic.ttf"))
-        {
-                std::cerr << "No font file found!" << std::endl;
-        }
-
-        //sf::Clock clock; // starts the clock
-
         // This is gonna be the printed time
-        timerText.setFont(timerFont); // The font is the one loaded above
-        //timerText.setString(std::to_string(0)); // Setting it 0 when the game starts
-        timerText.setCharacterSize(40); // Font size is 40 px I guess?
+        timerText.setFont(this->_data->assets.GetFont( "Game font" ));
+        timerText.setCharacterSize(40);
+        timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
 
-        velocityText.setFont(timerFont); // The font is the one loaded above
-        //timerText.setString(std::to_string(0)); // Setting it 0 when the game starts
-        //timerText.setPosition(40,300); // Position is somewhere
-        velocityText.setCharacterSize(40); // Font size is 40 px I guess?
-        pointsText.setFont(timerFont);
+        velocityText.setFont(this->_data->assets.GetFont( "Game font" ));
+        velocityText.setCharacterSize(40);
+        velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
+        
+        pointsText.setFont(this->_data->assets.GetFont( "Game font" ));
         pointsText.setCharacterSize(40);
+        pointsText.setPosition(-500+view.getCenter().x,-400+view.getCenter().y);
 
-        pointsNumber.setFont(timerFont);
+        pointsNumber.setFont(this->_data->assets.GetFont( "Game font" ));
         pointsNumber.setCharacterSize(40);
+        pointsNumber.setPosition(-375+view.getCenter().x,-400+view.getCenter().y);
 
-        angleText.setFont(timerFont);
+        angleText.setFont(this->_data->assets.GetFont( "Game font" ));
         angleText.setCharacterSize(40);
-
-        //this->_data->window.draw(timerText);
-        // sf::Text text;
-        // text.setFont(timerFont);
-        // text.setString("haha");
-        // text.setPosition(0,0);
-        // text.setCharacterSize(200);
-        // this->_data->window.draw(text);
+        angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
 
 	}
 
@@ -150,7 +137,6 @@ namespace Hills
         
         /*====================== TIMER, VELOCITY, ANGLE  ============================================*/
         sf::Time elapsed = clock.getElapsedTime();
-        timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
         int minutes = floor(elapsed.asSeconds() / 60); // counts how many mins have gone
         int seconds = (int) elapsed.asSeconds(); // counts the elapsed time in seconds
         std::string sec;
@@ -166,16 +152,11 @@ namespace Hills
         
         float velocity = abs(round(((float) pos.x - (float) prevPos.x)*30));
         velocityText.setString("Speed: " + std::to_string((int) velocity)+" KM/H");
-        velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
         
         angleText.setString("Angle: " + std::to_string( (int) angle) + " deg");
-        angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
         
         pointsText.setString("Points: ");
-        pointsText.setPosition(-500+view.getCenter().x,-400+view.getCenter().y);
-        
         pointsNumber.setString(std::to_string(intPoints));
-        pointsNumber.setPosition(-375+view.getCenter().x,-400+view.getCenter().y);
 	}
 
 
@@ -277,7 +258,7 @@ namespace Hills
         this->_data->window.draw(pointsText);
         this->_data->window.draw(pointsNumber);
 
-        world.DrawDebugData(); //comment out if you dont need debug drawing
+        //world.DrawDebugData(); //comment out if you dont need debug drawing
         this->_data->window.display();
         prevPos = pos;
 	}

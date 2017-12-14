@@ -20,6 +20,7 @@
 #define LAND_FILEPATH "Resources/ground.png"
 #define FINISH_LINE_FILEPATH "Resources/finishline.jpg"
 #define TOKEN_FILEPATH "Resources/token.png"
+#define FONT_FILEPATH "Resources/dpcomic.ttf"
 //Game over state
 #define GAME_OVER_BACKGROUND_FILEPATH "Resources/gameoverbg.jpg"
 //High scores state
