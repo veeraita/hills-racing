@@ -116,6 +116,11 @@ namespace Hills
         _wheelsprite2.setRotation( wheel2->GetAngle() * -180/b2_pi );
         return _wheelsprite2;
     }
+    
+    float Car::GetAngle()
+    {
+        return car->GetAngle();
+    }
 
     void Car::Reverse()
     {

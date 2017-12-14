@@ -72,6 +72,8 @@ namespace Hills
         pointsText.setCharacterSize(40);
         pointsNumber.setFont(timerFont);
         pointsNumber.setCharacterSize(40);
+        angleText.setFont(timerFont);
+        angleText.setCharacterSize(40);
 
         //this->_data->window.draw(timerText);
         // sf::Text text;
@@ -206,15 +208,24 @@ namespace Hills
           this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
         }
 
-        //TODO: katolleen kääntyessä gameover
-        //cary = car->getPosition().y;
-        //carx = car->getPosition().x;
-        //carr = car->getRotation();
-        //if (carr > 120 )
-        //{
+        //Gameover jos flippaa ja stoppaa
+        float angle = car->GetAngle();
+        angle = (angle / 3.14) * 180;
+        if(angle <= 0){
+                angle += 360;
+        }
+        if(angle > 360){
+                angle -= 360;
+        }
+        if (!(angle < 120 || angle >240))
+        {
+                if((abs(round(((float) pos.x - (float) prevPos2.x)*30)) == 0) && (abs(round(((float) pos.y - (float) prevPos2.y)*30)) == 0))
+                {
+                        this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+                }
+        }
 
-        //   this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
-        //}
+
 
         sf::Time elapsed = clock.getElapsedTime();
         timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
@@ -236,6 +247,9 @@ namespace Hills
         velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
         this->_data->window.draw(velocityText);
 
+        angleText.setString("Angle" + std::to_string(angle));
+        angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
+        this->_data->window.draw(angleText);
 
         pointsText.setString("Points: ");
         pointsText.setPosition(-500+view.getCenter().x,-400+view.getCenter().y);
