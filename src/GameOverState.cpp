@@ -18,10 +18,11 @@ namespace Hills
 	{
         this->_data->window.setView(view); // sets the view to the start
         std::cout<< "Game Over" << std::endl;
-		this->_data->assets.LoadTexture( "Game Over State Background", GAME_OVER_BACKGROUND_FILEPATH );
-		this->_background.setTexture( this->_data->assets.GetTexture( "Game Over State Background") );
+		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH );
+		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
+		this->_background.setScale(2,2);
 
-		if(!textFont.loadFromFile("Resources/KhmerOS.ttf"))
+		if(!textFont.loadFromFile("Resources/dpcomic.ttf"))
 		{
 						std::cerr << "No font file found!" << std::endl;
 		}
@@ -38,6 +39,16 @@ namespace Hills
 		score.setCharacterSize(25);
 		score.setString("Your score this game was: "+scorestring);
 		score.setPosition(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+
+		exitText.setFont(textFont);
+		exitText.setCharacterSize(25);
+		exitText.setString("You can return to the main menu by pressing the Esc key");
+		exitText.setPosition(SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 300);
+
+		gameOver.setFont(textFont);
+		gameOver.setCharacterSize(100);
+		gameOver.setString("GAME OVER!");
+		gameOver.setPosition(SCREEN_WIDTH/2,SCREEN_HEIGHT/2 - 300);
 	}
 
 	void GameOverState::HandleInput( )
@@ -68,6 +79,8 @@ namespace Hills
 		this->_data->window.clear(sf::Color::Red);
 		this->_data->window.draw( this->_background );
 		this->_data->window.draw(score);
+		this->_data->window.draw(exitText);
+		this->_data->window.draw(gameOver);
 		this->_data->window.display();
 
         //sf::Text points = getPoints();
