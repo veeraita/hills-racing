@@ -51,6 +51,11 @@ namespace Hills
 				this->_data->window.close();
 			}
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+                this->_data->machine.AddState( StateRef( new MainMenuState( this->_data ) ), true );
+        }
 	}
 
 	void GameOverState::Update( float dt )
