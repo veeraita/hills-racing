@@ -18,7 +18,7 @@ namespace Hills
 	{
         this->_data->window.setView(view); // sets the view to the start
         std::cout<< "Game Over" << std::endl;
-		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH );
+		this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_1 );
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
 		this->_background.setScale(2,2);
 

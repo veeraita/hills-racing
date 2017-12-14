@@ -16,8 +16,18 @@
 #define HIGHSCORE_FILEPATH "Resources/hsbutton.png"
 #define PLAY_BUTTON_FILEPATH "Resources/PlayButton.png"
 //Game state
-#define GAME_BACKGROUND_FILEPATH "Resources/gamebackground.png"
-#define LAND_FILEPATH "Resources/ground.png"
+
+//Level 1
+#define GAME_BACKGROUND_FILEPATH_1 "Resources/level1bg.png"
+#define LAND_FILEPATH_1 "Resources/level1ground.png"
+//level 2
+#define GAME_BACKGROUND_FILEPATH_2 "Resources/level2bg.png"
+#define LAND_FILEPATH_2 "Resources/level2ground.png"
+//level 3
+#define GAME_BACKGROUND_FILEPATH_3 "Resources/level3bg.png"
+#define LAND_FILEPATH_3 "Resources/level3ground.png"
+
+
 #define FINISH_LINE_FILEPATH "Resources/finishline.jpg"
 #define TOKEN_FILEPATH "Resources/token.png"
 #define FONT_FILEPATH "Resources/dpcomic.ttf"
