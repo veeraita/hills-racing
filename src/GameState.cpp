@@ -52,7 +52,7 @@ namespace Hills
         sf::Sprite wheelsprite2;
         wheelsprite2.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
 
-        if(!timerFont.loadFromFile("Resources/KhmerOS.ttf"))
+        if(!timerFont.loadFromFile("Resources/dpcomic.ttf"))
         {
                 std::cerr << "No font file found!" << std::endl;
         }
@@ -70,8 +70,10 @@ namespace Hills
         velocityText.setCharacterSize(40); // Font size is 40 px I guess?
         pointsText.setFont(timerFont);
         pointsText.setCharacterSize(40);
+
         pointsNumber.setFont(timerFont);
         pointsNumber.setCharacterSize(40);
+
         angleText.setFont(timerFont);
         angleText.setCharacterSize(40);
 

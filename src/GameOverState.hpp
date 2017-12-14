@@ -20,5 +20,7 @@ namespace Hills
             sf::View view;
 						sf::Text score;
 						sf::Font textFont;
+						sf::Text exitText;
+						sf::Text gameOver;
 	};
 }

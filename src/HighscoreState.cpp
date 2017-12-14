@@ -53,7 +53,7 @@ namespace Hills
 
 
 
-		if(!hsFont.loadFromFile("Resources/KhmerOS.ttf"))
+		if(!hsFont.loadFromFile("Resources/dpcomic.ttf"))
 		{
 			std::cerr << "No font file found!" << std::endl;
 		}
