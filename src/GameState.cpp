@@ -111,6 +111,12 @@ namespace Hills
                 car->TiltUp();
         }
 
+        if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down ) || 
+                sf::Keyboard::isKeyPressed(sf::Keyboard::W ) || sf::Keyboard::isKeyPressed(sf::Keyboard::S )))
+        {
+                car->Brake();
+        }
+
 	}
 
 	void GameState::Update( float dt )
