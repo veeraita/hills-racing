@@ -53,16 +53,28 @@ namespace Hills
         if ( this->_data->input.IsSpriteClicked( this->_button1, sf::Mouse::Left, this->_data->window ) )
         {
         this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL1_FILEPATH ) ), true );
+        std::ofstream recentlevel;
+        recentlevel.open("recentlevel.txt");
+        recentlevel << 1 << std::endl;
+        recentlevel.close();
         }
         //Level 2 selected
         if ( this->_data->input.IsSpriteClicked( this->_button2, sf::Mouse::Left, this->_data->window ) )
         {
         this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL2_FILEPATH ) ), true );
+        std::ofstream recentlevel;
+        recentlevel.open("recentlevel.txt");
+        recentlevel << 2 << std::endl;
+        recentlevel.close();
         }
         //Level 3 selected
         if ( this->_data->input.IsSpriteClicked( this->_button3, sf::Mouse::Left, this->_data->window ) )
         {
         this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL3_FILEPATH ) ), true );
+        std::ofstream recentlevel;
+        recentlevel.open("recentlevel.txt");
+        recentlevel << 3 << std::endl;
+        recentlevel.close();
         }
         //Go to High Scores state
 		if ( this->_data->input.IsSpriteClicked( this->_hsButton, sf::Mouse::Left, this->_data->window ) )
