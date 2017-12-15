@@ -11,7 +11,7 @@ namespace Hills
 /*========================== BOX2Dsetup Begin ==========================================*/
         //Random variables for the joints
         m_hz = 4.0f;
-        m_zeta = 0.7f;
+        m_zeta = 0.8f;
         m_speed = 40.0f;
         float y1 = 5.0f;
         /*========= chassis =============*/
@@ -21,11 +21,11 @@ namespace Hills
 
         b2PolygonShape chassis;
         b2Vec2 vertices[8];
-		vertices[0].Set(-1.5f, -0.5f);
-		vertices[1].Set(1.2f, -0.5f);
+		vertices[0].Set(-1.5f, -0.2f);
+		vertices[1].Set(1.2f, -0.2f);
 		vertices[2].Set(1.2f, 0.0f);
-		vertices[3].Set(0.0f, 0.8f);
-		vertices[4].Set(-1.15f, 0.8f);
+		vertices[3].Set(0.0f, 0.5f);
+		vertices[4].Set(-1.15f, 0.5f);
 		vertices[5].Set(-1.5f, 0.2f);
         chassis.Set(vertices, 6);
         car = world.CreateBody(&bd);
@@ -141,14 +141,14 @@ namespace Hills
     void Car::TiltUp()
     {
         // doesn't work yet
-        car->ApplyTorque(15, true);
+        car->ApplyTorque(17, true);
         //car->ApplyForce(b2Vec2(0, 50), car->GetWorldPoint( b2Vec2(1,1)), false );
     }
 
     void Car::TiltDown()
     {
         // doesn't work yet
-        car->ApplyTorque(-15, true);
+        car->ApplyTorque(-17, true);
         //car->ApplyForce(b2Vec2(0, 0), car->GetWorldPoint( b2Vec2(-1,1)), false );
     }
 }

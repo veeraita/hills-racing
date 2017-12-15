@@ -122,6 +122,11 @@ namespace Hills
                 this->_data->machine.AddState( StateRef( new GameState( this->_data, _filename ) ), true );
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+                this->_data->machine.AddState( StateRef( new MainMenuState( this->_data ) ), true );
+        }
+
 	}
 
 	void GameState::Update( float dt )
