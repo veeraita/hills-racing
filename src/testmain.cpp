@@ -148,11 +148,11 @@ int main()
         //   world.DestroyBody(bodiesScheduledForRemoval.back());
         //   bodiesScheduledForRemoval.pop_back();
         // }
-        for( unsigned int q = 0; q < 34; q++ )
-        {
-          world.DestroyBody( bodiesScheduledForRemoval[q] );
-          bodiesScheduledForRemoval.erase( bodiesScheduledForRemoval.begin(), bodiesScheduledForRemoval.begin()+33 );
-        }
+        // for( unsigned int q = 0; q < 34; q++ )
+        // {
+        //   world.DestroyBody( bodiesScheduledForRemoval[q] );
+        //   bodiesScheduledForRemoval.erase( bodiesScheduledForRemoval.begin(), bodiesScheduledForRemoval.begin()+33 );
+        // }
         std::cout<<world.GetBodyCount()<<std::endl;
       }
       view.setCenter( position2 );
