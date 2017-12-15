@@ -35,8 +35,8 @@ namespace Hills
 			sf::Text timerText;
 			sf::Text velocityText;
 			sf::Text angleText;
-                        int intPoints = 0;
-                        sf::Text pointsText;
+            int intPoints = 0;
+            sf::Text pointsText;
 			sf::Text pointsNumber;
 			sf::Vector2f prevPos;
 
