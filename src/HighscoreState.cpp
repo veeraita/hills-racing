@@ -53,14 +53,27 @@ namespace Hills
                 scoreVectorL1.pop_back();
                 int sizeL1 = scoreVectorL1.size();
                 int top1L1 = 0, top2L1 = 0, top3L1 = 0;
-                if(sizeL1 > 1)
+                if(sizeL1 > 0)
 
                 {
                     std::sort (scoreVectorL1.begin(),scoreVectorL1.end());
+                    if(sizeL1 >= 3)
+                    {
+                        top1L1 = scoreVectorL1[sizeL1-1];
+                        top2L1 = scoreVectorL1[sizeL1-2];
+                        top3L1 = scoreVectorL1[sizeL1-3];
+                    }
 
-                    top1L1 = scoreVectorL1[sizeL1-1];
-                    top2L1 = scoreVectorL1[sizeL1-2];
-                    top3L1 = scoreVectorL1[sizeL1-3];
+                    if(sizeL1 == 2)
+                    {
+                        top1L1 = scoreVectorL1[sizeL1-1];
+                        top2L1 = scoreVectorL1[sizeL1-2];
+                    }
+
+                    if(sizeL1 == 1)
+                    {
+                        top1L1 = scoreVectorL1[sizeL1-1];
+                    }
                 }
 
 
@@ -97,14 +110,27 @@ namespace Hills
                 scoreVectorL2.pop_back();
                 int sizeL2 = scoreVectorL2.size();
                 int top1L2 = 0, top2L2 = 0, top3L2 = 0;
-                if(sizeL2 > 1)
+                if(sizeL2 > 0)
 
                 {
                     std::sort (scoreVectorL2.begin(),scoreVectorL2.end());
+                    if(sizeL2 >= 3)
+                    {
+                        top1L2 = scoreVectorL2[sizeL2-1];
+                        top2L2 = scoreVectorL2[sizeL2-2];
+                        top3L2 = scoreVectorL2[sizeL2-3];
+                    }
 
-                    top1L2 = scoreVectorL2[sizeL2-1];
-                    top2L2 = scoreVectorL2[sizeL2-2];
-                    top3L2 = scoreVectorL2[sizeL2-3];
+                    if(sizeL2 == 2)
+                    {
+                        top1L2 = scoreVectorL2[sizeL2-1];
+                        top2L2 = scoreVectorL2[sizeL2-2];
+                    }
+
+                    if(sizeL2 == 1)
+                    {
+                        top1L2 = scoreVectorL2[sizeL2-1];
+                    }
                 }
 
 
@@ -141,14 +167,27 @@ namespace Hills
                 scoreVectorL3.pop_back();
                 int sizeL3 = scoreVectorL3.size();
                 int top1L3 = 0, top2L3 = 0, top3L3 = 0;
-                if(sizeL3 > 1)
+                if(sizeL3 > 0)
 
                 {
                     std::sort (scoreVectorL3.begin(),scoreVectorL3.end());
+                    if(sizeL3 >= 3)
+                    {
+                        top1L3 = scoreVectorL3[sizeL3-1];
+                        top2L3 = scoreVectorL3[sizeL3-2];
+                        top3L3 = scoreVectorL3[sizeL1-3];
+                    }
 
-                    top1L3 = scoreVectorL3[sizeL3-1];
-                    top2L3 = scoreVectorL3[sizeL3-2];
-                    top3L3 = scoreVectorL3[sizeL3-3];
+                    if(sizeL3 == 2)
+                    {
+                        top1L3 = scoreVectorL3[sizeL3-1];
+                        top2L3 = scoreVectorL3[sizeL3-2];
+                    }
+
+                    if(sizeL3 == 1)
+                    {
+                        top1L3 = scoreVectorL3[sizeL3-1];
+                    }
                 }
 
 
