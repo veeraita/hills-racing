@@ -105,8 +105,8 @@ namespace Hills
             
             quad[0].texCoords = sf::Vector2f(0, 0);
             quad[1].texCoords = sf::Vector2f(500, 0);
-            quad[2].texCoords = sf::Vector2f(500, 5000);
-            quad[3].texCoords = sf::Vector2f(0, 5000);
+            quad[2].texCoords = sf::Vector2f(500, -2400);
+            quad[3].texCoords = sf::Vector2f(0, -2400);
             
             y1 = y2;
 			x += dx;
