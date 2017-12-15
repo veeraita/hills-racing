@@ -23,6 +23,7 @@ namespace Hills
 		this->_background.setTexture( this->_data->assets.GetTexture( "Splash State Background") );
 		this->_data->assets.LoadTexture( "Exit Button", EXIT_FILEPATH );
 		this->_exitButton.setTexture(this->_data->assets.GetTexture("Exit Button"));
+		this->_data->assets.LoadFont("Game font", FONT_FILEPATH);
 		//std::string scores_string = "score1 \nscore2\nscore3";
 
 		std::vector<int> scoreVector;
@@ -51,24 +52,14 @@ namespace Hills
 		top2 = scoreVector[size-2];
 		top3 = scoreVector[size-3];
 
-
-
-		if(!hsFont.loadFromFile("Resources/dpcomic.ttf"))
-		{
-			std::cerr << "No font file found!" << std::endl;
-		}
 		std::cout << oneScore << std::endl;
-		scores.setFont(hsFont);
-		scores.setCharacterSize(20);
+		scores.setFont(this->_data->assets.GetFont("Game font"));
+		scores.setCharacterSize(50);
 		scores.setString("Level1 Highscores\n#1 " + std::to_string(top1) + "\n#2 " + std::to_string(top2) + "\n#3 " + std::to_string(top3));
-		scores.setPosition(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
-
-
-
-
-
+		scores.setPosition((SCREEN_WIDTH - scores.getGlobalBounds().width)/2, 100);
 
 	}
+
 
 	void HighscoreState::HandleInput( )
 	{
