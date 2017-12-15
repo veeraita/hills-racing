@@ -220,7 +220,10 @@ namespace Hills
         for (unsigned int i = 0; i < level->getTokens().size(); i++) 
         // if the car collides with a star, the following will happen
         {
-            if (car->getChassisSprite().getGlobalBounds().intersects(level->getTokens().at(i).getGlobalBounds()))
+            sf::Sprite token = level->getTokens().at(i);
+            //make the token hitbox a bit smaller
+            sf::FloatRect hitbox(token.getGlobalBounds().left + 10, token.getGlobalBounds().top + 10, token.getGlobalBounds().width - 20, token.getGlobalBounds().height - 20);
+            if (car->getChassisSprite().getGlobalBounds().intersects(hitbox))
             {
                 level->deleteToken(i);  //deletes the token
                 intPoints += 10; //  we get points
