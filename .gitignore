@@ -1,4 +1,3 @@
 src/main.o
 src/sfml-app
-src/allscores.txt
-src/recentscore.txt
+src/*.txt
