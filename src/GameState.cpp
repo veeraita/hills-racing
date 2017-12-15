@@ -17,9 +17,15 @@
 
 namespace Hills
 {
-        GameState::GameState( GameDataRef data, std::string level_filename) : _data( data ), world(b2World(b2Vec2(0.0f, -9.8f))), _filename(level_filename)
+    GameState::GameState( GameDataRef data, std::string level_filename) : _data( data ), world(b2World(b2Vec2(0.0f, -9.8f))), _filename(level_filename)
 	{
 
+	}
+	
+	GameState::~GameState()
+	{
+	    delete level;
+	    delete car;
 	}
 
 	void GameState::Init()

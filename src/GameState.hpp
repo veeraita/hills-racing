@@ -12,7 +12,11 @@ namespace Hills
 	class GameState : public State
 	{
 		public:
-			GameState(GameDataRef data, std::string level_filename);
+			GameState( GameDataRef data, std::string level_filename );
+			//prevent copying
+			GameState( const GameState& ) = delete;
+			GameState& operator= (const GameState&) = delete;
+			~GameState();
 			void Init();
 			void HandleInput();
 			void Update( float dt );
