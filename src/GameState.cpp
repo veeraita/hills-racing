@@ -26,21 +26,22 @@ namespace Hills
 	{
 
         /*====================== LOADING TEXTURES ================================================*/
-                this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_1, true );
-		//this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_1 );
+        this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_1, true );
 
-                if("Levels/level2.txt" == _filename){
-                        this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_2, true );
-		        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_2 );
-                }
-                else if("Levels/level3.txt" == _filename){
-                        this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_3, true );
-		        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_3 );
-                }
+//this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_1 );
+
+        if("Levels/level2.txt" == _filename){
+            this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_2, true );
+
+        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_2 );
+        }
+        else if("Levels/level3.txt" == _filename){
+            this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_3, true );
+
+        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_3 );
+        }
 		
-		this->_data->assets.LoadTexture( "Chassis", CHASSIS_FILEPATH );
-                this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
-                this->_data->assets.LoadFont( "Game font", FONT_FILEPATH );
+        this->_data->assets.LoadFont( "Game font", FONT_FILEPATH );
 
 		level = new Level( this->_data, world, _filename );
 		car = new Car( this->_data, world );
@@ -53,13 +54,6 @@ namespace Hills
 		this->_background.move(0,-200);
 
 		view.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
-
-        sf::Sprite chassissprite;
-        chassissprite.setTexture( this->_data->assets.GetTexture( "Chassis") );
-        sf::Sprite wheelsprite1;
-        wheelsprite1.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
-        sf::Sprite wheelsprite2;
-        wheelsprite2.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
 
         // This is gonna be the printed time
         timerText.setFont(this->_data->assets.GetFont( "Game font" ));
@@ -117,26 +111,56 @@ namespace Hills
 	{
         world.Step( dt, 8, 3 );
         
-        /*====================== GAME OVER WHEN STUCK UPSIDE DOWN  ============================================*/
         sf::Vector2f pos = car->getChassisSprite().getPosition();
         float angle = car->GetAngle();
         angle = (angle / 3.14) * 180;
         
-        while(angle <= 0)
+        while(angle <= -180)
         {
             angle += 360;
         }
         
-        while(angle > 360)
+        while(angle > 180)
         {
             angle -= 360;
         }
         
-        if (!(angle < 120 || angle >240))
+        if (angle < -120 || angle > 120)
         {
+            /*====================== GAME OVER WHEN STUCK UPSIDE DOWN  ============================================*/
             if((abs(round(((float) pos.x - (float) prevPos.x)*30)) == 0) && (abs(round(((float) pos.y - (float) prevPos.y)*30)) == 0))
             {
-                    this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+                std::ifstream recentlevel;
+                std::string levelstring;
+                recentlevel.open("recentlevel.txt");
+                std::getline(recentlevel,levelstring);
+                recentlevel.close();
+                //int levelnumber = std::stoi(levelstring);
+
+
+
+                std::string p = std::to_string(intPoints);
+                std::ofstream allscores;
+                allscores.open("allscoreslevel"+levelstring+".txt",std::ios::out |std::ios::app);
+                if (!allscores)
+                {
+                    std::cerr << "Error opening the file" << std::endl;
+                }
+
+                allscores << p << std::endl;
+                allscores.close();
+
+                std::ofstream recentscore;
+                recentscore.open("recentscore.txt");
+
+                if (!recentscore)
+                {
+                    std::cerr << "Error opening the file" << std::endl;
+                }
+                recentscore << p << std::endl;
+                recentscore.close();
+
+                this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
             }
         }
         
@@ -207,6 +231,37 @@ namespace Hills
                 
                 if (pos.y >=  SCREEN_HEIGHT)
                 {
+
+
+                    std::ifstream recentlevel;
+                    std::string levelstring;
+                    recentlevel.open("recentlevel.txt");
+                    std::getline(recentlevel,levelstring);
+                    recentlevel.close();
+                    //int levelnumber = std::stoi(levelstring);
+
+
+
+                    std::string p = std::to_string(intPoints);
+                    std::ofstream allscores;
+                    allscores.open("allscoreslevel"+levelstring+".txt",std::ios::out |std::ios::app);
+                    if (!allscores)
+                    {
+                        std::cerr << "Error opening the file" << std::endl;
+                    }
+
+                    allscores << p << std::endl;
+                    allscores.close();
+
+                    std::ofstream recentscore;
+                    recentscore.open("recentscore.txt");
+
+                    if (!recentscore)
+                    {
+                        std::cerr << "Error opening the file" << std::endl;
+                    }
+                    recentscore << p << std::endl;
+                    recentscore.close();
                     this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
                 }
             }
@@ -220,7 +275,10 @@ namespace Hills
         for (unsigned int i = 0; i < level->getTokens().size(); i++) 
         // if the car collides with a star, the following will happen
         {
-            if (car->getChassisSprite().getGlobalBounds().intersects(level->getTokens().at(i).getGlobalBounds()))
+            sf::Sprite token = level->getTokens().at(i);
+            //make the token hitbox a bit smaller
+            sf::FloatRect hitbox(token.getGlobalBounds().left + 10, token.getGlobalBounds().top + 10, token.getGlobalBounds().width - 20, token.getGlobalBounds().height - 20);
+            if (car->getChassisSprite().getGlobalBounds().intersects(hitbox))
             {
                 level->deleteToken(i);  //deletes the token
                 intPoints += 10; //  we get points
@@ -237,10 +295,20 @@ namespace Hills
             {
                 intPoints = 0;
             }
-            std::string p = std::to_string(intPoints);
 
+
+            std::ifstream recentlevel;
+            std::string levelstring;
+            recentlevel.open("recentlevel.txt");
+            std::getline(recentlevel,levelstring);
+            recentlevel.close();
+            //int levelnumber = std::stoi(levelstring);
+
+
+
+            std::string p = std::to_string(intPoints);
             std::ofstream allscores;
-            allscores.open("allscores.txt",std::ios::out |std::ios::app);
+            allscores.open("allscoreslevel"+levelstring+".txt",std::ios::out |std::ios::app);
             if (!allscores)
             {
                 std::cerr << "Error opening the file" << std::endl;
@@ -260,6 +328,7 @@ namespace Hills
             recentscore.close();
 
             this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+            
         }
 
 
