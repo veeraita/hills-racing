@@ -38,7 +38,8 @@ namespace Hills
     	b2FixtureDef fd;
 		fd.shape = &circle;
 		fd.density = 1.0f;
-		fd.friction = 0.9f;
+                fd.friction = 1.9f;
+                fd.restitution = 0.2;
 
         /*========== wheel1 ================*/
         bd.position.Set(3.0f, 1.5*y1+0.35f); //backwheel
@@ -58,7 +59,7 @@ namespace Hills
         //joints connect the origin of the chassis and origin of circleshapes
         jd.Initialize(car, wheel1, wheel1->GetPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 20.0f;
+        jd.maxMotorTorque = 7.0f;
         jd.enableMotor = true;
         jd.frequencyHz = m_hz;
         jd.dampingRatio = m_zeta;
@@ -66,7 +67,7 @@ namespace Hills
 
         jd.Initialize(car, wheel2, wheel2->GetPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 10.0f;
+        jd.maxMotorTorque = 2.0f;
         jd.enableMotor = false;
         jd.frequencyHz = m_hz;
         jd.dampingRatio = m_zeta;
@@ -124,12 +125,12 @@ namespace Hills
 
     void Car::Reverse()
     {
-            spring1->SetMotorSpeed(std::min(m_speed, spring1->GetMotorSpeed() + 0.1f));
+            spring1->SetMotorSpeed(std::min(m_speed, spring1->GetMotorSpeed() + 0.3f));
     }
 
     void Car::Accelerate()
     {
-        spring1->SetMotorSpeed(std::max(-m_speed, spring1->GetMotorSpeed() - 0.1f));
+        spring1->SetMotorSpeed(std::max(-m_speed, spring1->GetMotorSpeed() - 0.3f));
     }
 
     void Car::Brake()
@@ -140,14 +141,14 @@ namespace Hills
     void Car::TiltUp()
     {
         // doesn't work yet
-        car->ApplyTorque(35, true);
+        car->ApplyTorque(15, true);
         //car->ApplyForce(b2Vec2(0, 50), car->GetWorldPoint( b2Vec2(1,1)), false );
     }
 
     void Car::TiltDown()
     {
         // doesn't work yet
-        car->ApplyTorque(-35, true);
+        car->ApplyTorque(-15, true);
         //car->ApplyForce(b2Vec2(0, 0), car->GetWorldPoint( b2Vec2(-1,1)), false );
     }
 }
