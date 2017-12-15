@@ -27,14 +27,17 @@ namespace Hills
 
         /*====================== LOADING TEXTURES ================================================*/
         this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_1, true );
+
 //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_1 );
 
         if("Levels/level2.txt" == _filename){
-                this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_2, true );
+            this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_2, true );
+
         //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_2 );
         }
         else if("Levels/level3.txt" == _filename){
-                this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_3, true );
+            this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_3, true );
+
         //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_3 );
         }
 		
@@ -228,10 +231,20 @@ namespace Hills
             {
                 intPoints = 0;
             }
-            std::string p = std::to_string(intPoints);
 
+
+            std::ifstream recentlevel;
+            std::string levelstring;
+            recentlevel.open("recentlevel.txt");
+            std::getline(recentlevel,levelstring);
+            recentlevel.close();
+            //int levelnumber = std::stoi(levelstring);
+
+
+
+            std::string p = std::to_string(intPoints);
             std::ofstream allscores;
-            allscores.open("allscores.txt",std::ios::out |std::ios::app);
+            allscores.open("allscoreslevel"+levelstring+".txt",std::ios::out |std::ios::app);
             if (!allscores)
             {
                 std::cerr << "Error opening the file" << std::endl;
