@@ -143,13 +143,13 @@ namespace Hills
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S) )
         {
-            this->engineSound.play();
+            //this->engineSound.play();
             car->Reverse();
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            this->engineSound.play();
+            //this->engineSound.play();
             car->Accelerate();
         }
 
@@ -189,6 +189,7 @@ namespace Hills
 
             if((abs(round(((float) pos.x - (float) prevPos.x)*30)) == 0) && (abs(round(((float) pos.y - (float) prevPos.y)*30)) == 0))
             {
+                gameoverSound.play();
                 this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
 
             }
@@ -291,6 +292,8 @@ namespace Hills
                     
                     recentscore << p << std::endl;
                     recentscore.close();
+
+                    gameoverSound.play();
                     this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
                 }
             }
@@ -315,7 +318,6 @@ namespace Hills
         if (car->getChassisSprite().getGlobalBounds().intersects(level->getFinishSprite().getGlobalBounds()))
         // if the car collides with the finish line, the following will happen
         {
-            applauseSound.play();
             int elapsed = clock.getElapsedTime().asSeconds();
 
             intPoints += 1000 - elapsed*5;
@@ -345,6 +347,7 @@ namespace Hills
             recentscore << p << std::endl;
             recentscore.close();
 
+            applauseSound.play();
             this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
         }
 
