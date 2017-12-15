@@ -19,7 +19,7 @@ namespace Hills
 
 	void HighscoreState::Init()
 	{
-		this->_data->assets.LoadTexture( "Splash State Background", SPLASH_SCENE_BACKGROUND_FILEPATH );
+		this->_data->assets.LoadTexture( "Splash State Background", MAIN_MENU_BACKGROUND_FILEPATH );
 		this->_background.setTexture( this->_data->assets.GetTexture( "Splash State Background") );
 		this->_data->assets.LoadTexture( "Exit Button", EXIT_FILEPATH );
 		this->_exitButton.setTexture(this->_data->assets.GetTexture("Exit Button"));
