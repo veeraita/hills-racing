@@ -26,13 +26,13 @@ b2GLDraw::~b2GLDraw()
 //convert a Box2D (float 0.0f - 1.0f range) color to a SFML color (uint8 0 - 255 range)
 sf::Color b2GLDraw::B2SFColor(const b2Color &color, int alpha = 255)
 {
-        sf::Color result((sf::Uint8)(color.r*255), (sf::Uint8)(color.g*255), (sf::Uint8)(color.b*255), (sf::Uint8) alpha);
-        return result;
+    sf::Color result((sf::Uint8)(color.r*255), (sf::Uint8)(color.g*255), (sf::Uint8)(color.b*255), (sf::Uint8) alpha);
+    return result;
 }
 
 void b2GLDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
 {
-        sf::ConvexShape polygon(4);
+    sf::ConvexShape polygon(4);
 
     polygon.setPoint(0, sf::Vector2f(aabb->lowerBound.x*RATIO, aabb->lowerBound.y*RATIO));
     polygon.setPoint(1, sf::Vector2f(aabb->upperBound.x*RATIO, aabb->lowerBound.y*RATIO));
@@ -42,7 +42,7 @@ void b2GLDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
     polygon.setFillColor(this->B2SFColor(color, 50));
     polygon.setOutlineColor(this->B2SFColor(color));
     polygon.setOutlineThickness(1.0f);
-        this->window->draw(polygon);
+    this->window->draw(polygon);
 }
 
 void b2GLDraw::DrawTransform(const b2Transform& xf)
@@ -50,12 +50,12 @@ void b2GLDraw::DrawTransform(const b2Transform& xf)
     float lineProportion = 0.4f;
     b2Vec2 p1 = xf.p, p2;
 
-        //red (X axis)
-        p2 = p1 + (lineProportion * xf.q.GetXAxis());
+    //red (X axis)
+    p2 = p1 + (lineProportion * xf.q.GetXAxis());
     this->DrawSegment(p1, p2, b2Color(255, 0, 0));
 
-        //green (Y axis)
-        p2 = p1 + (lineProportion * xf.q.GetYAxis());
+    //green (Y axis)
+    p2 = p1 + (lineProportion * xf.q.GetYAxis());
     this->DrawSegment(p1, p2, b2Color(0, 255, 0));
 }
 
@@ -98,27 +98,29 @@ void b2GLDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& c
 void b2GLDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
     sf::ConvexShape polygon(vertexCount);
-        for (int32 i=0; i<vertexCount; i++)
-        {
-                b2Vec2 vertex = vertices[i];
-                polygon.setPoint(i, sf::Vector2f(vertex.x*RATIO, vertex.y*RATIO));
-        }
+    for (int32 i=0; i<vertexCount; i++)
+    {
+        b2Vec2 vertex = vertices[i];
+        polygon.setPoint(i, sf::Vector2f(vertex.x*RATIO, vertex.y*RATIO));
+    }
     polygon.setFillColor(this->B2SFColor(color, 50));
     polygon.setOutlineColor(this->B2SFColor(color));
-        polygon.setOutlineThickness(1.0f);
-        this->window->draw(polygon);
+    polygon.setOutlineThickness(1.0f);
+    this->window->draw(polygon);
 }
 
 void b2GLDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
     sf::ConvexShape polygon(vertexCount);
-        for (int32 i=0; i<vertexCount; i++)
-        {
-                b2Vec2 vertex = vertices[i];
-                polygon.setPoint(i, sf::Vector2f(vertex.x*RATIO, vertex.y*RATIO));
-        }
+    for (int32 i=0; i<vertexCount; i++)
+    {
+        b2Vec2 vertex = vertices[i];
+        polygon.setPoint(i, sf::Vector2f(vertex.x*RATIO, vertex.y*RATIO));
+    }
     polygon.setFillColor(sf::Color::Transparent);
     polygon.setOutlineColor(this->B2SFColor(color));
-        polygon.setOutlineThickness(1.0f);
-        this->window->draw(polygon);
+    polygon.setOutlineThickness(1.0f);
+    this->window->draw(polygon);
 }
+
+

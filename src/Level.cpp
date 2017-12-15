@@ -16,26 +16,29 @@ namespace Hills
     
     void Level::LoadTerrain(std::string& filename)
     {
-        //std::vector<std::pair<float, float>> points;
+        //read terrain coordinates from file
         std::ifstream infile(filename);
         std::string line;
         
         while (std::getline(infile, line))
         {
             std::istringstream iss(line);
-            float a; 
-            float b;
-            if (iss >> a ) 
+            float y_ground; 
+            float y_token;
+            
+            if (iss >> y_ground ) 
             { 
-                if (iss >> b ) 
+                if (iss >> y_token ) 
                 { 
-                    _points.push_back(std::make_pair(a, b)); 
+                    _points.push_back(std::make_pair(y_ground, y_token)); 
                 }
+                
                 else
                 {
-                    _points.push_back(std::make_pair(a, -1));
+                    _points.push_back(std::make_pair(y_ground, -99));
                 }
             }
+            
             else
             {
                 break;
@@ -70,10 +73,12 @@ namespace Hills
         //============LOAD TEXTURES====================================================================
         this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_1 );
 
-        if("Levels/level2.txt" == _filename){
+        if("Levels/level2.txt" == _filename)
+        {
             this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_2 );
         }
-        else if("Levels/level3.txt" == _filename){
+        else if("Levels/level3.txt" == _filename)
+        {
             this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_3 );
         }
 
@@ -86,15 +91,13 @@ namespace Hills
 		{
 			float32 y2 = 5.0f + _points[i].first;
 			
-			//std::cout << points[i].first << std::endl;
-			
 			shape.Set(b2Vec2(x, y1), b2Vec2(x + dx, y2));
 			ground->CreateFixture(&fd);
 
             // get a pointer to the current quad
             sf::Vertex* quad = &_vertices[ i * 4];
 
-            // define its 3 corners
+            // define its 4 corners
             quad[0].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT * 2);
             quad[1].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT * 2);
             quad[2].position = sf::Vector2f((x + dx) * SCALE, SCREEN_HEIGHT - (y2 * SCALE));
@@ -102,8 +105,8 @@ namespace Hills
             
             quad[0].texCoords = sf::Vector2f(0, 0);
             quad[1].texCoords = sf::Vector2f(500, 0);
-            quad[2].texCoords = sf::Vector2f(500, 5000);
-            quad[3].texCoords = sf::Vector2f(0, 5000);
+            quad[2].texCoords = sf::Vector2f(500, -2400);
+            quad[3].texCoords = sf::Vector2f(0, -2400);
             
             y1 = y2;
 			x += dx;
@@ -114,8 +117,8 @@ namespace Hills
         _finishLine.setTexture(&(this->_data->assets.GetTexture( "Finish" )));
         _finishLine.setTextureRect(sf::IntRect(0, 0, 50, 300));
         _finishLine.setPosition((x-4*dx)*SCALE, SCREEN_HEIGHT - ((_points[n-5].first+8.0f)*SCALE + 150.0f));
-        //std::cout << _finishLine.getPosition().x << " " << _finishLine.getPosition().y << std::endl;
     }
+    
     
     void Level::CreateTokens()
     {
@@ -123,7 +126,7 @@ namespace Hills
         
         for (unsigned int i = 0; i < _points.size(); i++)
         {
-            if (_points.at(i).second != -1 && _points.at(i).second > _points.at(i).first)
+            if (_points.at(i).second != -99 && _points.at(i).second > _points.at(i).first)
             {
                 sf::Sprite token(this->_data->assets.GetTexture( "Token"));
                 token.setPosition((i+1) * LEVEL_DX * SCALE, SCREEN_HEIGHT - (_points.at(i).second + 5.0f) * SCALE);
@@ -167,8 +170,7 @@ namespace Hills
             target.draw(*i);
         }
     }
-
-    
+  
 }
 
 

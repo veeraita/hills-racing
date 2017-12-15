@@ -12,7 +12,11 @@ namespace Hills
 	class GameState : public State
 	{
 		public:
-			GameState(GameDataRef data, std::string level_filename);
+			GameState( GameDataRef data, std::string level_filename );
+			//prevent copying
+			GameState( const GameState& ) = delete;
+			GameState& operator= (const GameState&) = delete;
+			~GameState();
 			void Init();
 			void HandleInput();
 			void Update( float dt );
@@ -31,12 +35,10 @@ namespace Hills
 			sf::Text timerText;
 			sf::Text velocityText;
 			sf::Text angleText;
-                        int intPoints = 0;
-                        sf::Text pointsText;
+            int intPoints = 0;
+            sf::Text pointsText;
 			sf::Text pointsNumber;
 			sf::Vector2f prevPos;
-
-
 
 	};
 }
