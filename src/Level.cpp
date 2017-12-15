@@ -104,9 +104,9 @@ namespace Hills
             quad[3].position = sf::Vector2f(x * SCALE, SCREEN_HEIGHT - (y1 * SCALE));
             
             quad[0].texCoords = sf::Vector2f(0, 0);
-            quad[1].texCoords = sf::Vector2f(500, 0);
-            quad[2].texCoords = sf::Vector2f(500, -2400);
-            quad[3].texCoords = sf::Vector2f(0, -2400);
+            quad[1].texCoords = sf::Vector2f(100, 0);
+            quad[2].texCoords = sf::Vector2f(100, -1600);
+            quad[3].texCoords = sf::Vector2f(0, -1600);
             
             y1 = y2;
 			x += dx;
