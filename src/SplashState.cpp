@@ -36,8 +36,7 @@ namespace Hills
 	{
 		if( this->_clock.getElapsedTime().asSeconds() > SPLASH_STATE_SHOW_TIME )
 		{
-                        this->_data->machine.AddState( StateRef( new MainMenuState( this->_data ) ), true );
-
+            this->_data->machine.AddState( StateRef( new MainMenuState( this->_data ) ), true );
 		}
 	}
 

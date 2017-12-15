@@ -3,25 +3,20 @@
 #include "AssetManager.hpp"
 
 
-//AssetManager säilyttää ja käsittelee kaikkia kuvia, spriteja ym. ettei niitä tarvitse ladata useasti
 namespace Hills
 {
-	//LoadTexture lataa kuvan fileNamen perusteella mappiin. Avaimena toimii std::string name
-	//fileName löytyy valmiiksi DEFINITIONS.hpp:sta, jonne kirjataan kaikki resurssien FILEPATH:t!!
-	//std::string namen voi heittää miksi huvittaa
+	//resource filepaths are defined in DEFINITIONS.hpp
 	void AssetManager::LoadTexture( std::string name, std::string fileName, bool repeat)
 	{
-		//aluksi luodaan sfml-texture-muuttuja tex
 		sf::Texture tex;
 
-		//yritetään ladata sinne sfml-loadFromFile-funktiolla kuva tiedostosta
 		if ( tex.loadFromFile( fileName ) )
 		{
 		    if (repeat)
 		    {
 		        tex.setRepeated(true);
 		    }
-			//Jos lataus onnistuu asetetaan se mappiin avaimella: name
+
 			this->_textures[name] = tex;
 		}
 		else
@@ -29,15 +24,14 @@ namespace Hills
 			std::cout <<"Texture loading failed" << std::endl;
 		}
 	}
+	
 
-	//GetTexture palautaa mapista halutun Texturen. Tämä toteutetaan aina LoadTexturen jälkeen koodissa
-	//Esim. ...State.cpp-filuissa
 	sf::Texture &AssetManager::GetTexture( std::string name )
 	{
 		return this->_textures.at( name );
 	}
 
-	//Sama kuin LoadTexture, mutta nyt kyseessä fontti.
+
 	void AssetManager::LoadFont( std::string name, std::string fileName )
 	{
 		sf::Font font;
@@ -52,6 +46,7 @@ namespace Hills
 			std::cout <<"Font loading failed" << std::endl;
 		}
 	}
+	
 
 	sf::Font &AssetManager::GetFont( std::string name )
 	{
@@ -59,4 +54,4 @@ namespace Hills
 	}
 }
 
-//Tänne toteutetaan samalla logiikalla audiot
+

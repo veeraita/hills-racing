@@ -9,7 +9,7 @@ namespace Hills
       //Initialization of the b2body of the car and the sprites in the constructor
 
 /*========================== BOX2Dsetup Begin ==========================================*/
-        //Random variables for the joints
+        //variables for the joints
         m_hz = 4.0f;
         m_zeta = 0.7f;
         m_speed = 40.0f;
@@ -41,13 +41,13 @@ namespace Hills
         fd.friction = 1.9f;
         fd.restitution = 0.2;
 
-        /*========== wheel1 ================*/
-        bd.position.Set(3.0f, 1.5*y1+0.35f); //backwheel
+        /*========== back wheel ================*/
+        bd.position.Set(3.0f, 1.5*y1+0.35f);
         wheel1 = world.CreateBody( &bd );
         wheel1->CreateFixture( &fd );
 
-        /*=========== wheel2 ================*/
-        bd.position.Set(5.0f, 1.5*y1+0.4f); //frontwheel
+        /*=========== front wheel ================*/
+        bd.position.Set(5.0f, 1.5*y1+0.4f);
         wheel2 = world.CreateBody( &bd );
         wheel2->CreateFixture( &fd );
 
@@ -140,16 +140,12 @@ namespace Hills
 
     void Car::TiltUp()
     {
-        // doesn't work yet
         car->ApplyTorque(15, true);
-        //car->ApplyForce(b2Vec2(0, 50), car->GetWorldPoint( b2Vec2(1,1)), false );
     }
 
     void Car::TiltDown()
     {
-        // doesn't work yet
         car->ApplyTorque(-15, true);
-        //car->ApplyForce(b2Vec2(0, 0), car->GetWorldPoint( b2Vec2(-1,1)), false );
     }
 }
 

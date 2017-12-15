@@ -30,22 +30,16 @@ namespace Hills
 		
 		gameOver.setFont(this->_data->assets.GetFont( "Game font" ));
 		gameOver.setCharacterSize(100);
-		//gameOver.setOutlineThickness(5.0);
-		//gameOver.setOutlineColor(sf::Color::Black);
 		gameOver.setString("GAME OVER!");
 		gameOver.setPosition((SCREEN_WIDTH - gameOver.getGlobalBounds().width) / 2, 100);
 
 		score.setFont(this->_data->assets.GetFont( "Game font" ));
 		score.setCharacterSize(50);
-		//score.setOutlineThickness(2.0);
-		//score.setOutlineColor(sf::Color::Black);
 		score.setString("Your score for this game was: "+scorestring);
 		score.setPosition((SCREEN_WIDTH - score.getGlobalBounds().width) / 2, 300);
 
 		exitText.setFont(this->_data->assets.GetFont( "Game font" ));
 		exitText.setCharacterSize(50);
-		//exitText.setOutlineThickness(2.0);
-		//exitText.setOutlineColor(sf::Color::Black);
 		exitText.setString("You can return to the main \nmenu by pressing the Esc key");
 		exitText.setPosition((SCREEN_WIDTH - exitText.getGlobalBounds().width) / 2, 500);
 	}
@@ -64,7 +58,7 @@ namespace Hills
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
-                this->_data->machine.AddState( StateRef( new MainMenuState( this->_data ) ), true );
+            this->_data->machine.AddState( StateRef( new MainMenuState( this->_data ) ), true );
         }
 	}
 
@@ -81,9 +75,8 @@ namespace Hills
 		this->_data->window.draw(exitText);
 		this->_data->window.draw(gameOver);
 		this->_data->window.display();
-
-        //sf::Text points = getPoints();
-
 	}
 
 }
+
+

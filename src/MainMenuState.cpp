@@ -17,7 +17,7 @@ namespace Hills
 	}
 
 	void MainMenuState::Init()
-        {
+    {
         this->_data->window.setView(view); // sets the view to the start
         this->_data->assets.LoadTexture( "Main Menu Background", MAIN_MENU_BACKGROUND_FILEPATH );
         this->_data->assets.LoadTexture( "Level 1", LEVEL1_BUTTON_FILEPATH );
@@ -52,35 +52,37 @@ namespace Hills
         //Level 1 selected
         if ( this->_data->input.IsSpriteClicked( this->_button1, sf::Mouse::Left, this->_data->window ) )
         {
-        this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL1_FILEPATH ) ), true );
-        std::ofstream recentlevel;
-        recentlevel.open("recentlevel.txt");
-        recentlevel << 1 << std::endl;
-        recentlevel.close();
+            this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL1_FILEPATH ) ), true );
+            std::ofstream recentlevel;
+            recentlevel.open("recentlevel.txt");
+            recentlevel << 1 << std::endl;
+            recentlevel.close();
         }
+        
         //Level 2 selected
         if ( this->_data->input.IsSpriteClicked( this->_button2, sf::Mouse::Left, this->_data->window ) )
         {
-        this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL2_FILEPATH ) ), true );
-        std::ofstream recentlevel;
-        recentlevel.open("recentlevel.txt");
-        recentlevel << 2 << std::endl;
-        recentlevel.close();
+            this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL2_FILEPATH ) ), true );
+            std::ofstream recentlevel;
+            recentlevel.open("recentlevel.txt");
+            recentlevel << 2 << std::endl;
+            recentlevel.close();
         }
+        
         //Level 3 selected
         if ( this->_data->input.IsSpriteClicked( this->_button3, sf::Mouse::Left, this->_data->window ) )
         {
-        this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL3_FILEPATH ) ), true );
-        std::ofstream recentlevel;
-        recentlevel.open("recentlevel.txt");
-        recentlevel << 3 << std::endl;
-        recentlevel.close();
+            this->_data->machine.AddState( StateRef( new GameState( this->_data, LEVEL3_FILEPATH ) ), true );
+            std::ofstream recentlevel;
+            recentlevel.open("recentlevel.txt");
+            recentlevel << 3 << std::endl;
+            recentlevel.close();
         }
+        
         //Go to High Scores state
 		if ( this->_data->input.IsSpriteClicked( this->_hsButton, sf::Mouse::Left, this->_data->window ) )
 		{
 			this->_data->machine.AddState( StateRef( new HighscoreState( this->_data ) ), true );
-
 		}
 	}
 

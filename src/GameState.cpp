@@ -32,19 +32,17 @@ namespace Hills
 	{
 
         /*====================== LOADING TEXTURES ================================================*/
+        
         this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_1, true );
 
-//this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_1 );
-
-        if("Levels/level2.txt" == _filename){
+        if("Levels/level2.txt" == _filename)
+        {
             this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_2, true );
-
-        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_2 );
         }
-        else if("Levels/level3.txt" == _filename){
+        
+        else if("Levels/level3.txt" == _filename)
+        {
             this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_3, true );
-
-        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_3 );
         }
 		
         this->_data->assets.LoadFont( "Game font", FONT_FILEPATH );
@@ -53,6 +51,7 @@ namespace Hills
 		car = new Car( this->_data, world );
 
         /*====================== SETUP THE BACKGROUND AND VIEW ============================================*/
+        
 		this->_background.setTexture( this->_data->assets.GetTexture( "Game State Background") );
 		this->_background.setScale(2,2);
 		// make the sprite longer so the texture repeats itself
@@ -61,7 +60,7 @@ namespace Hills
 
 		view.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
 
-        // This is gonna be the printed time
+        // settings for the info texts shown on screen
         timerText.setFont(this->_data->assets.GetFont( "Game font" ));
         timerText.setCharacterSize(40);
 
@@ -131,9 +130,10 @@ namespace Hills
             angle -= 360;
         }
         
+        /*====================== GAME OVER WHEN STUCK UPSIDE DOWN  ============================================*/
+        
         if (angle < -120 || angle > 120)
         {
-            /*====================== GAME OVER WHEN STUCK UPSIDE DOWN  ============================================*/
             if((abs(round(((float) pos.x - (float) prevPos.x)*30)) == 0) && (abs(round(((float) pos.y - (float) prevPos.y)*30)) == 0))
             {
                 std::ifstream recentlevel;
@@ -141,9 +141,6 @@ namespace Hills
                 recentlevel.open("recentlevel.txt");
                 std::getline(recentlevel,levelstring);
                 recentlevel.close();
-                //int levelnumber = std::stoi(levelstring);
-
-
 
                 std::string p = std::to_string(intPoints);
                 std::ofstream allscores;
@@ -171,18 +168,22 @@ namespace Hills
         }
         
         /*====================== TIMER, VELOCITY, ANGLE  ============================================*/
+        
         sf::Time elapsed = clock.getElapsedTime();
         int minutes = floor(elapsed.asSeconds() / 60); // counts how many mins have gone
         int seconds = (int) elapsed.asSeconds(); // counts the elapsed time in seconds
         std::string sec;
+        
         if ((seconds - minutes*60) < 10)
         {
-                sec = '0' + std::to_string(seconds - minutes*60);
+            sec = '0' + std::to_string(seconds - minutes*60);
         }
+        
         else
         {
-                sec = std::to_string(seconds - minutes*60);
+            sec = std::to_string(seconds - minutes*60);
         }
+        
         timerText.setString("Time: " +std::to_string(minutes)+ ":" + sec);
         
         float velocity = abs(round(((float) pos.x - (float) prevPos.x)*30));
@@ -198,6 +199,7 @@ namespace Hills
 	void GameState::Draw( float dt )
 	{
         /*====================== DEBUG DRAWING MODE  ============================================*/
+        
         b2GLDraw debugDrawInstance(this->_data->window);
         world.SetDebugDraw( &debugDrawInstance );
         uint32 flags = 0;
@@ -207,8 +209,11 @@ namespace Hills
         flags += b2Draw::e_centerOfMassBit;
         flags += b2Draw::e_aabbBit;
         debugDrawInstance.SetFlags( flags );
+        //uncomment the following line to enable debug drawing
+        //world.DrawDebugData();
 
         /*====================== DRAW BACKGROUND, LEVEL AND CAR  ============================================*/
+        
         this->_data->window.setView( view );
         this->_data->window.clear( );
         this->_data->window.draw( this->_background );
@@ -223,7 +228,7 @@ namespace Hills
         this->_data->window.draw( wheel2 );
 
         /*====================== MAKE CAMERA FOLLOW THE CAR  ============================================*/
-        //sf::Vector2f prevPos2 = getPrevPos();
+
         sf::Vector2f pos = car->getChassisSprite().getPosition();
         if (pos.x > SCREEN_WIDTH/2 && pos.x < level->getLevelLength() - SCREEN_WIDTH/2)
         {
@@ -231,26 +236,23 @@ namespace Hills
             {
                 view.setCenter(pos.x, SCREEN_HEIGHT - 15.0f*SCALE);
             }
+            
             else if (pos.y >=  SCREEN_HEIGHT - 10.0f*SCALE)
             {
                 view.setCenter(pos.x, SCREEN_HEIGHT - 10.0f*SCALE);
                 
                 if (pos.y >=  SCREEN_HEIGHT)
                 {
-
-
                     std::ifstream recentlevel;
                     std::string levelstring;
                     recentlevel.open("recentlevel.txt");
                     std::getline(recentlevel,levelstring);
                     recentlevel.close();
-                    //int levelnumber = std::stoi(levelstring);
-
-
 
                     std::string p = std::to_string(intPoints);
                     std::ofstream allscores;
                     allscores.open("allscoreslevel"+levelstring+".txt",std::ios::out |std::ios::app);
+                    
                     if (!allscores)
                     {
                         std::cerr << "Error opening the file" << std::endl;
@@ -266,11 +268,13 @@ namespace Hills
                     {
                         std::cerr << "Error opening the file" << std::endl;
                     }
+                    
                     recentscore << p << std::endl;
                     recentscore.close();
                     this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
                 }
             }
+            
             else
             {
                 view.setCenter(pos);
@@ -284,6 +288,7 @@ namespace Hills
             sf::Sprite token = level->getTokens().at(i);
             //make the token hitbox a bit smaller
             sf::FloatRect hitbox(token.getGlobalBounds().left + 10, token.getGlobalBounds().top + 10, token.getGlobalBounds().width - 20, token.getGlobalBounds().height - 20);
+            
             if (car->getChassisSprite().getGlobalBounds().intersects(hitbox))
             {
                 level->deleteToken(i);  //deletes the token
@@ -308,13 +313,11 @@ namespace Hills
             recentlevel.open("recentlevel.txt");
             std::getline(recentlevel,levelstring);
             recentlevel.close();
-            //int levelnumber = std::stoi(levelstring);
-
-
 
             std::string p = std::to_string(intPoints);
             std::ofstream allscores;
             allscores.open("allscoreslevel"+levelstring+".txt",std::ios::out |std::ios::app);
+            
             if (!allscores)
             {
                 std::cerr << "Error opening the file" << std::endl;
@@ -330,6 +333,7 @@ namespace Hills
             {
                 std::cerr << "Error opening the file" << std::endl;
             }
+            
             recentscore << p << std::endl;
             recentscore.close();
 
@@ -339,6 +343,7 @@ namespace Hills
 
 
         /*====================== DRAW INFO TEXTS  ============================================*/
+        
         timerText.setPosition(-500+view.getCenter().x,-500+view.getCenter().y);
         this->_data->window.draw(timerText);
         velocityText.setPosition(-500+view.getCenter().x,-450+view.getCenter().y);
@@ -350,7 +355,6 @@ namespace Hills
         angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
         this->_data->window.draw(angleText);
 
-        //world.DrawDebugData(); //comment out if you dont need debug drawing
         this->_data->window.display();
         prevPos = pos;
 	}
@@ -360,3 +364,5 @@ namespace Hills
 		return prevPos;
 	}
 }
+
+

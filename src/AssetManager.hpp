@@ -1,4 +1,4 @@
-	#pragma once
+#pragma once
 
 #include <map>
 #include <SFML/Graphics.hpp>
@@ -18,11 +18,8 @@ namespace Hills
 			sf::Font &GetFont( std::string name );
 
 		private:
-			//map-containerit, johon ladataan SFML-Texturet ja -fontit. Toimii avaimilla (python dictionary)
 			std::map<std::string, sf::Texture> _textures;
 			std::map<std::string, sf::Font> _fonts;
 	};
-
-
 
 }

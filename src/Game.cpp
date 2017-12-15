@@ -1,20 +1,18 @@
 #include "Game.hpp"
 #include "SplashState.hpp"
 
-//GameState. Täällä tapahtuu itse pelin pyöritys.
 namespace Hills
 {
 	Game::Game( int width, int height, std::string title )
 	{
-		//Game-constructor, jossa luodaan aluksi peli-ikkuna ja lisätään uusi tila SplashState (eka tila joka näkyy kun pelin buildaa)
+		//Create the game window and add splash state
 		this->_data->window.create( sf::VideoMode( width, height ), title, sf::Style::Close | sf::Style::Titlebar );
 		this->_data->machine.AddState(StateRef(new SplashState(this->_data)));
-		//Constructor kutsuu myös saman luokan Run-funktiota, eli kun Game-olio luodaan mainissa
-		//se aloittaa saman tien Game-loopin
+        //Start the game
 		this->Run();
 	}
 
-	//Tähän pitää pureutua vielä vähän tarkemmin
+
 	void Game::Run()
 	{
 		float newTime, frameTime, interpolation;
@@ -43,9 +41,13 @@ namespace Hills
 
 				accumulator -= dt;
 			}
-
+            
+            //using time accumulator and interpolation allows the game to render at
+            //different frame rates
 			interpolation = accumulator / dt;
 			this->_data->machine.GetActiveState()->Draw(interpolation);
 		}
 	}
 }
+
+
