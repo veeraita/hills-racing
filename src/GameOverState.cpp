@@ -9,7 +9,7 @@
 
 namespace Hills
 {
-	GameOverState::GameOverState( GameDataRef data) : _data( data )
+	GameOverState::GameOverState( GameDataRef data, std::string level_filename) : _data( data ), _filename(level_filename)
 	{
 
 	}
@@ -40,8 +40,8 @@ namespace Hills
 
 		exitText.setFont(this->_data->assets.GetFont( "Game font" ));
 		exitText.setCharacterSize(50);
-		exitText.setString("You can return to the main \nmenu by pressing the Esc key");
-		exitText.setPosition((SCREEN_WIDTH - exitText.getGlobalBounds().width) / 2, 500);
+		exitText.setString("\tPress R to restart.\n\nYou can return to the main \nmenu by pressing the Esc key");
+		exitText.setPosition((SCREEN_WIDTH - exitText.getGlobalBounds().width) / 2, 400);
 	}
 
 	void GameOverState::HandleInput( )
@@ -59,6 +59,11 @@ namespace Hills
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
             this->_data->machine.AddState( StateRef( new MainMenuState( this->_data ) ), true );
+        }
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+        {
+                this->_data->machine.AddState( StateRef( new GameState( this->_data, _filename ) ), true );
         }
 	}
 

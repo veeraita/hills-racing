@@ -110,6 +110,17 @@ namespace Hills
                 car->TiltUp();
         }
 
+        if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down ) || 
+                sf::Keyboard::isKeyPressed(sf::Keyboard::W ) || sf::Keyboard::isKeyPressed(sf::Keyboard::S )))
+        {
+                car->Brake();
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+        {
+                this->_data->machine.AddState( StateRef( new GameState( this->_data, _filename ) ), true );
+        }
+
 	}
 
 	void GameState::Update( float dt )
@@ -163,7 +174,7 @@ namespace Hills
                 recentscore << p << std::endl;
                 recentscore.close();
 
-                this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+                this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
             }
         }
         
@@ -271,7 +282,7 @@ namespace Hills
                     
                     recentscore << p << std::endl;
                     recentscore.close();
-                    this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+                    this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
                 }
             }
             
@@ -337,7 +348,7 @@ namespace Hills
             recentscore << p << std::endl;
             recentscore.close();
 
-            this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+            this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
             
         }
 
