@@ -370,6 +370,13 @@ namespace Hills
         this->_data->window.draw(pointsNumber);
         angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
         this->_data->window.draw(angleText);
+        
+        sf::Text controlsText;
+        controlsText.setFont(this->_data->assets.GetFont( "Game font" ));
+        controlsText.setCharacterSize(30);
+        controlsText.setString("UP/W Accelerate\nDOWN/S Brake\nLEFT/A Tilt Up\nRIGHT/D Tilt Down\n\nR Restart\nESC Main Menu");
+        controlsText.setPosition(250+view.getCenter().x, -500 + view.getCenter().y);
+        this->_data->window.draw(controlsText);
 
         this->_data->window.display();
         prevPos = pos;
