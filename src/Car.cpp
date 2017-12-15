@@ -12,7 +12,7 @@ namespace Hills
         //Random variables for the joints
         m_hz = 4.0f;
         m_zeta = 0.7f;
-        m_speed = 1200.0f/SCALE;
+        m_speed = 40.0f;
         float y1 = 5.0f;
         /*========= chassis =============*/
         b2BodyDef bd;
@@ -38,8 +38,8 @@ namespace Hills
     	b2FixtureDef fd;
 		fd.shape = &circle;
 		fd.density = 1.0f;
-                fd.friction = 1.9f;
-                fd.restitution = 0.2;
+        fd.friction = 1.9f;
+        fd.restitution = 0.2;
 
         /*========== wheel1 ================*/
         bd.position.Set(3.0f, 1.5*y1+0.35f); //backwheel
@@ -67,7 +67,7 @@ namespace Hills
 
         jd.Initialize(car, wheel2, wheel2->GetPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 2.0f;
+        jd.maxMotorTorque = 5.0f;
         jd.enableMotor = false;
         jd.frequencyHz = m_hz;
         jd.dampingRatio = m_zeta;
