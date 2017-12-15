@@ -115,17 +115,17 @@ namespace Hills
         float angle = car->GetAngle();
         angle = (angle / 3.14) * 180;
         
-        while(angle <= 0)
+        while(angle <= -180)
         {
             angle += 360;
         }
         
-        while(angle > 360)
+        while(angle > 180)
         {
             angle -= 360;
         }
         
-        if (!(angle < 120 || angle >240))
+        if (angle < -120 || angle > 120)
         {
             /*====================== GAME OVER WHEN STUCK UPSIDE DOWN  ============================================*/
             if((abs(round(((float) pos.x - (float) prevPos.x)*30)) == 0) && (abs(round(((float) pos.y - (float) prevPos.y)*30)) == 0))
