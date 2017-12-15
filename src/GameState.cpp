@@ -108,7 +108,6 @@ namespace Hills
 	{
         world.Step( dt, 8, 3 );
         
-        /*====================== GAME OVER WHEN STUCK UPSIDE DOWN  ============================================*/
         sf::Vector2f pos = car->getChassisSprite().getPosition();
         float angle = car->GetAngle();
         angle = (angle / 3.14) * 180;
@@ -125,9 +124,19 @@ namespace Hills
         
         if (!(angle < 120 || angle >240))
         {
+            /*====================== GAME OVER WHEN STUCK UPSIDE DOWN  ============================================*/
             if((abs(round(((float) pos.x - (float) prevPos.x)*30)) == 0) && (abs(round(((float) pos.y - (float) prevPos.y)*30)) == 0))
             {
-                    this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+                std::ofstream recentscore;
+                recentscore.open("recentscore.txt");
+            
+                if (!recentscore)
+                {
+                    std::cerr << "Error opening the file" << std::endl;
+                }
+                recentscore << std::to_string(intPoints) << std::endl;
+                recentscore.close();
+                this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
             }
         }
         
@@ -251,6 +260,7 @@ namespace Hills
             recentscore.close();
 
             this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+            
         }
 
 
