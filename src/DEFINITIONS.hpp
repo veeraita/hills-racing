@@ -49,4 +49,9 @@
 #define LEVEL2_FILEPATH "Levels/level2.txt"
 #define LEVEL3_FILEPATH "Levels/level3.txt"
 
-
+//Audio
+#define DRIVE_SOUND_FILEPATH "Audio/Drive.wav"
+#define BUTTON_SOUND_FILEPATH "Audio/Button.wav"
+#define GAMEOVER_SOUND_FILEPATH "Audio/Gameover.wav"
+#define APPLAUSE_SOUND_FILEPATH "Audio/Applause.wav"
+#define ENGINE_SOUND_FILEPATH "Audio/Engine.wav"

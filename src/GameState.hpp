@@ -39,6 +39,17 @@ namespace Hills
             sf::Text pointsText;
 			sf::Text pointsNumber;
 			sf::Vector2f prevPos;
+			//AUDIO
+			sf::SoundBuffer applauseBuffer;
+			sf::SoundBuffer driveBuffer;
+			sf::SoundBuffer buttonBuffer;
+			sf::SoundBuffer engineBuffer;
+			sf::SoundBuffer gameoverBuffer;
+			sf::Sound applauseSound;
+			sf::Sound driveSound;
+			sf::Sound buttonSound;
+			sf::Sound engineSound;
+			sf::Sound gameoverSound;
 
 	};
 }
