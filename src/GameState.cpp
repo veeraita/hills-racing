@@ -249,6 +249,8 @@ namespace Hills
         /*====================== MAKE CAMERA FOLLOW THE CAR  ============================================*/
         //sf::Vector2f prevPos2 = getPrevPos();
         sf::Vector2f pos = car->getChassisSprite().getPosition();
+        std::ifstream recentlevel;
+        std::string levelstring;
         if (pos.x > SCREEN_WIDTH/2 && pos.x < level->getLevelLength() - SCREEN_WIDTH/2)
         {
             if (pos.y <= SCREEN_HEIGHT - 15.0f*SCALE)
@@ -266,23 +268,30 @@ namespace Hills
                     recentlevel.open("recentlevel.txt");
                     std::getline(recentlevel,levelstring);
                     recentlevel.close();
-                    //int levelnumber = std::stoi(levelstring);
-
-
 
                     std::string p = std::to_string(intPoints);
                     std::ofstream allscores;
                     allscores.open("allscoreslevel"+levelstring+".txt",std::ios::out |std::ios::app);
-
+                    
                     if (!allscores)
                     {
                         std::cerr << "Error opening the file" << std::endl;
                     }
 
+                    allscores << p << std::endl;
+                    allscores.close();
+
+                    std::ofstream recentscore;
+                    recentscore.open("recentscore.txt");
+
+                    if (!recentscore)
+                    {
+                        std::cerr << "Error opening the file" << std::endl;
+                    }
+                    
                     recentscore << p << std::endl;
                     recentscore.close();
                     this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
-
                 }
             }
             else
