@@ -156,7 +156,7 @@ namespace Hills
                 scores3.setCharacterSize(50);
                 scores3.setString("Level3 Highscores\n#1 " + std::to_string(top1L3) + "\n#2 " + std::to_string(top2L3) + "\n#3 " + std::to_string(top3L3));
                 scores3.setPosition((SCREEN_WIDTH - scores3.getGlobalBounds().width)/2, 700);
-                scores3.setOutlineThickness(2.0);
+
 
 
 
