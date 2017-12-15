@@ -40,7 +40,5 @@ namespace Hills
 			sf::Text pointsNumber;
 			sf::Vector2f prevPos;
 
-
-
 	};
 }

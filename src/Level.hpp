@@ -24,7 +24,6 @@ namespace Hills
             std::vector<std::pair<float, float>> _points;
             std::vector<sf::Sprite> _tokens;
             sf::RectangleShape _finishLine;
-            //std::vector<float> GenerateTerrain( float factor, float roughness );
             void LoadTerrain(std::string& filename);
             void CreateTerrain();
             void CreateTokens();

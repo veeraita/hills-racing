@@ -2,8 +2,7 @@
 
 namespace Hills
 {
-	//Jokaisen GameStaten Parent-class, jossa lähinnä virtuaalifunktioita, jotka
-	//toteutetaan yksillöllisesti kullekkin GameStatelle.
+    //base class for different states
 	class State
 	{
 		public:
