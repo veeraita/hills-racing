@@ -55,3 +55,4 @@
 #define GAMEOVER_SOUND_FILEPATH "Audio/Gameover.wav"
 #define APPLAUSE_SOUND_FILEPATH "Audio/Applause.wav"
 #define ENGINE_SOUND_FILEPATH "Audio/Engine.wav"
+#define MUSIC_FILEPATH "Audio/ebintausta.ogg"

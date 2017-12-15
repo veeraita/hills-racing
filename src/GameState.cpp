@@ -51,11 +51,21 @@ namespace Hills
         {
             std::cout << "Error loading gameover sound effect" << std::endl;
         }
+        if( !musicBuffer.loadFromFile( MUSIC_FILEPATH ) )
+        {
+            std::cout << "Error loading gameover sound effect" << std::endl;
+        }
         applauseSound.setBuffer( applauseBuffer );
         driveSound.setBuffer( driveBuffer );
         buttonSound.setBuffer( buttonBuffer );
         engineSound.setBuffer( engineBuffer );
         gameoverSound.setBuffer( gameoverBuffer );
+        music.setBuffer( musicBuffer );
+
+        music.setVolume(50);
+        music.setLoop(true);
+        music.play();
+
 
         /*====================== LOADING TEXTURES ================================================*/
         this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_1, true );
@@ -189,6 +199,7 @@ namespace Hills
 
             if((abs(round(((float) pos.x - (float) prevPos.x)*30)) == 0) && (abs(round(((float) pos.y - (float) prevPos.y)*30)) == 0))
             {
+                music.stop();
                 gameoverSound.play();
                 this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
 
@@ -293,6 +304,7 @@ namespace Hills
                     recentscore << p << std::endl;
                     recentscore.close();
 
+                    music.stop();
                     gameoverSound.play();
                     this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
                 }
@@ -346,7 +358,8 @@ namespace Hills
             }
             recentscore << p << std::endl;
             recentscore.close();
-
+            
+            music.stop();
             applauseSound.play();
             this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
         }

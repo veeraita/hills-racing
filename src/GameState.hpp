@@ -46,11 +46,13 @@ namespace Hills
 			sf::SoundBuffer buttonBuffer;
 			sf::SoundBuffer engineBuffer;
 			sf::SoundBuffer gameoverBuffer;
+			sf::SoundBuffer musicBuffer;
 			sf::Sound applauseSound;
 			sf::Sound driveSound;
 			sf::Sound buttonSound;
 			sf::Sound engineSound;
 			sf::Sound gameoverSound;
+			sf::Sound music;
 
 	};
 }
