@@ -140,12 +140,12 @@ namespace Hills
 
     void Car::TiltUp()
     {
-        car->ApplyTorque(17, true);
+        car->ApplyTorque(15, true);
     }
 
     void Car::TiltDown()
     {
-        car->ApplyTorque(-17, true);
+        car->ApplyTorque(-15, true);
     }
 }
 

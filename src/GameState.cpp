@@ -143,13 +143,13 @@ namespace Hills
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S) )
         {
-            engineSound.play();
+            this->engineSound.play();
             car->Reverse();
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            engineSound.play();
+            this->engineSound.play();
             car->Accelerate();
         }
 
