@@ -17,10 +17,16 @@
 
 namespace Hills
 {
-        GameState::GameState( GameDataRef data, std::string level_filename) : _data( data ), world(b2World(b2Vec2(0.0f, -9.8f))), _filename(level_filename)
+    GameState::GameState( GameDataRef data, std::string level_filename) : _data( data ), world(b2World(b2Vec2(0.0f, -9.8f))), _filename(level_filename)
 	{
 
 	}
+
+    GameState::~GameState()
+    {
+        delete level;
+        delete car;
+    }
 
 	void GameState::Init()
 	{
@@ -118,7 +124,24 @@ namespace Hills
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down ) ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::W ) || sf::Keyboard::isKeyPressed(sf::Keyboard::S )))
+        {
+                car->Brake();
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+        {
+                this->_data->machine.AddState( StateRef( new GameState( this->_data, _filename ) ), true );
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+                this->_data->machine.AddState( StateRef( new MainMenuState( this->_data ) ), true );
+        }
+
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S) )
         {
             engineSound.play();
             car->Reverse();
@@ -166,7 +189,8 @@ namespace Hills
 
             if((abs(round(((float) pos.x - (float) prevPos.x)*30)) == 0) && (abs(round(((float) pos.y - (float) prevPos.y)*30)) == 0))
             {
-                    this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+                this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
+
             }
         }
 
@@ -237,7 +261,28 @@ namespace Hills
 
                 if (pos.y >=  SCREEN_HEIGHT)
                 {
-                    this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+                    std::ifstream recentlevel;
+                    std::string levelstring;
+                    recentlevel.open("recentlevel.txt");
+                    std::getline(recentlevel,levelstring);
+                    recentlevel.close();
+                    //int levelnumber = std::stoi(levelstring);
+
+
+
+                    std::string p = std::to_string(intPoints);
+                    std::ofstream allscores;
+                    allscores.open("allscoreslevel"+levelstring+".txt",std::ios::out |std::ios::app);
+
+                    if (!allscores)
+                    {
+                        std::cerr << "Error opening the file" << std::endl;
+                    }
+
+                    recentscore << p << std::endl;
+                    recentscore.close();
+                    this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
+
                 }
             }
             else
@@ -272,7 +317,7 @@ namespace Hills
             std::string p = std::to_string(intPoints);
 
             std::ofstream allscores;
-            allscores.open("allscores.txt",std::ios::out |std::ios::app);
+            allscores.open("allscoreslevel"+levelstring+".txt",std::ios::out |std::ios::app);
             if (!allscores)
             {
                 std::cerr << "Error opening the file" << std::endl;
@@ -291,7 +336,7 @@ namespace Hills
             recentscore << p << std::endl;
             recentscore.close();
 
-            this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+            this->_data->machine.AddState( StateRef( new GameOverState( this->_data, this->_filename ) ), true );
         }
 
 
@@ -306,6 +351,17 @@ namespace Hills
         this->_data->window.draw(pointsNumber);
         angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
         this->_data->window.draw(angleText);
+        this->_data->window.draw(pointsNumber);
+        angleText.setPosition(-500+view.getCenter().x, -350 + view.getCenter().y);
+        this->_data->window.draw(angleText);
+
+        sf::Text controlsText;
+        controlsText.setFont(this->_data->assets.GetFont( "Game font" ));
+        controlsText.setCharacterSize(30);
+        controlsText.setString("UP/W Accelerate\nDOWN/S Brake\nLEFT/A Tilt Up\nRIGHT/D Tilt Down\n\nR Restart\nESC Main Menu");
+        controlsText.setPosition(250+view.getCenter().x, -500 + view.getCenter().y);
+        this->_data->window.draw(controlsText);
+
 
         //world.DrawDebugData(); //comment out if you dont need debug drawing
         this->_data->window.display();

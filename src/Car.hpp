@@ -19,7 +19,7 @@ namespace Hills
           void Brake();
           void TiltUp();
           void TiltDown();
-          float GetAngle(); 
+          float GetAngle();
       private:
           GameDataRef _data;
           b2World& world;

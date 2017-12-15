@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Level.hpp"
 #include "State.hpp"
 #include "Game.hpp"
