@@ -26,21 +26,19 @@ namespace Hills
 	{
 
         /*====================== LOADING TEXTURES ================================================*/
-                this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_1, true );
-		//this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_1 );
+        this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_1, true );
+//this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_1 );
 
-                if("Levels/level2.txt" == _filename){
-                        this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_2, true );
-		        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_2 );
-                }
-                else if("Levels/level3.txt" == _filename){
-                        this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_3, true );
-		        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_3 );
-                }
+        if("Levels/level2.txt" == _filename){
+                this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_2, true );
+        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_2 );
+        }
+        else if("Levels/level3.txt" == _filename){
+                this->_data->assets.LoadTexture( "Game State Background", GAME_BACKGROUND_FILEPATH_3, true );
+        //this->_data->assets.LoadTexture( "Land", LAND_FILEPATH_3 );
+        }
 		
-		this->_data->assets.LoadTexture( "Chassis", CHASSIS_FILEPATH );
-                this->_data->assets.LoadTexture( "Wheel", WHEEL_FILEPATH );
-                this->_data->assets.LoadFont( "Game font", FONT_FILEPATH );
+        this->_data->assets.LoadFont( "Game font", FONT_FILEPATH );
 
 		level = new Level( this->_data, world, _filename );
 		car = new Car( this->_data, world );
@@ -53,13 +51,6 @@ namespace Hills
 		this->_background.move(0,-200);
 
 		view.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
-
-        sf::Sprite chassissprite;
-        chassissprite.setTexture( this->_data->assets.GetTexture( "Chassis") );
-        sf::Sprite wheelsprite1;
-        wheelsprite1.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
-        sf::Sprite wheelsprite2;
-        wheelsprite2.setTexture( this->_data->assets.GetTexture( "Wheel" ) );
 
         // This is gonna be the printed time
         timerText.setFont(this->_data->assets.GetFont( "Game font" ));
