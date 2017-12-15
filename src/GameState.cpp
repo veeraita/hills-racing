@@ -111,7 +111,6 @@ namespace Hills
 	{
         world.Step( dt, 8, 3 );
         
-        /*====================== GAME OVER WHEN STUCK UPSIDE DOWN  ============================================*/
         sf::Vector2f pos = car->getChassisSprite().getPosition();
         float angle = car->GetAngle();
         angle = (angle / 3.14) * 180;
@@ -128,9 +127,19 @@ namespace Hills
         
         if (!(angle < 120 || angle >240))
         {
+            /*====================== GAME OVER WHEN STUCK UPSIDE DOWN  ============================================*/
             if((abs(round(((float) pos.x - (float) prevPos.x)*30)) == 0) && (abs(round(((float) pos.y - (float) prevPos.y)*30)) == 0))
             {
-                    this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+                std::ofstream recentscore;
+                recentscore.open("recentscore.txt");
+            
+                if (!recentscore)
+                {
+                    std::cerr << "Error opening the file" << std::endl;
+                }
+                recentscore << std::to_string(intPoints) << std::endl;
+                recentscore.close();
+                this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
             }
         }
         
@@ -214,7 +223,10 @@ namespace Hills
         for (unsigned int i = 0; i < level->getTokens().size(); i++) 
         // if the car collides with a star, the following will happen
         {
-            if (car->getChassisSprite().getGlobalBounds().intersects(level->getTokens().at(i).getGlobalBounds()))
+            sf::Sprite token = level->getTokens().at(i);
+            //make the token hitbox a bit smaller
+            sf::FloatRect hitbox(token.getGlobalBounds().left + 10, token.getGlobalBounds().top + 10, token.getGlobalBounds().width - 20, token.getGlobalBounds().height - 20);
+            if (car->getChassisSprite().getGlobalBounds().intersects(hitbox))
             {
                 level->deleteToken(i);  //deletes the token
                 intPoints += 10; //  we get points
@@ -264,6 +276,7 @@ namespace Hills
             recentscore.close();
 
             this->_data->machine.AddState( StateRef( new GameOverState( this->_data ) ), true );
+            
         }
 
 
